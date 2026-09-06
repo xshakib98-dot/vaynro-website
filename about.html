@@ -39,8 +39,8 @@
 
   <div class="about-card">
     <div class="about-img">
-      <!-- ডিফল্টভাবে GitHub-এর founder.jpg অথবা ফায়ারবেসের লিংক দেখাবে -->
-      <img id="ownerImg" src="https://raw.githubusercontent.com/xshakib98/vaynro-website/main/founder.jpg" alt="VAYNRO Founder">
+      <!-- সরাসরি আপনার GitHub-এর founder.jpg ফাইলটি এখানে সেট করা হলো -->
+      <img id="ownerImg" src="founder.jpg" alt="VAYNRO Founder">
     </div>
     <div>
       <div class="about-title" id="abNameDisplay">Shakib</div>
@@ -64,13 +64,13 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // অ্যাডমিন প্যানেলের site_settings/about থেকে রিয়েল-টাইম ডাটা লোড করা
     db.collection("site_settings").doc("about").onSnapshot(doc => {
       if(doc.exists) {
         const d = doc.data();
         if(d.name) document.getElementById("abNameDisplay").innerText = d.name;
         if(d.role) document.getElementById("abRoleDisplay").innerText = d.role;
-        if(d.img) document.getElementById("ownerImg").src = d.img;
+        // যদি ফায়ারবেসে ছবির লিংক দেওয়া থাকে তবেই সেটা দেখাবে, না হলে founder.jpg ফাইলটিই থাকবে
+        if(d.img && d.img.trim() !== "") document.getElementById("ownerImg").src = d.img;
         if(d.bio1) document.getElementById("abBio1Display").innerText = d.bio1;
         if(d.bio2) document.getElementById("abBio2Display").innerText = d.bio2;
       }
