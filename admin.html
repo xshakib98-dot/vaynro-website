@@ -12,13 +12,14 @@
     h2 { font-size: 22px; color: #d4af37; margin-bottom: 20px; text-align: center; text-transform: uppercase; letter-spacing: 2px; }
     .form-group { margin-bottom: 18px; }
     label { display: block; font-size: 12px; text-transform: uppercase; color: #a0a0a0; margin-bottom: 8px; letter-spacing: 1px; }
-    input[type="text"], input[type="number"], input[type="file"] {
+    input[type="text"], input[type="number"] {
       width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #222; background: #0b0b0b; color: #fff; font-size: 14px; outline: none;
     }
     input:focus { border-color: #d4af37; }
     .submit-btn { width: 100%; background: #d4af37; color: #000; padding: 14px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-top: 10px; transition: 0.3s; }
     .submit-btn:hover { background: #fff; }
     .status-msg { margin-top: 15px; font-size: 13px; text-align: center; color: #d4af37; }
+    .hint { font-size: 11px; color: #888; margin-top: 4px; }
   </style>
 </head>
 <body>
@@ -35,17 +36,17 @@
         <input type="number" id="prodPrice" placeholder="e.g. 2500" required>
       </div>
       <div class="form-group">
-        <label>Product Image</label>
-        <input type="file" id="prodImage" accept="image/*" required>
+        <label>Image Name / URL</label>
+        <input type="text" id="prodImage" placeholder="e.g. overcoat.jpg or image link" required>
+        <div class="hint">GitHub-এ আপলোড করা ছবির নাম (যেমন: tshirt.jpg) অথবা যেকোনো অনলাইন ছবির লিংক দিন।</div>
       </div>
-      <button type="submit" class="submit-btn" id="uploadBtn">Upload Product</button>
+      <button type="submit" class="submit-btn" id="uploadBtn">Publish Product</button>
       <div class="status-msg" id="statusMsg"></div>
     </form>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 
   <script>
     // Firebase Configuration
@@ -61,46 +62,33 @@
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-    const storage = firebase.storage();
 
     function uploadProduct(e) {
       e.preventDefault();
 
       const title = document.getElementById("prodTitle").value;
       const price = parseFloat(document.getElementById("prodPrice").value);
-      const file = document.getElementById("prodImage").files[0];
+      const image = document.getElementById("prodImage").value;
       const btn = document.getElementById("uploadBtn");
       const status = document.getElementById("statusMsg");
 
-      if (!file) return;
-
       btn.disabled = true;
-      btn.innerText = "Uploading Image...";
-      status.innerText = "Please wait, uploading to server...";
+      btn.innerText = "Publishing...";
 
-      // Upload image to Firebase Storage
-      const storageRef = storage.ref('products/' + Date.now() + '_' + file.name);
-      storageRef.put(file).then((snapshot) => {
-        return snapshot.ref.getDownloadURL();
-      }).then((downloadURL) => {
-        btn.innerText = "Saving Product...";
-        
-        // Save product details to Firestore Database
-        return db.collection("products").add({
-          title: title,
-          price: price,
-          image: downloadURL,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
+      db.collection("products").add({
+        title: title,
+        price: price,
+        image: image,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
       }).then(() => {
-        status.innerText = "✅ Product uploaded successfully!";
+        status.innerText = "✅ Product Published Successfully!";
         document.getElementById("uploadForm").reset();
       }).catch((err) => {
         console.error(err);
-        status.innerText = "❌ Failed to upload. Check Firebase rules.";
+        status.innerText = "❌ Failed to publish: " + err.message;
       }).finally(() => {
         btn.disabled = false;
-        btn.innerText = "Upload Product";
+        btn.innerText = "Publish Product";
       });
     }
   </script>
