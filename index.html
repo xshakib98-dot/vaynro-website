@@ -15,16 +15,16 @@
     .nav-links a:hover { color: #8e52bd; }
     .cart-btn-trigger { background: #8e52bd; border: none; color: #fff; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 14px; transition: 0.3s; box-shadow: 0 4px 12px rgba(142, 82, 189, 0.2); }
 
-    /* Perfect Cover Styling - No Black Bars */
+    /* Cover Photo Fix - ওপরের মুখ কেটে যাওয়া রোধ করার জন্য object-fit: contain করা হলো */
     .vogue-cover-container {
       position: relative;
       width: 100%;
-      max-width: 600px; /* ম্যাগাজিনের সঠিক রেশিও রাখার জন্য ম্যাক্স উইডথ কমানো হলো */
+      max-width: 600px;
       height: 75vh;
       margin: 0 auto 40px auto;
       border-radius: 20px;
       overflow: hidden;
-      background: #f3f0f9; /* বডির কালারের সাথে ম্যাচ করানো হলো যেন কালো না দেখায় */
+      background: #f3f0f9;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -33,7 +33,7 @@
     .vogue-cover-container .cover-bg {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* ছবি পুরো এরিয়া জুড়ে সুন্দরভাবে ফিট হবে */
+      object-fit: contain; /* ছবি যেন সম্পূর্ণ দেখা যায় এবং ওপরের অংশ কেটে না যায় */
       display: block;
     }
 
@@ -52,7 +52,7 @@
     .close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: #7c5295; background: none; border: none; }
     .modal-img { width: 100%; height: 280px; object-fit: cover; border-radius: 16px; margin-bottom: 15px; border: 1px solid #e9e2f3; }
     .modal-title { font-size: 22px; font-weight: 700; color: #2d2342; margin-bottom: 5px; }
-    .modal-price { font-size: 18px; font-weight: 700; color: #8e52bd; margin-bottom: 15px; }
+    .modal-price { font-size: 16px; font-weight: 700; color: #8e52bd; margin-bottom: 15px; }
     
     /* Size Selector */
     .size-container { margin-bottom: 15px; text-align: left; }
@@ -122,12 +122,39 @@
         <label>Delivery Address</label>
         <input type="text" id="buyerAddress" placeholder="House, Road, City">
       </div>
+
+      <!-- Delivery Location (Charge calculation) -->
+      <div class="form-group">
+        <label>Delivery Area</label>
+        <select id="deliveryLocation">
+          <option value="inside_dhaka">Inside Dhaka (Charge: 70 BDT)</option>
+          <option value="outside_dhaka">Outside Dhaka (Charge: 150 BDT)</option>
+        </select>
+      </div>
+
       <div class="form-group">
         <label>Payment Method</label>
         <select id="paymentMethod">
           <option value="Cash on Delivery">Cash on Delivery</option>
           <option value="bKash">bKash Payment</option>
         </select>
+      </div>
+
+      <!-- বিকাশ পেমেন্ট সিলেক্ট করলে এই বক্সটি শো করবে এবং আপনার নাম্বার দেখাবে -->
+      <div id="bkashDetailsBox" style="display: none; background: #f9f5fc; padding: 15px; border-radius: 12px; margin-bottom: 12px; border: 1px dashed #8e52bd; text-align: left;">
+        <p style="font-size: 13px; font-weight: 700; color: #7c5295; margin-bottom: 8px;">
+          bkash Send Money: <span style="color: #d81b60; font-size: 14px;">01725373633</span>
+        </p>
+        <p style="font-size: 12px; color: #5a4b73; margin-bottom: 10px;">সম্পূর্ণ টাকা পেমেন্ট করে নিচের তথ্য দিন:</p>
+        
+        <div class="form-group" style="margin-bottom: 8px;">
+          <label style="font-size: 12px;">Your bKash Number</label>
+          <input type="text" id="bkashSenderPhone" placeholder="01XXXXXXXXX" style="padding: 8px; font-size: 13px;">
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+          <label style="font-size: 12px;">Transaction ID (TrxID)</label>
+          <input type="text" id="bkashTrxId" placeholder="e.g. 9N7A..." style="padding: 8px; font-size: 13px;">
+        </div>
       </div>
       
       <div class="action-buttons">
@@ -139,106 +166,8 @@
 
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyAw6PTjumhTGMog6LAyCaFNuyIg2E16fd8",
-      authDomain: "vaynro-website.firebaseapp.com",
-      projectId: "vaynro-website",
-      storageBucket: "vaynro-website.firebasestorage.app",
-      messagingSenderId: "442609775562",
-      appId: "1:442609775562:web:51722b9bd1c34b6cac9533",
-      measurementId: "G-225DYYLGER"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    let currentProduct = null;
-    let selectedSize = 'S';
-    let cart = [];
-
-    function selectSize(btn, size) {
-      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      selectedSize = size;
-    }
-
-    db.collection("products").onSnapshot((snapshot) => {
-      const grid = document.getElementById("productGrid");
-      grid.innerHTML = "";
-      if(snapshot.empty) {
-        grid.innerHTML = "<p style='text-align: center; width: 100%; color: #7d6e93;'>No products available.</p>";
-        return;
-      }
-      snapshot.forEach((doc) => {
-        const data = doc.data();
-        grid.innerHTML += `
-          <div class="card" onclick='openModal(${JSON.stringify(data)})'>
-            <img src="${data.image}">
-            <div class="card-details">
-              <div class="card-title">${data.title}</div>
-              <div class="card-price">${data.price} BDT</div>
-            </div>
-          </div>
-        `;
-      });
-    });
-
-    function openModal(product) {
-      currentProduct = product;
-      document.getElementById("modalImg").src = product.image;
-      document.getElementById("modalTitle").innerText = product.title;
-      document.getElementById("modalPrice").innerText = product.price + " BDT";
-      document.getElementById("productModal").style.display = "flex";
-    }
-
-    function closeModal() {
-      document.getElementById("productModal").style.display = "none";
-    }
-
-    function addToCart() {
-      if(!currentProduct) return;
-      cart.push({ ...currentProduct, size: selectedSize });
-      document.getElementById("cartCount").innerText = cart.length;
-      alert(`Added ${currentProduct.title} (Size: ${selectedSize}) to Cart!`);
-      closeModal();
-    }
-
-    // ফায়ারবেসে অর্ডার সাবমিট করার ফাংশন
-    function placeOrder() {
-      const name = document.getElementById("buyerName").value;
-      const phone = document.getElementById("buyerPhone").value;
-      const address = document.getElementById("buyerAddress").value;
-      const payment = document.getElementById("paymentMethod").value;
-
-      if(!name || !phone || !address) {
-        alert("Please fill in your delivery details!");
-        return;
-      }
-
-      // Firestore এর 'orders' কালেকশনে ডেটা পাঠানো হচ্ছে
-      db.collection("orders").add({
-        productTitle: currentProduct.title,
-        productPrice: currentProduct.price,
-        productImage: currentProduct.image,
-        size: selectedSize,
-        customerName: name,
-        customerPhone: phone,
-        customerAddress: address,
-        paymentMethod: payment,
-        orderDate: new Date().toLocaleString()
-      })
-      .then(() => {
-        alert(`Order placed successfully via ${payment}!\nYour order has been saved.`);
-        closeModal();
-        // ইনপুট ফিল্ড ক্লিয়ার করে দেওয়া
-        document.getElementById("buyerName").value = '';
-        document.getElementById("buyerPhone").value = '';
-        document.getElementById("buyerAddress").value = '';
-      })
-      .catch((error) => {
-        alert("Error placing order: " + error.message);
-      });
-    }
-  </script>
+  
+  <!-- আলাদা করা order.js ফাইল কানেক্ট করা হলো -->
+  <script src="order.js"></script>
 </body>
 </html>
