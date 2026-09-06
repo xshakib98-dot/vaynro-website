@@ -46,10 +46,9 @@ function openModal(product) {
   currentProduct = product;
   document.getElementById("modalImg").src = product.image;
   document.getElementById("modalTitle").innerText = product.title;
-  document.getElementById("modalPrice").innerText = product.price + " BDT";
   document.getElementById("productModal").style.display = "flex";
   
-  // ডিফল트 হিসেবে বিকাশ ফিল্ড হাইড থাকবে এবং ডেলিভারি চার্জ রিসেট হবে
+  // পেমেন্ট বক্স হাইড এবং ডেলিভারি চার্জ ক্যালকুলেট করা
   document.getElementById("bkashDetailsBox").style.display = "none";
   calculateTotal();
 }
@@ -66,7 +65,7 @@ function addToCart() {
   closeModal();
 }
 
-// পেমেন্ট মেথড বা লোকেশন পরিবর্তন হলে টোটাল অ্যামাউন্ট এবং বিকাশ বক্স হ্যান্ডেল করার ফাংশন
+// পেমেন্ট মেথড পরিবর্তন হলে বিকাশ বক্স ওপেন/ক্লোজ হবে
 document.getElementById("paymentMethod")?.addEventListener("change", function() {
   const bkashBox = document.getElementById("bkashDetailsBox");
   if(this.value === "bKash") {
@@ -76,6 +75,7 @@ document.getElementById("paymentMethod")?.addEventListener("change", function() 
   }
 });
 
+// ডেলিভারি লোকেশন পরিবর্তন হলে টোটাল অ্যামাউন্ট আপডেট হবে
 document.getElementById("deliveryLocation")?.addEventListener("change", function() {
   calculateTotal();
 });
@@ -86,10 +86,10 @@ function calculateTotal() {
   let deliveryFee = location === "inside_dhaka" ? 70 : 150;
   let totalPrice = Number(currentProduct.price) + deliveryFee;
   
-  // মোডাল প্রাইসের নিচে টোটাল অ্যামাউন্ট দেখানোর জন্য
-  document.getElementById("modalPrice").innerText = `${currentProduct.price} BDT + Delivery: ${deliveryFee} BDT = Total: ${totalPrice} BDT`;
+  document.getElementById("modalPrice").innerText = `Price: ${currentProduct.price} + Delivery: ${deliveryFee} = Total: ${totalPrice} BDT`;
 }
 
+// ফায়ারবেসে অর্ডার সাবমিট করার ফাংশন
 function placeOrder() {
   const name = document.getElementById("buyerName").value;
   const phone = document.getElementById("buyerPhone").value;
@@ -105,12 +105,12 @@ function placeOrder() {
     return;
   }
 
-  // যদি বিকাশ সিলেক্ট করা থাকে তবে নাম্বার ও ট্রানজ্যাকশন কোড চেক করা
+  // বিকাশ সিলেক্ট করলে সেন্ডার নম্বর ও TrxID বাধ্যতামূলক করা
   if(payment === "bKash") {
     bkashSender = document.getElementById("bkashSenderPhone").value;
     bkashTrxID = document.getElementById("bkashTrxId").value;
     if(!bkashSender || !bkashTrxID) {
-      alert("Please provide your bKash number and TrxID for verification!");
+      alert("Please provide your bKash number and TrxID!");
       return;
     }
   }
@@ -119,7 +119,7 @@ function placeOrder() {
   let finalTotalAmount = Number(currentProduct.price) + deliveryFee;
   let deliveryAreaText = location === "inside_dhaka" ? "Inside Dhaka (70 BDT)" : "Outside Dhaka (150 BDT)";
 
-  // ফায়ারবেসের 'orders' কালেকশনে সম্পূর্ণ তথ্য পাঠানো হচ্ছে
+  // Firestore এর 'orders' কালেকশনে সমস্ত তথ্য পাঠানো হচ্ছে
   db.collection("orders").add({
     productTitle: currentProduct.title,
     productPrice: Number(currentProduct.price),
@@ -137,7 +137,7 @@ function placeOrder() {
     orderDate: new Date().toLocaleString()
   })
   .then(() => {
-    alert(`Order placed successfully via ${payment}!\nYour order has been saved to Firebase.`);
+    alert(`Order placed successfully via ${payment}!\nYour order has been saved.`);
     closeModal();
     // ফর্ম ক্লিয়ার করা
     document.getElementById("buyerName").value = '';
