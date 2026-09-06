@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VAYNRO | Aesthetic Fashion</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
     body { background: #f3f0f9; color: #2d2342; padding: 20px; }
@@ -15,56 +15,29 @@
     .nav-links a:hover { color: #8e52bd; }
     .cart-btn-trigger { background: #8e52bd; border: none; color: #fff; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 14px; transition: 0.3s; box-shadow: 0 4px 12px rgba(142, 82, 189, 0.2); }
 
-    /* Vogue Cover Styling */
+    /* Clean Full Magazine Cover Styling */
     .vogue-cover-container {
       position: relative;
       width: 100%;
-      max-width: 1200px;
-      height: 80vh;
+      max-width: 900px;
+      height: 85vh;
       min-height: 550px;
       margin: 0 auto 40px auto;
       border-radius: 20px;
       overflow: hidden;
-      background: #000;
-      color: #ffffff;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
     }
     .vogue-cover-container .cover-bg {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      filter: grayscale(100%) contrast(110%);
-      opacity: 0.9;
+      /* contain ব্যবহার করার কারণে ছবি এক ফোঁটাও কাটবে না, পুরোটা একসাথে দেখাবে */
+      object-fit: contain; 
+      display: block;
     }
-    .vogue-title {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: 'Bodoni Moda', serif;
-      font-size: clamp(60px, 11vw, 140px);
-      font-weight: 800;
-      letter-spacing: 6px;
-      color: rgba(255, 255, 255, 0.95);
-      text-shadow: 0 4px 15px rgba(0,0,0,0.6);
-      margin: 0;
-      line-height: 0.9;
-      width: 100%;
-      text-align: center;
-      pointer-events: none;
-    }
-    .cover-meta { position: absolute; top: 130px; font-family: 'Bodoni Moda', serif; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255, 255, 255, 0.85); }
-    .left-meta { left: 30px; }
-    .right-meta { right: 30px; text-align: right; display: flex; flex-direction: column; }
-    .cover-text-group { position: absolute; top: 180px; width: 200px; }
-    .left-group { left: 30px; text-align: left; }
-    .right-group { right: 30px; text-align: right; }
-    .vogue-headline { font-family: 'Bodoni Moda', serif; font-size: clamp(14px, 1.8vw, 20px); font-weight: 700; line-height: 1.1; letter-spacing: 1.5px; text-transform: uppercase; color: #ffffff; }
-    .vogue-subtext { font-size: 9px; letter-spacing: 1px; margin-top: 5px; color: rgba(255, 255, 255, 0.75); text-transform: uppercase; }
-    .cover-footer { position: absolute; bottom: 20px; width: 100%; text-align: center; padding: 0 20px; }
-    .vogue-bottom-title { font-family: 'Bodoni Moda', serif; font-size: clamp(30px, 5vw, 65px); font-weight: 800; letter-spacing: 4px; color: #ffffff; margin: 0; }
-    .vogue-footer-sub { font-size: 10px; letter-spacing: 3px; margin-top: 6px; color: rgba(255, 255, 255, 0.8); text-transform: uppercase; }
 
     /* Product Grid */
     .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 40px auto; }
@@ -86,33 +59,9 @@
     </div>
   </header>
 
-  <!-- Vogue Magazine Cover Banner Section -->
+  <!-- Full Magazine Cover Display -->
   <div class="vogue-cover-container">
-    <!-- এখানে আপনার গিটহাবের cover.jpg ফাইলটি সরাসরি বসিয়ে দেওয়া হলো -->
     <img src="cover.jpg" alt="VAYNRO Cover" class="cover-bg">
-    <h1 class="vogue-title">VAYNRO</h1>
-
-    <div class="cover-meta left-meta">2026</div>
-    <div class="cover-meta right-meta">
-      <span>STYLE</span>
-      <span>CULTURE</span>
-      <span>BEAUTY</span>
-    </div>
-
-    <div class="cover-text-group left-group">
-      <div class="vogue-headline">NEW<br>SEASON<br>NEW<br>ATTITUDE</div>
-      <p class="vogue-subtext">FRESH LOOKS<br>BOLD STATEMENTS</p>
-    </div>
-
-    <div class="cover-text-group right-group">
-      <div class="vogue-headline">LESS<br>IS THE<br>NEW MORE</div>
-      <p class="vogue-subtext">THE POWER OF<br>SIMPLICITY</p>
-    </div>
-
-    <div class="cover-footer">
-      <h2 class="vogue-bottom-title">ICONIC FOREVER</h2>
-      <p class="vogue-footer-sub">A LEGACY OF STYLE. A VISION OF TOMORROW</p>
-    </div>
   </div>
 
   <div class="product-grid" id="productGrid">
