@@ -4,66 +4,62 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact Us | VAYNRO</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
     body { background: #f3f0f9; color: #2d2342; padding: 20px; }
+    header { max-width: 1000px; margin: 0 auto 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e1d9ec; padding-bottom: 20px; }
+    h1.logo { font-size: 28px; letter-spacing: 4px; color: #7c5295; text-transform: uppercase; font-weight: 700; }
+    .nav-links { display: flex; gap: 20px; align-items: center; }
+    .nav-links a { color: #5a4b73; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; }
+    .back-btn { background: #8e52bd; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 20px; font-weight: 700; font-size: 13px; }
+
+    .contact-card { max-width: 600px; margin: 0 auto; background: #fff; border-radius: 20px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; }
+    .contact-title { font-size: 28px; font-weight: 700; color: #2d2342; margin-bottom: 8px; }
+    .contact-sub { font-size: 14px; color: #6b5b85; margin-bottom: 30px; }
     
-    nav { max-width: 1200px; margin: 0 auto 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e1d9ec; padding-bottom: 20px; }
-    nav .logo { font-size: 26px; font-weight: 700; color: #7c5295; letter-spacing: 3px; text-decoration: none; }
-    nav .nav-links { display: flex; gap: 20px; align-items: center; }
-    nav .nav-links a { color: #5a4b73; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-    nav a.back-btn { background: #8e52bd; color: #fff; text-decoration: none; padding: 8px 18px; border-radius: 20px; font-size: 14px; font-weight: 600; }
-
-    .contact-container { max-width: 600px; margin: 40px auto; background: #ffffff; border: 1px solid #e1d9ec; border-radius: 20px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-    .page-title { font-size: 28px; font-weight: 700; color: #2d2342; text-align: center; margin-bottom: 10px; }
-    .page-subtitle { font-size: 14px; color: #6b5b85; text-align: center; margin-bottom: 30px; }
-
-    .contact-info-list { margin-bottom: 30px; display: flex; flex-direction: column; gap: 15px; }
-    .info-item { display: flex; align-items: center; gap: 15px; background: #f8f5fc; padding: 15px 20px; border-radius: 12px; border: 1px solid #e9e2f3; }
-    .info-item span.icon { font-size: 22px; }
-    .info-item div .label { font-size: 12px; color: #7d6e93; text-transform: uppercase; font-weight: 600; }
-    .info-item div .val { font-size: 15px; font-weight: 700; color: #2d2342; text-decoration: none; }
+    .info-box { background: #f8f5fc; border: 1px solid #e1d9ec; border-radius: 12px; padding: 16px; margin-bottom: 15px; text-align: left; display: flex; align-items: center; gap: 15px; }
+    .info-icon { font-size: 24px; }
+    .info-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #7c5295; }
+    .info-val { font-size: 15px; font-weight: 600; color: #2d2342; margin-top: 2px; }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a href="index.html" class="logo">VAYNRO</a>
+  <header>
+    <h1 class="logo">VAYNRO</h1>
     <div class="nav-links">
-      <a href="about.html">About Us</a>
-      <a href="contact.html" style="color: #8e52bd;">Contact Us</a>
-      <a href="index.html" class="back-btn">← Back to Shop</a>
+      <a href="about.html">ABOUT US</a>
+      <a href="contact.html" style="color: #8e52bd;">CONTACT US</a>
+      <a href="index.html" class="back-btn">← BACK TO SHOP</a>
     </div>
-  </nav>
+  </header>
 
-  <div class="contact-container">
-    <div class="page-title">Get In Touch</div>
-    <div class="page-subtitle">Have questions or need assistance with your order? Contact us directly!</div>
+  <div class="contact-card">
+    <div class="contact-title">Get In Touch</div>
+    <div class="contact-sub">Have questions or need assistance with your order? Contact us directly!</div>
 
-    <div class="contact-info-list">
-      <div class="info-item">
-        <span class="icon">📱</span>
-        <div>
-          <div class="label">Call / WhatsApp</div>
-          <a id="cPhoneLink" href="#" target="_blank" class="val"><span id="cPhone">Loading...</span></a>
-        </div>
+    <div class="info-box">
+      <span class="info-icon">📱</span>
+      <div>
+        <div class="info-label">Call / WhatsApp</div>
+        <div class="info-val" id="cntPhone">+880 1725-373633</div>
       </div>
+    </div>
 
-      <div class="info-item">
-        <span class="icon">✉️</span>
-        <div>
-          <div class="label">Email Address</div>
-          <a id="cEmailLink" href="#" class="val"><span id="cEmail">Loading...</span></a>
-        </div>
+    <div class="info-box">
+      <span class="info-icon">✉️</span>
+      <div>
+        <div class="info-label">Email Address</div>
+        <div class="info-val" id="cntEmail">support@vaynro.com</div>
       </div>
+    </div>
 
-      <div class="info-item">
-        <span class="icon">📍</span>
-        <div>
-          <div class="label">Headquarters</div>
-          <div class="val" id="cAddress">Loading...</div>
-        </div>
+    <div class="info-box">
+      <span class="info-icon">📍</span>
+      <div>
+        <div class="info-label">Headquarters</div>
+        <div class="info-val" id="cntAddress">Dhaka, Bangladesh</div>
       </div>
     </div>
   </div>
@@ -77,24 +73,17 @@
       projectId: "vaynro-website",
       storageBucket: "vaynro-website.firebasestorage.app",
       messagingSenderId: "442609775562",
-      appId: "1:442609775562:web:51722b9bd1c34b6cac9533",
-      measurementId: "G-225DYYLGER"
+      appId: "1:442609775562:web:51722b9bd1c34b6cac9533"
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    db.collection("site_settings").doc("contact").onSnapshot(doc => {
+    db.collection("settings").doc("contactUs").onSnapshot(doc => {
       if(doc.exists) {
-        const d = doc.data();
-        const rawPhone = (d.phone || "").replace(/[^0-9]/g, '');
-        
-        document.getElementById("cPhone").innerText = d.phone || "";
-        document.getElementById("cPhoneLink").href = `https://wa.me/${rawPhone}`;
-        
-        document.getElementById("cEmail").innerText = d.email || "";
-        document.getElementById("cEmailLink").href = `mailto:${d.email}`;
-        
-        document.getElementById("cAddress").innerText = d.address || "";
+        const data = doc.data();
+        if(data.phone) document.getElementById("cntPhone").innerText = data.phone;
+        if(data.email) document.getElementById("cntEmail").innerText = data.email;
+        if(data.address) document.getElementById("cntAddress").innerText = data.address;
       }
     });
   </script>
