@@ -9,12 +9,16 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
     body { background: #0b0b0b; color: #fff; padding: 20px; }
     
-    /* Top Header / Navbar */
+    /* Header / Navbar */
     header { max-width: 1200px; margin: 0 auto 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 20px; }
     h1 { font-size: 28px; letter-spacing: 4px; color: #d4af37; text-transform: uppercase; }
     .nav-links { display: flex; gap: 20px; align-items: center; }
     .nav-links a { color: #aaa; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
     .nav-links a:hover { color: #d4af37; }
+    
+    /* Cart Trigger Button */
+    .cart-btn-trigger { background: #141414; border: 1px solid #d4af37; color: #d4af37; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+    .cart-btn-trigger:hover { background: #d4af37; color: #000; }
 
     /* Product Grid */
     .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 40px auto; }
@@ -23,22 +27,34 @@
     .card-details { padding: 20px; text-align: center; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
     .card-title { font-size: 18px; color: #fff; margin-bottom: 8px; font-weight: 600; }
     .card-price { font-size: 16px; color: #d4af37; font-weight: 700; margin-bottom: 15px; }
-    .buy-btn { background: #d4af37; color: #000; border: none; padding: 12px; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+    
+    .btn-group { display: flex; gap: 10px; }
+    .btn-group button { flex: 1; border: none; padding: 12px 5px; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 12px; transition: 0.3s; }
+    .add-cart-btn { background: #222; color: #fff; border: 1px solid #333 !important; }
+    .add-cart-btn:hover { border-color: #d4af37 !important; color: #d4af37; }
+    .buy-btn { background: #d4af37; color: #000; }
     .buy-btn:hover { background: #fff; }
 
-    /* Order Modal (Popup) */
+    /* Modal Popups (Order & Cart Drawer) */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
     .modal-content { background: #141414; border: 1px solid #d4af37; padding: 25px; border-radius: 12px; width: 100%; max-width: 480px; position: relative; max-height: 90vh; overflow-y: auto; }
     .close-btn { position: absolute; top: 15px; right: 20px; color: #aaa; font-size: 24px; cursor: pointer; }
     .close-btn:hover { color: #fff; }
     .modal-title { font-size: 20px; color: #d4af37; margin-bottom: 15px; text-align: center; text-transform: uppercase; }
     
+    /* Cart Items List */
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #222; }
+    .cart-item-title { font-size: 14px; font-weight: 600; }
+    .cart-item-price { color: #d4af37; font-size: 13px; }
+    .remove-item { color: #ff4d4d; cursor: pointer; font-size: 18px; font-weight: bold; margin-left: 10px; }
+    .cart-total-box { display: flex; justify-content: space-between; margin: 15px 0; font-size: 16px; font-weight: 700; color: #d4af37; border-top: 1px dashed #333; padding-top: 10px; }
+
+    /* Form Styles */
     .form-group { margin-bottom: 14px; text-align: left; }
     .form-group label { display: block; font-size: 12px; color: #aaa; margin-bottom: 5px; text-transform: uppercase; }
     .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; background: #0b0b0b; border: 1px solid #333; color: #fff; border-radius: 6px; font-size: 14px; outline: none; }
     .form-group input:focus, .form-group select:focus { border-color: #d4af37; }
     
-    /* Payment Instruction Box */
     .payment-box { background: #1c1a14; border: 1px solid #d4af37; padding: 15px; border-radius: 8px; margin-bottom: 15px; font-size: 13px; display: none; }
     .payment-box .num { color: #d4af37; font-weight: bold; font-size: 15px; }
 
@@ -54,6 +70,9 @@
     <div class="nav-links">
       <a href="about.html">About Us</a>
       <a href="contact.html">Contact Us</a>
+      <button class="cart-btn-trigger" onclick="openCartModal()">
+        🛒 Cart (<span id="cartCount">0</span>)
+      </button>
     </div>
   </header>
 
@@ -62,7 +81,26 @@
     <p style="text-align: center; width: 100%; color: #888;">Loading catalog...</p>
   </div>
 
-  <!-- Checkout Modal Popup -->
+  <!-- Cart Modal -->
+  <div class="modal-overlay" id="cartModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeCartModal()">&times;</span>
+      <div class="modal-title">Your Shopping Cart</div>
+      
+      <div id="cartItemsContainer">
+        <p style="text-align: center; color: #888; margin: 20px 0;">Your cart is empty.</p>
+      </div>
+
+      <div class="cart-total-box" id="cartTotalBox" style="display: none;">
+        <span>Total:</span>
+        <span id="cartTotalAmount">0 BDT</span>
+      </div>
+
+      <button class="confirm-btn" id="checkoutCartBtn" style="display: none;" onclick="openCheckoutFromCart()">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <!-- Checkout Order Modal Popup -->
   <div class="modal-overlay" id="orderModal">
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -70,7 +108,7 @@
       
       <form id="orderForm" onsubmit="placeOrder(event)">
         <div class="form-group">
-          <label>Selected Product</label>
+          <label>Selected Product(s)</label>
           <input type="text" id="modalProduct" readonly style="color: #d4af37; font-weight: bold;">
         </div>
 
@@ -147,6 +185,7 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
+    let cart = [];
     let selectedProductTitle = "";
     let selectedProductPrice = "";
 
@@ -170,17 +209,89 @@
                 <div class="card-title">${data.title || 'VAYNRO Apparel'}</div>
                 <div class="card-price">${data.price || 0} BDT</div>
               </div>
-              <button class="buy-btn" onclick="openModal('${data.title}', '${data.price}')">Buy Now</button>
+              <div class="btn-group">
+                <button class="add-cart-btn" onclick="addToCart('${data.title}', ${data.price || 0})">+ Cart</button>
+                <button class="buy-btn" onclick="openDirectBuyModal('${data.title}', '${data.price}')">Buy Now</button>
+              </div>
             </div>
           </div>
         `;
       });
     });
 
-    function openModal(title, price) {
+    // Cart Functionalities
+    function addToCart(title, price) {
+      cart.push({ title, price: Number(price) });
+      updateCartUI();
+      openCartModal();
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      document.getElementById("cartCount").innerText = cart.length;
+      const container = document.getElementById("cartItemsContainer");
+      const totalBox = document.getElementById("cartTotalBox");
+      const checkoutBtn = document.getElementById("checkoutCartBtn");
+
+      if (cart.length === 0) {
+        container.innerHTML = `<p style="text-align: center; color: #888; margin: 20px 0;">Your cart is empty.</p>`;
+        totalBox.style.display = "none";
+        checkoutBtn.style.display = "none";
+        return;
+      }
+
+      let html = "";
+      let total = 0;
+      cart.forEach((item, index) => {
+        total += item.price;
+        html += `
+          <div class="cart-item">
+            <div>
+              <div class="cart-item-title">${item.title}</div>
+              <div class="cart-item-price">${item.price} BDT</div>
+            </div>
+            <span class="remove-item" onclick="removeFromCart(${index})">&times;</span>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      document.getElementById("cartTotalAmount").innerText = total + " BDT";
+      totalBox.style.display = "flex";
+      checkoutBtn.style.display = "block";
+    }
+
+    function openCartModal() {
+      document.getElementById("cartModal").style.display = "flex";
+    }
+
+    function closeCartModal() {
+      document.getElementById("cartModal").style.display = "none";
+    }
+
+    // Modal Control & Checkout Setup
+    function openDirectBuyModal(title, price) {
       selectedProductTitle = title;
-      selectedProductPrice = price;
-      document.getElementById("modalProduct").value = `${title} - ${price} BDT`;
+      selectedProductPrice = price + " BDT";
+      document.getElementById("modalProduct").value = `${selectedProductTitle} - ${selectedProductPrice}`;
+      document.getElementById("orderModal").style.display = "flex";
+      document.getElementById("orderStatus").innerText = "";
+      togglePaymentInfo();
+    }
+
+    function openCheckoutFromCart() {
+      closeCartModal();
+      const titles = cart.map(i => i.title).join(", ");
+      const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
+      
+      selectedProductTitle = `[Cart Order] ${titles}`;
+      selectedProductPrice = `${totalPrice} BDT`;
+      
+      document.getElementById("modalProduct").value = `${selectedProductTitle} (${selectedProductPrice})`;
       document.getElementById("orderModal").style.display = "flex";
       document.getElementById("orderStatus").innerText = "";
       togglePaymentInfo();
@@ -190,7 +301,6 @@
       document.getElementById("orderModal").style.display = "none";
     }
 
-    // Toggle Payment Info Box
     function togglePaymentInfo() {
       const payMethod = document.getElementById("payMethod").value;
       const bkashBox = document.getElementById("bkashBox");
@@ -235,6 +345,8 @@
       db.collection("orders").add(orderData).then(() => {
         status.innerText = "🎉 Order Placed Successfully!";
         document.getElementById("orderForm").reset();
+        cart = []; // Empty cart after order
+        updateCartUI();
         setTimeout(() => {
           closeModal();
           btn.disabled = false;
