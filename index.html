@@ -47,6 +47,7 @@
             top: 0;
             z-index: 100;
             border-bottom: 1px solid var(--border-color);
+            gap: 15px;
         }
 
         .logo-img {
@@ -55,9 +56,32 @@
             object-fit: contain;
         }
 
+        /* Search Input Style */
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            font-size: 13px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-dark);
+            background: #fff;
+        }
+
         .nav-links {
             display: flex;
-            gap: 24px;
+            gap: 20px;
             list-style: none;
         }
 
@@ -163,7 +187,6 @@
             margin-bottom: 12px;
         }
 
-        /* Size Selector */
         .size-option {
             margin-bottom: 16px;
         }
@@ -342,6 +365,9 @@
             .nav-links {
                 display: none;
             }
+            .search-box {
+                max-width: 160px;
+            }
         }
     </style>
 </head>
@@ -349,6 +375,12 @@
 
     <nav>
         <img src="logo.svg" alt="VAYNRO" class="logo-img" onerror="this.outerHTML='<div style=\'font-size:22px; font-weight:600; letter-spacing:3px;\'>VAYNRO</div>'">
+        
+        <!-- Live Search Bar -->
+        <div class="search-box">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search products..." onkeyup="filterProducts()">
+        </div>
+
         <ul class="nav-links">
             <li><a href="#collection">Collection</a></li>
             <li><a href="#about">About Us</a></li>
@@ -365,7 +397,8 @@
     </section>
 
     <div class="section-title" id="collection">Featured Collection</div>
-    <main class="products-grid">
+    
+    <main class="products-grid" id="productsGrid">
         <!-- Product 1 -->
         <div class="product-card">
             <img src="overcoat.jpg" alt="Cozy Overcoat" class="product-image" onerror="this.src='https://via.placeholder.com/300x400/f5f4f0/2c2a29?text=Overcoat'">
@@ -442,6 +475,20 @@
 
     <script>
         let cart = JSON.parse(localStorage.getItem('vaynro_cart')) || [];
+
+        function filterProducts() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.product-card');
+
+            cards.forEach(card => {
+                const title = card.querySelector('.product-title').innerText.toLowerCase();
+                if (title.includes(input)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
 
         function updateCartUI() {
             const cartItemsContainer = document.getElementById('cartItems');
