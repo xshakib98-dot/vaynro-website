@@ -7,10 +7,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background: #0b0b0b; color: #fff; padding: 40px 20px; }
-    header { text-align: center; padding-bottom: 30px; border-bottom: 1px solid #222; }
-    h1 { font-size: 32px; letter-spacing: 4px; color: #d4af37; text-transform: uppercase; }
+    body { background: #0b0b0b; color: #fff; padding: 20px; }
     
+    /* Top Header / Navbar */
+    header { max-width: 1200px; margin: 0 auto 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 20px; }
+    h1 { font-size: 28px; letter-spacing: 4px; color: #d4af37; text-transform: uppercase; }
+    .nav-links a { color: #aaa; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+    .nav-links a:hover { color: #d4af37; }
+
     /* Product Grid */
     .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 40px auto; }
     .card { background: #141414; border: 1px solid #222; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
@@ -20,14 +24,6 @@
     .card-price { font-size: 16px; color: #d4af37; font-weight: 700; margin-bottom: 15px; }
     .buy-btn { background: #d4af37; color: #000; border: none; padding: 12px; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
     .buy-btn:hover { background: #fff; }
-
-    /* About Us Section */
-    .about-section { max-width: 1200px; margin: 60px auto 20px; background: #141414; border: 1px solid #222; border-radius: 12px; padding: 40px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 30px; }
-    .about-img { flex: 1; min-width: 280px; text-align: center; }
-    .about-img img { width: 100%; max-width: 320px; height: 380px; object-fit: cover; border-radius: 12px; border: 2px solid #d4af37; }
-    .about-text { flex: 1.5; min-width: 280px; }
-    .about-text h2 { font-size: 26px; color: #d4af37; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
-    .about-text p { color: #ccc; line-height: 1.7; font-size: 15px; margin-bottom: 15px; }
 
     /* Order Modal (Popup) */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
@@ -54,24 +50,14 @@
 
   <header>
     <h1>VAYNRO</h1>
+    <div class="nav-links">
+      <a href="about.html">About Us</a>
+    </div>
   </header>
 
   <!-- Product Catalog -->
   <div class="product-grid" id="productGrid">
     <p style="text-align: center; width: 100%; color: #888;">Loading catalog...</p>
-  </div>
-
-  <!-- About Us Section -->
-  <div class="about-section">
-    <div class="about-img">
-      <!-- GitHub repository-তে থাকা founder.jpg লিঙ্ক যুক্ত করা হয়েছে -->
-      <img src="founder.jpg" alt="VAYNRO Founder" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500'">
-    </div>
-    <div class="about-text">
-      <h2>About VAYNRO</h2>
-      <p>Welcome to <b>VAYNRO</b>. We are dedicated to providing high-quality, modern, and aesthetic streetwear for fashion enthusiasts. Every piece is crafted with attention to detail, comfort, and premium materials.</p>
-      <p>Our mission is to bring you bold, effortless fashion that elevates your everyday look without compromising on quality.</p>
-    </div>
   </div>
 
   <!-- Checkout Modal Popup -->
