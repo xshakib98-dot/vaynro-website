@@ -316,7 +316,7 @@
 
     <div class="products-grid" id="productGrid">
       
-      <!-- Product 1 -->
+      <!-- Product 1: T-Shirt -->
       <div class="product-card">
         <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=800&auto=format&fit=crop" alt="VAYNRO Oversized Tee">
         <div class="product-title">VAYNRO Aesthetic Oversized Tee</div>
@@ -335,7 +335,7 @@
         </div>
       </div>
 
-      <!-- Product 2 -->
+      <!-- Product 2: Hoodie -->
       <div class="product-card">
         <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?q=80&w=800&auto=format&fit=crop" alt="VAYNRO Hoodie">
         <div class="product-title">VAYNRO Heavyweight Hoodie</div>
@@ -351,6 +351,25 @@
         <div class="btn-group">
           <button class="add-to-cart" onclick="addToCart('VAYNRO Heavyweight Hoodie', 2450, this)">Add To Cart</button>
           <button class="buy-now-btn" onclick="buyNow('VAYNRO Heavyweight Hoodie', 2450, this)">Buy Now</button>
+        </div>
+      </div>
+
+      <!-- Product 3: Overcoat -->
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=800&auto=format&fit=crop" alt="VAYNRO Overcoat">
+        <div class="product-title">VAYNRO Premium Wool Overcoat</div>
+        <div class="product-price">BDT 3,850</div>
+        
+        <div class="size-selector-label">Select Size</div>
+        <div class="size-selector">
+          <button class="size-btn" onclick="selectSize(this, 'M')">M</button>
+          <button class="size-btn" onclick="selectSize(this, 'L')">L</button>
+          <button class="size-btn" onclick="selectSize(this, 'XL')">XL</button>
+        </div>
+        
+        <div class="btn-group">
+          <button class="add-to-cart" onclick="addToCart('VAYNRO Premium Wool Overcoat', 3850, this)">Add To Cart</button>
+          <button class="buy-now-btn" onclick="buyNow('VAYNRO Premium Wool Overcoat', 3850, this)">Buy Now</button>
         </div>
       </div>
 
@@ -496,7 +515,6 @@
         return;
       }
 
-      // Set cart only to this item for quick checkout
       cart = [{ title, price, size }];
       document.getElementById('cartCount').innerText = cart.length;
       openCheckout();
