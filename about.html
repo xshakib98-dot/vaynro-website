@@ -39,7 +39,7 @@
 
   <div class="about-card">
     <div class="about-img">
-      <!-- সরাসরি আপনার GitHub-এর founder.jpg ফাইলটি এখানে সেট করা হলো -->
+      <!-- আপনার GitHub-এর founder.jpg ফাইলটি সরাসরি ফিক্সড করা হলো -->
       <img id="ownerImg" src="founder.jpg" alt="VAYNRO Founder">
     </div>
     <div>
@@ -64,13 +64,12 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
+    // অ্যাডমিন প্যানেল থেকে শুধু টেক্সটগুলো রিয়েল-টাইমে আপডেট হবে, ছবি ফিক্সড থাকবে
     db.collection("site_settings").doc("about").onSnapshot(doc => {
       if(doc.exists) {
         const d = doc.data();
         if(d.name) document.getElementById("abNameDisplay").innerText = d.name;
         if(d.role) document.getElementById("abRoleDisplay").innerText = d.role;
-        // যদি ফায়ারবেসে ছবির লিংক দেওয়া থাকে তবেই সেটা দেখাবে, না হলে founder.jpg ফাইলটিই থাকবে
-        if(d.img && d.img.trim() !== "") document.getElementById("ownerImg").src = d.img;
         if(d.bio1) document.getElementById("abBio1Display").innerText = d.bio1;
         if(d.bio2) document.getElementById("abBio2Display").innerText = d.bio2;
       }
