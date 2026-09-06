@@ -15,7 +15,7 @@
     .nav-links a:hover { color: #8e52bd; }
     .cart-btn-trigger { background: #8e52bd; border: none; color: #fff; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 14px; transition: 0.3s; box-shadow: 0 4px 12px rgba(142, 82, 189, 0.2); }
 
-    /* Cover Photo Fix - ওপরের মুখ কেটে যাওয়া রোধ করার জন্য object-fit: contain করা হলো */
+    /* Cover Photo Fix */
     .vogue-cover-container {
       position: relative;
       width: 100%;
@@ -33,7 +33,7 @@
     .vogue-cover-container .cover-bg {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* ছবি যেন সম্পূর্ণ দেখা যায় এবং ওপরের অংশ কেটে না যায় */
+      object-fit: contain;
       display: block;
     }
 
@@ -78,7 +78,8 @@
     <div class="nav-links">
       <a href="about.html">About Us</a>
       <a href="contact.html">Contact Us</a>
-      <button class="cart-btn-trigger">🛒 Cart (<span id="cartCount">0</span>)</button>
+      <!-- কার্ট বাটনে ক্লিক করলে openCartModal() ফাংশন রান করবে -->
+      <button class="cart-btn-trigger" onclick="openCartModal()">🛒 Cart (<span id="cartCount">0</span>)</button>
     </div>
   </header>
 
@@ -140,7 +141,7 @@
         </select>
       </div>
 
-      <!-- বিকাশ পেমেন্ট সিলেক্ট করলে এই বক্সটি শো করবে এবং আপনার নাম্বার দেখাবে -->
+      <!-- বিকাশ পেমেন্ট বক্স -->
       <div id="bkashDetailsBox" style="display: none; background: #f9f5fc; padding: 15px; border-radius: 12px; margin-bottom: 12px; border: 1px dashed #8e52bd; text-align: left;">
         <p style="font-size: 13px; font-weight: 700; color: #7c5295; margin-bottom: 8px;">
           bkash Send Money: <span style="color: #d81b60; font-size: 14px;">01725373633</span>
@@ -164,10 +165,21 @@
     </div>
   </div>
 
+  <!-- Cart Items Modal -->
+  <div class="modal-overlay" id="cartModal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeCartModal()">&times;</button>
+      <div class="modal-title" style="margin-bottom: 15px;">Your Shopping Cart</div>
+      <div id="cartItemsContainer" style="max-height: 300px; overflow-y: auto; margin-bottom: 15px;">
+        <!-- Cart items will be loaded here dynamically -->
+      </div>
+      <div style="font-weight: 700; font-size: 16px; color: #8e52bd; text-align: right; margin-bottom: 15px;" id="cartTotalPrice">Total: 0 BDT</div>
+      <button class="order-action-btn" style="width: 100%;" onclick="closeCartModal()">Continue Shopping</button>
+    </div>
+  </div>
+
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-  
-  <!-- আলাদা করা order.js ফাইল কানেক্ট করা হলো -->
   <script src="order.js"></script>
 </body>
 </html>
