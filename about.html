@@ -15,9 +15,10 @@
     .back-btn { background: #8e52bd; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 20px; font-weight: 700; font-size: 13px; }
 
     .about-card { max-width: 1000px; margin: 0 auto; background: #fff; border-radius: 20px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: grid; grid-template-columns: 350px 1fr; gap: 40px; align-items: center; }
-    .about-img img { width: 100%; height: 420px; object-fit: cover; border-radius: 16px; border: 1px solid #e1d9ec; background: #f0eae.app; }
-    .about-title { font-size: 32px; font-weight: 700; color: #7c5295; margin-bottom: 15px; }
-    .about-text { font-size: 15px; color: #5a4b73; line-height: 1.8; white-space: pre-line; }
+    .about-img img { width: 100%; height: 420px; object-fit: cover; border-radius: 16px; border: 1px solid #e1d9ec; }
+    .about-title { font-size: 32px; font-weight: 700; color: #7c5295; margin-bottom: 5px; }
+    .about-role { font-size: 16px; font-weight: 600; color: #8e52bd; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+    .about-text { font-size: 15px; color: #5a4b73; line-height: 1.8; margin-bottom: 15px; white-space: pre-line; }
 
     @media (max-width: 768px) {
       .about-card { grid-template-columns: 1fr; padding: 25px; }
@@ -38,16 +39,14 @@
 
   <div class="about-card">
     <div class="about-img">
-      <!-- GitHub Raw Link for founder.jpg -->
+      <!-- ডিফল্টভাবে GitHub-এর founder.jpg অথবা ফায়ারবেসের লিংক দেখাবে -->
       <img id="ownerImg" src="https://raw.githubusercontent.com/xshakib98/vaynro-website/main/founder.jpg" alt="VAYNRO Founder">
     </div>
     <div>
-      <div class="about-title" id="aboutTitle">Welcome to VAYNRO</div>
-      <div class="about-text" id="aboutText">
-        Welcome to VAYNRO! We provide high-quality modern fashion and aesthetic apparel designed for individuals who love style, comfort, and timeless confidence.
-
-        Our collection brings carefully crafted clothing right to your doorstep with maximum comfort and premium materials.
-      </div>
+      <div class="about-title" id="abNameDisplay">Shakib</div>
+      <div class="about-role" id="abRoleDisplay">Founder & CEO, VAYNRO</div>
+      <div class="about-text" id="abBio1Display">Welcome to VAYNRO! We provide high-quality modern fashion and aesthetic apparel designed for individuals who love style, comfort, and timeless confidence.</div>
+      <div class="about-text" id="abBio2Display">Our collection brings carefully crafted clothing right to your doorstep with maximum comfort and premium materials.</div>
     </div>
   </div>
 
@@ -65,12 +64,15 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    db.collection("settings").doc("aboutUs").onSnapshot(doc => {
+    // অ্যাডমিন প্যানেলের site_settings/about থেকে রিয়েল-টাইম ডাটা লোড করা
+    db.collection("site_settings").doc("about").onSnapshot(doc => {
       if(doc.exists) {
-        const data = doc.data();
-        if(data.title) document.getElementById("aboutTitle").innerText = data.title;
-        if(data.text) document.getElementById("aboutText").innerText = data.text;
-        if(data.image) document.getElementById("ownerImg").src = data.image;
+        const d = doc.data();
+        if(d.name) document.getElementById("abNameDisplay").innerText = d.name;
+        if(d.role) document.getElementById("abRoleDisplay").innerText = d.role;
+        if(d.img) document.getElementById("ownerImg").src = d.img;
+        if(d.bio1) document.getElementById("abBio1Display").innerText = d.bio1;
+        if(d.bio2) document.getElementById("abBio2Display").innerText = d.bio2;
       }
     });
   </script>
