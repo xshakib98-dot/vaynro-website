@@ -7,39 +7,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background: #0b0b0b; color: #fff; padding: 20px; }
+    body { background: #f3f0f9; color: #2d2342; padding: 20px; }
     
     /* Navigation Bar */
-    nav { max-width: 1200px; margin: 0 auto 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 20px; }
-    nav .logo { font-size: 24px; font-weight: 700; color: #d4af37; letter-spacing: 3px; text-decoration: none; }
+    nav { max-width: 1200px; margin: 0 auto 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e1d9ec; padding-bottom: 20px; }
+    nav .logo { font-size: 26px; font-weight: 700; color: #7c5295; letter-spacing: 3px; text-decoration: none; }
     nav .nav-links { display: flex; gap: 20px; align-items: center; }
-    nav .nav-links a { color: #aaa; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
-    nav .nav-links a:hover, nav .nav-links a.active { color: #d4af37; }
-    nav a.back-btn { color: #fff; text-decoration: none; border: 1px solid #333; padding: 8px 16px; border-radius: 6px; font-size: 14px; transition: 0.3s; }
-    nav a.back-btn:hover { border-color: #d4af37; color: #d4af37; }
+    nav .nav-links a { color: #5a4b73; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+    nav .nav-links a:hover, nav .nav-links a.active { color: #8e52bd; }
+    nav a.back-btn { background: #8e52bd; color: #fff; text-decoration: none; padding: 8px 18px; border-radius: 20px; font-size: 14px; transition: 0.3s; font-weight: 600; box-shadow: 0 4px 12px rgba(142, 82, 189, 0.2); }
+    nav a.back-btn:hover { background: #763fa2; }
 
-    /* Contact Section Container */
-    .contact-container { max-width: 1000px; margin: 40px auto; background: #141414; border: 1px solid #222; border-radius: 16px; padding: 40px; display: flex; flex-wrap: wrap; gap: 40px; }
-    
-    .contact-info { flex: 1; min-width: 280px; }
-    .contact-info h2 { font-size: 28px; color: #d4af37; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
-    .contact-info p { color: #ccc; line-height: 1.6; font-size: 15px; margin-bottom: 30px; }
-    
-    .info-item { margin-bottom: 20px; }
-    .info-item h4 { font-size: 12px; color: #aaa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-    .info-item p { color: #fff; font-weight: 600; font-size: 16px; margin: 0; }
-    .info-item a { color: #d4af37; text-decoration: none; }
+    /* Contact Card Container */
+    .contact-container { max-width: 600px; margin: 40px auto; background: #ffffff; border: 1px solid #e1d9ec; border-radius: 20px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+    .page-title { font-size: 28px; font-weight: 700; color: #2d2342; text-align: center; margin-bottom: 10px; }
+    .page-subtitle { font-size: 14px; color: #6b5b85; text-align: center; margin-bottom: 30px; }
 
-    .contact-form { flex: 1.2; min-width: 280px; background: #0b0b0b; padding: 25px; border-radius: 12px; border: 1px solid #222; }
-    .contact-form h3 { font-size: 18px; color: #fff; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
-    
-    .form-group { margin-bottom: 15px; }
-    .form-group label { display: block; font-size: 12px; color: #aaa; margin-bottom: 5px; text-transform: uppercase; }
-    .form-group input, .form-group textarea { width: 100%; padding: 12px; background: #141414; border: 1px solid #333; color: #fff; border-radius: 6px; font-size: 14px; outline: none; }
-    .form-group input:focus, .form-group textarea:focus { border-color: #d4af37; }
-    
-    .send-btn { width: 100%; background: #d4af37; color: #000; border: none; padding: 12px; font-weight: 700; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 14px; transition: 0.3s; }
-    .send-btn:hover { background: #fff; }
+    .contact-info-list { margin-bottom: 30px; display: flex; flex-direction: column; gap: 15px; }
+    .info-item { display: flex; align-items: center; gap: 15px; background: #f8f5fc; padding: 15px 20px; border-radius: 12px; border: 1px solid #e9e2f3; }
+    .info-item span.icon { font-size: 22px; }
+    .info-item div .label { font-size: 12px; color: #7d6e93; text-transform: uppercase; font-weight: 600; }
+    .info-item div .val { font-size: 15px; font-weight: 700; color: #2d2342; text-decoration: none; }
+    .info-item div a.val:hover { color: #8e52bd; }
   </style>
 </head>
 <body>
@@ -54,43 +43,33 @@
   </nav>
 
   <div class="contact-container">
-    <div class="contact-info">
-      <h2>Get In Touch</h2>
-      <p>Have questions about our products, orders, or custom requests? Feel free to reach out to us. We are here to help!</p>
-      
+    <div class="page-title">Get In Touch</div>
+    <div class="page-subtitle">Have questions or need assistance with your order? Contact us directly!</div>
+
+    <div class="contact-info-list">
       <div class="info-item">
-        <h4>Phone / bKash</h4>
-        <p>+880 1725373633</p>
+        <span class="icon">📱</span>
+        <div>
+          <div class="label">Call / WhatsApp</div>
+          <a href="https://wa.me/8801725373633" target="_blank" class="val">+880 1725-373633</a>
+        </div>
       </div>
 
       <div class="info-item">
-        <h4>Email Support</h4>
-        <p><a href="mailto:support@vaynro.com">support@vaynro.com</a></p>
+        <span class="icon">✉️</span>
+        <div>
+          <div class="label">Email Address</div>
+          <a href="mailto:xshakib98@gmail.com" class="val">support@vaynro.com</a>
+        </div>
       </div>
 
       <div class="info-item">
-        <h4>Location</h4>
-        <p>Dhaka, Bangladesh</p>
+        <span class="icon">📍</span>
+        <div>
+          <div class="label">Headquarters</div>
+          <div class="val">Dhaka, Bangladesh</div>
+        </div>
       </div>
-    </div>
-
-    <div class="contact-form">
-      <h3>Send Us A Message</h3>
-      <form onsubmit="event.preventDefault(); alert('Thank you for reaching out! We will contact you soon.'); this.reset();">
-        <div class="form-group">
-          <label>Your Name</label>
-          <input type="text" placeholder="Enter your name" required>
-        </div>
-        <div class="form-group">
-          <label>Your Phone / Email</label>
-          <input type="text" placeholder="How can we contact you?" required>
-        </div>
-        <div class="form-group">
-          <label>Message</label>
-          <textarea rows="4" placeholder="Type your message here..." required></textarea>
-        </div>
-        <button type="submit" class="send-btn">Send Message</button>
-      </form>
     </div>
   </div>
 
