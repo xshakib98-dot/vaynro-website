@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAYNRO | Aesthetic Fashion & Modern Lifestyle</title>
+  
+  <!-- Favicon (Browser Tab Icon) -->
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+
+  <!-- Google Site Verification -->
+  <meta name="google-site-verification" content="googleaff53208d2c03532" />
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: #0b0b0b; color: #e0e0e0; font-family: 'Poppins', sans-serif; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    
+    /* Header */
+    header {
+      text-align: center;
+      padding: 30px 20px 20px;
+      background: linear-gradient(180deg, #141414 0%, #0b0b0b 100%);
+      border-bottom: 1px solid #222;
+      position: relative;
+    }
+    
+    /* Header Brand Container with Logo */
+    .brand-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 5px;
+    }
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+    }
+    header h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 2.8rem;
+      letter-spacing: 6px;
+      color: #fff;
+      line-height: 1;
+    }
+    header p {
+      color: #d4af37;
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      margin-top: 5px;
+      text-transform: uppercase;
+    }
+
+    /* Header Actions & Search */
+    .header-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .search-box {
+      position: relative;
+      width: 100%;
+      max-width: 300px;
+    }
+    .search-box input {
+      width: 100%;
+      background: #181818;
+      border: 1px solid #333;
+      padding: 8px 35px 8px 15px;
+      border-radius: 20px;
+      color: #fff;
+      font-size: 0.85rem;
+      outline: none;
+    }
+    .search-box input:focus { border-color: #d4af37; }
+    .search-box i {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+      font-size: 0.85rem;
+    }
+
+    .cart-btn-trigger {
+      position: absolute;
+      right: 30px;
+      top: 35px;
+      font-size: 1.3rem;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    .cart-count {
+      background: #d4af37;
+      color: #000;
+      font-size: 0.75rem;
+      font-weight: bold;
+      border-radius: 50%;
+      padding: 2px 7px;
+      position: relative;
+      top: -10px;
+      left: -5px;
+    }
+
+    /* Navigation Bar */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      padding: 15px;
+      background: #111;
+      border-bottom: 1px solid #222;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    nav a:hover { color: #d4af37; }
+
+    /* Container */
+    .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+    .section-title {
+      font-family: 'Cinzel', serif;
+      text-align: center;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      color: #fff;
+      margin-bottom: 30px;
+    }
+
+    /* Product Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .product-card {
+      background: #121212;
+      border: 1px solid #222;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+      cursor: pointer;
+    }
+    .product-card:hover { transform: translateY(-5px); border-color: #d4af37; }
+    
+    /* Product Image Styling (Prevents Crop) */
+    .product-card img {
+      width: 100%;
+      height: 320px;
+      object-fit: contain;
+      background: #181818;
+      padding: 10px;
+    }
+
+    .product-info { padding: 20px; text-align: center; }
+    .product-title { font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 8px; }
+    .product-price { color: #d4af37; font-weight: 600; font-size: 1.1rem; margin-bottom: 12px; }
+    .click-view { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* About Section */
+    .about-box {
+      background: #121212;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 60px;
+    }
+    .about-flex { display: flex; flex-wrap: wrap; align-items: center; gap: 30px; justify-content: center; }
+
+    /* Contact Section */
+    .contact-box {
+      background: #121212;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .contact-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
+    .contact-btn {
+      padding: 10px 20px;
+      border: 1px solid #d4af37;
+      color: #d4af37;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+    .contact-btn:hover { background: #d4af37; color: #000; }
+
+    /* --- PRODUCT DETAIL MODAL --- */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 1000;
+      padding: 20px;
+    }
+    .modal-container {
+      background: #181818; color: #fff; width: 100%; max-width: 900px; max-height: 90vh; overflow-y: auto;
+      border-radius: 12px; border: 1px solid #333; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; padding: 30px; position: relative;
+    }
+    .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.8rem; cursor: pointer; color: #aaa; }
+    .close-modal:hover { color: #fff; }
+
+    .modal-main-img { width: 100%; height: 380px; object-fit: contain; background: #121212; border-radius: 8px; border: 1px solid #222; padding: 10px; }
+    .modal-details { display: flex; flex-direction: column; justify-content: center; }
+    .modal-title { font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 10px; color: #fff; }
+    .modal-price-box { font-size: 1.4rem; color: #d4af37; font-weight: 600; margin-bottom: 15px; }
+    .old-price { text-decoration: line-through; color: #666; font-size: 1rem; margin-left: 10px; }
+    .modal-desc { font-size: 0.9rem; color: #aaa; margin-bottom: 20px; line-height: 1.6; }
+
+    .option-title { font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; color: #d4af37; }
+    .size-options { display: flex; gap: 10px; margin-bottom: 25px; }
+    .size-btn { border: 1px solid #444; padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; background: #222; color: #fff; }
+    .size-btn.active { background: #d4af37; color: #000; font-weight: bold; border-color: #d4af37; }
+
+    .modal-actions { display: flex; flex-direction: column; gap: 12px; }
+    .btn-add-cart { background: #222; border: 1px solid #d4af37; color: #d4af37; padding: 12px; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%; }
+    .btn-add-cart:hover { background: #d4af37; color: #000; }
+    .btn-wa-order { background: #25d366; color: #fff; padding: 12px; border-radius: 6px; font-weight: 600; text-align: center; width: 100%; }
+
+    /* --- SIDE CART DRAWER --- */
+    .cart-drawer-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7); display: none; z-index: 2000;
+    }
+    .cart-drawer {
+      position: fixed; top: 0; right: -400px; width: 100%; max-width: 380px; height: 100%;
+      background: #141414; border-left: 1px solid #222; z-index: 2001; transition: right 0.3s ease;
+      display: flex; flex-direction: column; justify-content: space-between; padding: 20px;
+    }
+    .cart-drawer.open { right: 0; }
+    
+    .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 15px; }
+    .cart-header h3 { font-family: 'Cinzel', serif; color: #fff; }
+    .close-cart { font-size: 1.5rem; cursor: pointer; color: #aaa; }
+
+    .cart-items { flex: 1; overflow-y: auto; margin: 20px 0; display: flex; flex-direction: column; gap: 15px; }
+    .cart-item { display: flex; gap: 15px; background: #1a1a1a; padding: 10px; border-radius: 8px; border: 1px solid #282828; align-items: center; }
+    .cart-item img { width: 60px; height: 70px; object-fit: contain; background: #111; border-radius: 4px; }
+    .cart-item-details { flex: 1; }
+    .cart-item-title { font-size: 0.9rem; font-weight: 600; color: #fff; }
+    .cart-item-meta { font-size: 0.75rem; color: #aaa; margin: 3px 0; }
+    .cart-item-price { color: #d4af37; font-weight: 600; font-size: 0.85rem; }
+    .remove-item { color: #ff5555; cursor: pointer; font-size: 0.85rem; margin-left: 10px; }
+
+    .cart-footer { border-top: 1px solid #222; padding-top: 15px; }
+    .cart-total { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 15px; }
+    .btn-checkout-wa { background: #25d366; color: #fff; width: 100%; padding: 12px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; }
+
+    /* Footer */
+    footer { text-align: center; padding: 30px 20px; border-top: 1px solid #222; color: #666; font-size: 0.85rem; }
+
+    @media(max-width: 768px) {
+      .modal-container { grid-template-columns: 1fr; }
+      .modal-main-img { height: 280px; }
+      .cart-btn-trigger { right: 15px; top: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <!-- Brand Logo and Name Combined -->
+    <div class="brand-container">
+      <img src="logo.svg" alt="VAYNRO Logo" class="brand-logo">
+      <h1>VAYNRO</h1>
+    </div>
+    <p>Aesthetic Fashion & Modern Lifestyle</p>
+
+    <!-- Search Box -->
+    <div class="header-actions">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()">
+        <i class="fas fa-search"></i>
+      </div>
+    </div>
+
+    <!-- Cart Button Trigger -->
+    <div class="cart-btn-trigger" onclick="toggleCartDrawer(true)">
+      <i class="fas fa-shopping-bag"></i><span class="cart-count" id="cart-count">0</span>
+    </div>
+  </header>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="#products">Collection</a>
+    <a href="#girls">Girls Collection</a>
+    <a href="#about">About Us</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="container">
+
+    <!-- PRODUCTS SECTION -->
+    <h2 class="section-title" id="products">FEATURED COLLECTION</h2>
+    
+    <div class="product-grid" id="productGrid">
+
+      <!-- Product 1 -->
+      <div class="product-card" data-name="aesthetic long overcoat" onclick="openModal('Aesthetic Long Overcoat', '2500', '3000', 'overcoat.jpg', 'Premium heavyweight long overcoat designed with a modern aesthetic fit for maximum elegance and comfort.', true)">
+        <img src="overcoat.jpg" alt="Aesthetic Overcoat">
+        <div class="product-info">
+          <div class="product-title">Aesthetic Long Overcoat</div>
+          <div class="product-price">৳ 2,500</div>
+          <div class="click-view">Click for Details</div>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card" data-name="aesthetic casual shirt" onclick="openModal('Aesthetic Casual Shirt', '1200', '1500', 'shirt.jpg', 'Soft breathable cotton casual shirt designed for effortless everyday style.', true)">
+        <img src="shirt.jpg" alt="Aesthetic Casual Shirt">
+        <div class="product-info">
+          <div class="product-title">Aesthetic Casual Shirt</div>
+          <div class="product-price">৳ 1,200</div>
+          <div class="click-view">Click for Details</div>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-card" data-name="minimalist cargo pants" onclick="openModal('Minimalist Cargo Pants', '1500', '1800', 'pants.jpg', 'Durable minimalist cargo pants featuring practical utility pockets and a sleek modern cut.', true)">
+        <img src="pants.jpg" alt="Minimalist Cargo Pants">
+        <div class="product-info">
+          <div class="product-title">Minimalist Cargo Pants</div>
+          <div class="product-price">৳ 1,500</div>
+          <div class="click-view">Click for Details</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- GIRLS COLLECTION SECTION -->
+    <h2 class="section-title" id="girls">GIRLS COLLECTION</h2>
+    <div class="product-grid">
+
+      <!-- Girl's Bag Product -->
+      <div class="product-card" data-name="cheri cheri lady tote bag" onclick="openModal('Cheri Cheri Lady Tote Bag', '500', '700', 'bag.png', 'Premium good quality printed aesthetic tote bag with a comfortable handle and stylish design.', false)">
+        <img src="bag.png" alt="Cheri Cheri Lady Tote Bag">
+        <div class="product-info">
+          <div class="product-title">Cheri Cheri Lady Tote Bag</div>
+          <div class="product-price">৳ 500</div>
+          <div class="click-view">Click for Details</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ABOUT VAYNRO SECTION -->
+    <h2 class="section-title" id="about">ABOUT US</h2>
+    <div class="about-box">
+      <div class="about-flex">
+        
+        <div style="flex: 0 0 160px; text-align: center;">
+          <img src="founder.jpg" alt="Shakib Al Hasan" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid #d4af37;">
+        </div>
+
+        <div style="flex: 1; min-width: 280px;">
+          <h3 style="color: #fff; font-family: 'Cinzel', serif; margin-bottom: 5px;">ABOUT VAYNRO</h3>
+          <p style="color: #d4af37; font-weight: 600; text-transform: uppercase;">Shakib Al Hasan</p>
+          <p style="color: #888; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 15px;">Founder & CEO</p>
+          
+          <p style="line-height: 1.6; font-size: 0.95rem; margin-bottom: 10px; color: #ccc;">
+            At VAYNRO, we believe clothing is not just something you wear—it defines your individuality. We deliver modern, aesthetic, and premium-quality fashion pieces designed to help you stand out from the crowd.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CONTACT SECTION -->
+    <h2 class="section-title" id="contact">CONTACT US</h2>
+    <div class="contact-box">
+      <p style="color: #ccc; margin-bottom: 10px;">Have questions or need assistance with your order? Reach out directly!</p>
+      <p style="color: #d4af37; font-weight: 600;">WhatsApp Support: +880 1725-373633</p>
+      <div class="contact-links">
+        <a href="https://wa.me/8801725373633" target="_blank" class="contact-btn"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PRODUCT DETAIL MODAL (POP-UP UI) -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal-container">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      
+      <div>
+        <img src="" id="modalImg" class="modal-main-img">
+      </div>
+
+      <div class="modal-details">
+        <h2 class="modal-title" id="modalTitle">Product Title</h2>
+        
+        <div class="modal-price-box">
+          ৳ <span id="modalPrice">0</span>
+          <span class="old-price">৳ <span id="modalOldPrice">0</span></span>
+        </div>
+
+        <p class="modal-desc" id="modalDesc">Product description...</p>
+
+        <div id="sizeSection">
+          <div class="option-title">Select Size</div>
+          <div class="size-options">
+            <div class="size-btn" onclick="selectSize(this)">S</div>
+            <div class="size-btn active" onclick="selectSize(this)">M</div>
+            <div class="size-btn" onclick="selectSize(this)">L</div>
+            <div class="size-btn" onclick="selectSize(this)">XL</div>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-add-cart" onclick="addToCart()"><i class="fas fa-shopping-bag"></i> Add to Cart</button>
+          <a href="#" id="waLink" target="_blank" class="btn-wa-order"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- CART SIDE DRAWER PAGE -->
+  <div class="cart-drawer-overlay" id="cartOverlay" onclick="toggleCartDrawer(false)"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div>
+      <div class="cart-header">
+        <h3>YOUR CART</h3>
+        <span class="close-cart" onclick="toggleCartDrawer(false)">&times;</span>
+      </div>
+      <div class="cart-items" id="cartItemsList">
+        <!-- Dynamic Cart Items Will Appear Here -->
+      </div>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span>৳ <span id="cartTotal">0</span></span>
+      </div>
+      <button class="btn-checkout-wa" onclick="checkoutViaWhatsApp()"><i class="fab fa-whatsapp"></i> Checkout via WhatsApp</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 VAYNRO. All rights reserved.</p>
+  </footer>
+
+  <script>
+    let cart = [];
+    let selectedSize = 'M';
+    let currentProduct = {};
+    let hasSizeOption = true;
+
+    function openModal(title, price, oldPrice, imgSrc, desc, showSize = true) {
+      currentProduct = { title, price: parseInt(price), imgSrc };
+      hasSizeOption = showSize;
+      
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalPrice').innerText = price;
+      document.getElementById('modalOldPrice').innerText = oldPrice;
+      document.getElementById('modalImg').src = imgSrc;
+      document.getElementById('modalDesc').innerText = desc;
+
+      if(showSize) {
+        document.getElementById('sizeSection').style.display = 'block';
+        selectedSize = 'M';
+      } else {
+        document.getElementById('sizeSection').style.display = 'none';
+        selectedSize = 'Free Size / Standard';
+      }
+      
+      let waMsg = `Hello VAYNRO, I want to order ${title} (Price: ৳${price}).` + (showSize ? ` Size: ${selectedSize}` : '');
+      document.getElementById('waLink').href = `https://wa.me/8801725373633?text=${encodeURIComponent(waMsg)}`;
+
+      document.getElementById('productModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('productModal').style.display = 'none';
+    }
+
+    function selectSize(element) {
+      document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+      element.classList.add('active');
+      selectedSize = element.innerText;
+    }
+
+    /* Cart System Logic */
+    function addToCart() {
+      let item = {
+        title: currentProduct.title,
+        price: currentProduct.price,
+        imgSrc: currentProduct.imgSrc,
+        size: hasSizeOption ? selectedSize : 'Standard'
+      };
+      
+      cart.push(item);
+      updateCartUI();
+      closeModal();
+      toggleCartDrawer(true);
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      document.getElementById('cart-count').innerText = cart.length;
+      let cartItemsContainer = document.getElementById('cartItemsList');
+      cartItemsContainer.innerHTML = '';
+
+      let total = 0;
+
+      if(cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p style="color: #666; text-align: center; margin-top: 30px;">Your cart is empty.</p>';
+      } else {
+        cart.forEach((item, index) => {
+          total += item.price;
+          cartItemsContainer.innerHTML += `
+            <div class="cart-item">
+              <img src="${item.imgSrc}" alt="${item.title}">
+              <div class="cart-item-details">
+                <div class="cart-item-title">${item.title}</div>
+                <div class="cart-item-meta">${item.size !== 'Standard' ? 'Size: ' + item.size : 'Standard Size'}</div>
+                <div class="cart-item-price">৳ ${item.price}</div>
+              </div>
+              <i class="fas fa-trash remove-item" onclick="removeFromCart(${index})"></i>
+            </div>
+          `;
+        });
+      }
+
+      document.getElementById('cartTotal').innerText = total;
+    }
+
+    function toggleCartDrawer(open) {
+      let drawer = document.getElementById('cartDrawer');
+      let overlay = document.getElementById('cartOverlay');
+      if(open) {
+        drawer.classList.add('open');
+        overlay.style.display = 'block';
+      } else {
+        drawer.classList.remove('open');
+        overlay.style.display = 'none';
+      }
+    }
+
+    function checkoutViaWhatsApp() {
+      if(cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+      let text = "Hello VAYNRO, I would like to place an order for:\n\n";
+      let total = 0;
+      cart.forEach((item, i) => {
+        text += `${i+1}. ${item.title} (${item.size !== 'Standard' ? 'Size: ' + item.size : 'Standard Size'}) - ৳${item.price}\n`;
+        total += item.price;
+      });
+      text += `\nTotal Amount: ৳${total}`;
+      window.open(`https://wa.me/8801725373633?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    /* Live Product Search */
+    function filterProducts() {
+      let input = document.getElementById('searchInput').value.toLowerCase();
+      let products = document.querySelectorAll('.product-card');
+
+      products.forEach(product => {
+        let name = product.getAttribute('data-name');
+        if (name.includes(input)) {
+          product.style.display = 'block';
+        } else {
+          product.style.display = 'none';
+        }
+      });
+    }
+
+    window.onclick = function(event) {
+      let modal = document.getElementById('productModal');
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
+  </script>
+
+</body>
+</html>
