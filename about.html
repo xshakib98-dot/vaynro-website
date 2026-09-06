@@ -38,8 +38,8 @@
 
   <div class="about-card">
     <div class="about-img">
-      <!-- Your Image Link -->
-      <img id="ownerImg" src="https://i.ibb.co/C060f7n1/VideoCapture-20260907-001518.jpg" alt="VAYNRO Owner">
+      <!-- GitHub-এর 'founder' ফাইলটি এখানে লোকাল পাথ হিসেবে যুক্ত করা হলো -->
+      <img id="ownerImg" src="founder" alt="VAYNRO Founder">
     </div>
     <div>
       <div class="about-title" id="aboutTitle">Welcome to VAYNRO</div>
@@ -70,7 +70,10 @@
         const data = doc.data();
         if(data.title) document.getElementById("aboutTitle").innerText = data.title;
         if(data.text) document.getElementById("aboutText").innerText = data.text;
-        if(data.image) document.getElementById("ownerImg").src = data.image;
+        // যদি ফায়ারস্টোর থেকেও ছবি সেট করা থাকে, তবেই কেবল সেটা কাজ করবে, অন্যথায় 'founder' ফাইলটি দেখাবে
+        if(data.image && !document.getElementById("ownerImg").src.includes("founder")) {
+          document.getElementById("ownerImg").src = data.image;
+        }
       }
     });
   </script>
