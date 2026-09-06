@@ -47,7 +47,6 @@ function openModal(product) {
   document.getElementById("modalImg").src = product.image;
   document.getElementById("modalTitle").innerText = product.title;
   
-  // পেমেন্ট বক্স হাইড এবং ডেলিভারি চার্জ ক্যালকুলেট করা
   document.getElementById("bkashDetailsBox").style.display = "none";
   document.getElementById("paymentMethod").value = "Cash on Delivery";
   document.getElementById("deliveryLocation").value = "inside_dhaka";
@@ -58,6 +57,47 @@ function openModal(product) {
 
 function closeModal() {
   document.getElementById("productModal").style.display = "none";
+}
+
+// কার্ট পপআপ ওপেন করার ফাংশন
+function openCartModal() {
+  const container = document.getElementById("cartItemsContainer");
+  container.innerHTML = "";
+  
+  if (cart.length === 0) {
+    container.innerHTML = "<p style='text-align: center; color: #7d6e93; padding: 20px;'>Your cart is empty!</p>";
+    document.getElementById("cartTotalPrice").innerText = "Total: 0 BDT";
+  } else {
+    let total = 0;
+    cart.forEach((item, index) => {
+      total += Number(item.price);
+      container.innerHTML += `
+        <div style="display: flex; align-items: center; justify-content: space-between; background: #f9f5fc; padding: 10px; border-radius: 10px; margin-bottom: 8px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="${item.image}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
+            <div>
+              <div style="font-size: 14px; font-weight: 600; color: #2d2342;">${item.title}</div>
+              <div style="font-size: 12px; color: #7c5295;">Size: ${item.size} | ${item.price} BDT</div>
+            </div>
+          </div>
+          <button onclick="removeFromCart(${index})" style="background: none; border: none; color: #d81b60; font-size: 16px; cursor: pointer;">🗑️</button>
+        </div>
+      `;
+    });
+    document.getElementById("cartTotalPrice").innerText = `Total: ${total} BDT`;
+  }
+  
+  document.getElementById("cartModal").style.display = "flex";
+}
+
+function closeCartModal() {
+  document.getElementById("cartModal").style.display = "none";
+}
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  document.getElementById("cartCount").innerText = cart.length;
+  openCartModal(); // কার্ট রিফ্রেশ করা
 }
 
 function addToCart() {
@@ -71,7 +111,6 @@ function addToCart() {
   closeModal();
 }
 
-// পেমেন্ট মেথড পরিবর্তন হলে বিকাশ বক্স ওপেন/ক্লোজ হবে
 document.getElementById("paymentMethod")?.addEventListener("change", function() {
   const bkashBox = document.getElementById("bkashDetailsBox");
   if(this.value === "bKash") {
@@ -81,7 +120,6 @@ document.getElementById("paymentMethod")?.addEventListener("change", function() 
   }
 });
 
-// ডেলিভারি লোকেশন পরিবর্তন হলে টোটাল অ্যামাউন্ট আপডেট হবে
 document.getElementById("deliveryLocation")?.addEventListener("change", function() {
   calculateTotal();
 });
@@ -95,7 +133,6 @@ function calculateTotal() {
   document.getElementById("modalPrice").innerText = `Price: ${currentProduct.price} + Delivery: ${deliveryFee} = Total: ${totalPrice} BDT`;
 }
 
-// ফায়ারবেসে অর্ডার সাবমিট করার ফাংশন
 function placeOrder() {
   if(!currentProduct) {
     alert("No product selected!");
@@ -116,7 +153,6 @@ function placeOrder() {
     return;
   }
 
-  // বিকাশ সিলেক্ট করলে সেন্ডার নম্বর ও TrxID বাধ্যতামূলক করা
   if(payment === "bKash") {
     bkashSender = document.getElementById("bkashSenderPhone").value;
     bkashTrxID = document.getElementById("bkashTrxId").value;
@@ -130,7 +166,6 @@ function placeOrder() {
   let finalTotalAmount = Number(currentProduct.price) + deliveryFee;
   let deliveryAreaText = location === "inside_dhaka" ? "Inside Dhaka (70 BDT)" : "Outside Dhaka (150 BDT)";
 
-  // Firestore এর 'orders' কালেকশনে সমস্ত তথ্য পাঠানো হচ্ছে
   db.collection("orders").add({
     productTitle: currentProduct.title,
     productPrice: Number(currentProduct.price),
@@ -150,7 +185,6 @@ function placeOrder() {
   .then(() => {
     alert(`Order placed successfully via ${payment}!\nYour order has been saved.`);
     closeModal();
-    // ফর্ম ক্লিয়ার করা
     document.getElementById("buyerName").value = '';
     document.getElementById("buyerPhone").value = '';
     document.getElementById("buyerAddress").value = '';
