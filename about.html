@@ -9,24 +9,19 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
     body { background: #f3f0f9; color: #2d2342; padding: 20px; }
     
-    /* Navigation Bar */
     nav { max-width: 1200px; margin: 0 auto 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e1d9ec; padding-bottom: 20px; }
     nav .logo { font-size: 26px; font-weight: 700; color: #7c5295; letter-spacing: 3px; text-decoration: none; }
     nav .nav-links { display: flex; gap: 20px; align-items: center; }
-    nav .nav-links a { color: #5a4b73; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
-    nav .nav-links a:hover, nav .nav-links a.active { color: #8e52bd; }
-    nav a.back-btn { background: #8e52bd; color: #fff; text-decoration: none; padding: 8px 18px; border-radius: 20px; font-size: 14px; transition: 0.3s; font-weight: 600; box-shadow: 0 4px 12px rgba(142, 82, 189, 0.2); }
-    nav a.back-btn:hover { background: #763fa2; }
+    nav .nav-links a { color: #5a4b73; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    nav a.back-btn { background: #8e52bd; color: #fff; text-decoration: none; padding: 8px 18px; border-radius: 20px; font-size: 14px; font-weight: 600; }
 
-    /* About Card Container */
     .about-container { max-width: 1000px; margin: 40px auto; background: #ffffff; border: 1px solid #e1d9ec; border-radius: 20px; padding: 40px; display: flex; flex-wrap: wrap; align-items: center; gap: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
     .about-img-box { flex: 1; min-width: 280px; text-align: center; }
-    .about-img-box img { width: 100%; max-width: 340px; height: 420px; object-fit: cover; border-radius: 16px; border: 2px solid #8e52bd; box-shadow: 0 10px 25px rgba(142, 82, 189, 0.2); }
+    .about-img-box img { width: 100%; max-width: 340px; height: 420px; object-fit: cover; border-radius: 16px; border: 2px solid #8e52bd; }
     
     .about-details { flex: 1.5; min-width: 280px; }
     .founder-title { font-size: 30px; font-weight: 700; color: #2d2342; margin-bottom: 5px; }
     .founder-role { font-size: 15px; color: #8e52bd; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
-    
     .about-details p { color: #5a4b73; line-height: 1.8; font-size: 15px; margin-bottom: 15px; }
   </style>
 </head>
@@ -35,7 +30,7 @@
   <nav>
     <a href="index.html" class="logo">VAYNRO</a>
     <div class="nav-links">
-      <a href="about.html" class="active">About Us</a>
+      <a href="about.html" style="color: #8e52bd;">About Us</a>
       <a href="contact.html">Contact Us</a>
       <a href="index.html" class="back-btn">← Back to Shop</a>
     </div>
@@ -43,19 +38,42 @@
 
   <div class="about-container">
     <div class="about-img-box">
-      <img src="founder.jpg" alt="Shakib - Founder & CEO" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500'">
+      <img id="fImg" src="" alt="Founder" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500'">
     </div>
     <div class="about-details">
-      <div class="founder-title">Shakib</div>
-      <div class="founder-role">Founder & CEO, VAYNRO</div>
+      <div class="founder-title" id="fName">Loading...</div>
+      <div class="founder-role" id="fRole">...</div>
       
-      <p>Welcome to <b>VAYNRO</b>. I founded this brand with a vision to redefine modern fashion and provide premium, aesthetic streetwear for style enthusiasts.</p>
-      
-      <p>Every piece in our collection is thoughtfully crafted with high attention to detail, superior fabric quality, and timeless design. Our mission is to empower individual expression through effortless, bold, and high-quality clothing.</p>
-      
-      <p>Thank you for being part of our journey.</p>
+      <p id="fBio1">...</p>
+      <p id="fBio2"></p>
     </div>
   </div>
 
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAw6PTjumhTGMog6LAyCaFNuyIg2E16fd8",
+      authDomain: "vaynro-website.firebaseapp.com",
+      projectId: "vaynro-website",
+      storageBucket: "vaynro-website.firebasestorage.app",
+      messagingSenderId: "442609775562",
+      appId: "1:442609775562:web:51722b9bd1c34b6cac9533",
+      measurementId: "G-225DYYLGER"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    db.collection("site_settings").doc("about").onSnapshot(doc => {
+      if(doc.exists) {
+        const d = doc.data();
+        document.getElementById("fName").innerText = d.name || "Shakib";
+        document.getElementById("fRole").innerText = d.role || "Founder & CEO, VAYNRO";
+        document.getElementById("fImg").src = d.img || "";
+        document.getElementById("fBio1").innerText = d.bio1 || "";
+        document.getElementById("fBio2").innerText = d.bio2 || "";
+      }
+    });
+  </script>
 </body>
 </html>
