@@ -15,37 +15,60 @@
     .nav-links a:hover { color: #8e52bd; }
     .cart-btn-trigger { background: #8e52bd; border: none; color: #fff; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 14px; transition: 0.3s; box-shadow: 0 4px 12px rgba(142, 82, 189, 0.2); }
 
-    /* Clean Full Magazine Cover Styling */
+    /* Perfect Cover Styling - No Black Bars */
     .vogue-cover-container {
       position: relative;
       width: 100%;
-      max-width: 900px;
-      height: 85vh;
-      min-height: 550px;
+      max-width: 600px; /* ম্যাগাজিনের সঠিক রেশিও রাখার জন্য ম্যাক্স উইডথ কমানো হলো */
+      height: 75vh;
       margin: 0 auto 40px auto;
       border-radius: 20px;
       overflow: hidden;
-      background: #111;
+      background: #f3f0f9; /* বডির কালারের সাথে ম্যাচ করানো হলো যেন কালো না দেখায় */
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+      box-shadow: 0 15px 35px rgba(142, 82, 189, 0.15);
     }
     .vogue-cover-container .cover-bg {
       width: 100%;
       height: 100%;
-      /* contain ব্যবহার করার কারণে ছবি এক ফোঁটাও কাটবে না, পুরোটা একসাথে দেখাবে */
-      object-fit: contain; 
+      object-fit: cover; /* ছবি পুরো এরিয়া জুড়ে সুন্দরভাবে ফিট হবে */
       display: block;
     }
 
     /* Product Grid */
     .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 40px auto; }
-    .card { background: #ffffff; border: 1px solid #e9e2f3; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.3s; }
+    .card { background: #ffffff; border: 1px solid #e9e2f3; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+    .card:hover { transform: translateY(-5px); }
     .card img { width: 100%; height: 350px; object-fit: cover; background: #eae5f2; }
     .card-details { padding: 20px; text-align: center; }
     .card-title { font-size: 18px; color: #2d2342; margin-bottom: 8px; font-weight: 600; }
     .card-price { font-size: 16px; color: #8e52bd; font-weight: 700; }
+
+    /* Aesthetic Popup / Modal */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; backdrop-filter: blur(5px); }
+    .modal-content { background: #fff; max-width: 500px; width: 100%; border-radius: 24px; padding: 30px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+    .close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: #7c5295; background: none; border: none; }
+    .modal-img { width: 100%; height: 280px; object-fit: cover; border-radius: 16px; margin-bottom: 15px; border: 1px solid #e9e2f3; }
+    .modal-title { font-size: 22px; font-weight: 700; color: #2d2342; margin-bottom: 5px; }
+    .modal-price { font-size: 18px; font-weight: 700; color: #8e52bd; margin-bottom: 15px; }
+    
+    /* Size Selector */
+    .size-container { margin-bottom: 15px; text-align: left; }
+    .size-container label { display: block; font-size: 13px; font-weight: 600; color: #5a4b73; margin-bottom: 8px; }
+    .sizes { display: flex; gap: 10px; }
+    .size-btn { padding: 8px 16px; border: 1px solid #e1d9ec; background: #fff; border-radius: 8px; cursor: pointer; font-weight: 600; color: #5a4b73; transition: 0.2s; }
+    .size-btn.active { background: #8e52bd; color: #fff; border-color: #8e52bd; }
+
+    .form-group { margin-bottom: 12px; text-align: left; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: #5a4b73; margin-bottom: 5px; }
+    .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #e1d9ec; border-radius: 8px; font-size: 14px; outline: none; }
+    
+    .action-buttons { display: flex; gap: 10px; margin-top: 20px; }
+    .cart-action-btn { flex: 1; background: #f3f0f9; color: #8e52bd; border: 1px solid #8e52bd; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; }
+    .cart-action-btn:hover { background: #e9e2f3; }
+    .order-action-btn { flex: 1; background: #8e52bd; color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -68,6 +91,52 @@
     <p style="text-align: center; width: 100%; color: #7d6e93;">Loading catalog...</p>
   </div>
 
+  <!-- Aesthetic Product Details & Checkout Modal -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeModal()">&times;</button>
+      <img id="modalImg" class="modal-img" src="" alt="">
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-price" id="modalPrice"></div>
+      
+      <!-- Size Selection -->
+      <div class="size-container">
+        <label>Select Size</label>
+        <div class="sizes">
+          <button class="size-btn active" onclick="selectSize(this, 'S')">S</button>
+          <button class="size-btn" onclick="selectSize(this, 'M')">M</button>
+          <button class="size-btn" onclick="selectSize(this, 'L')">L</button>
+          <button class="size-btn" onclick="selectSize(this, 'XL')">XL</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="buyerName" placeholder="Enter your full name">
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="text" id="buyerPhone" placeholder="01XXXXXXXXX">
+      </div>
+      <div class="form-group">
+        <label>Delivery Address</label>
+        <input type="text" id="buyerAddress" placeholder="House, Road, City">
+      </div>
+      <div class="form-group">
+        <label>Payment Method</label>
+        <select id="paymentMethod">
+          <option value="Cash on Delivery">Cash on Delivery</option>
+          <option value="bKash">bKash Payment</option>
+        </select>
+      </div>
+      
+      <div class="action-buttons">
+        <button class="cart-action-btn" onclick="addToCart()">Add to Cart</button>
+        <button class="order-action-btn" onclick="placeOrder()">Order Now</button>
+      </div>
+    </div>
+  </div>
+
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
   <script>
@@ -83,6 +152,16 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
+    let currentProduct = null;
+    let selectedSize = 'S';
+    let cart = [];
+
+    function selectSize(btn, size) {
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedSize = size;
+    }
+
     db.collection("products").onSnapshot((snapshot) => {
       const grid = document.getElementById("productGrid");
       grid.innerHTML = "";
@@ -93,7 +172,7 @@
       snapshot.forEach((doc) => {
         const data = doc.data();
         grid.innerHTML += `
-          <div class="card">
+          <div class="card" onclick='openModal(${JSON.stringify(data)})'>
             <img src="${data.image}">
             <div class="card-details">
               <div class="card-title">${data.title}</div>
@@ -103,6 +182,63 @@
         `;
       });
     });
+
+    function openModal(product) {
+      currentProduct = product;
+      document.getElementById("modalImg").src = product.image;
+      document.getElementById("modalTitle").innerText = product.title;
+      document.getElementById("modalPrice").innerText = product.price + " BDT";
+      document.getElementById("productModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("productModal").style.display = "none";
+    }
+
+    function addToCart() {
+      if(!currentProduct) return;
+      cart.push({ ...currentProduct, size: selectedSize });
+      document.getElementById("cartCount").innerText = cart.length;
+      alert(`Added ${currentProduct.title} (Size: ${selectedSize}) to Cart!`);
+      closeModal();
+    }
+
+    // ফায়ারবেসে অর্ডার সাবমিট করার ফাংশন
+    function placeOrder() {
+      const name = document.getElementById("buyerName").value;
+      const phone = document.getElementById("buyerPhone").value;
+      const address = document.getElementById("buyerAddress").value;
+      const payment = document.getElementById("paymentMethod").value;
+
+      if(!name || !phone || !address) {
+        alert("Please fill in your delivery details!");
+        return;
+      }
+
+      // Firestore এর 'orders' কালেকশনে ডেটা পাঠানো হচ্ছে
+      db.collection("orders").add({
+        productTitle: currentProduct.title,
+        productPrice: currentProduct.price,
+        productImage: currentProduct.image,
+        size: selectedSize,
+        customerName: name,
+        customerPhone: phone,
+        customerAddress: address,
+        paymentMethod: payment,
+        orderDate: new Date().toLocaleString()
+      })
+      .then(() => {
+        alert(`Order placed successfully via ${payment}!\nYour order has been saved.`);
+        closeModal();
+        // ইনপুট ফিল্ড ক্লিয়ার করে দেওয়া
+        document.getElementById("buyerName").value = '';
+        document.getElementById("buyerPhone").value = '';
+        document.getElementById("buyerAddress").value = '';
+      })
+      .catch((error) => {
+        alert("Error placing order: " + error.message);
+      });
+    }
   </script>
 </body>
 </html>
