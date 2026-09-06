@@ -33,8 +33,9 @@
     .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; background: #0b0b0b; border: 1px solid #333; color: #fff; border-radius: 6px; font-size: 14px; outline: none; }
     .form-group input:focus, .form-group select:focus { border-color: #d4af37; }
     
-    .confirm-btn { width: 100%; background: #25d366; color: #fff; border: none; padding: 12px; font-weight: 700; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 15px; margin-top: 10px; }
-    .confirm-btn:hover { background: #1eb954; }
+    .confirm-btn { width: 100%; background: #d4af37; color: #000; border: none; padding: 12px; font-weight: 700; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 15px; margin-top: 10px; transition: 0.3s; }
+    .confirm-btn:hover { background: #fff; }
+    .status-msg { margin-top: 10px; font-size: 13px; text-align: center; color: #25d366; }
   </style>
 </head>
 <body>
@@ -53,7 +54,7 @@
       <span class="close-btn" onclick="closeModal()">&times;</span>
       <div class="modal-title">Checkout Order</div>
       
-      <form onsubmit="placeOrder(event)">
+      <form id="orderForm" onsubmit="placeOrder(event)">
         <div class="form-group">
           <label>Selected Product</label>
           <input type="text" id="modalProduct" readonly style="color: #d4af37; font-weight: bold;">
@@ -89,11 +90,13 @@
           <label>Payment Method</label>
           <select id="payMethod" required>
             <option value="Cash on Delivery">Cash on Delivery (COD)</option>
-            <option value="bKash / Nagad">bKash / Nagad</option>
+            <option value="bKash">bKash</option>
+            <option value="Nagad">Nagad</option>
           </select>
         </div>
 
-        <button type="submit" class="confirm-btn">Confirm Order via WhatsApp</button>
+        <button type="submit" class="confirm-btn" id="subBtn">Confirm Order</button>
+        <div class="status-msg" id="orderStatus"></div>
       </form>
     </div>
   </div>
@@ -118,7 +121,7 @@
     let selectedProductTitle = "";
     let selectedProductPrice = "";
 
-    // Fetch live products
+    // Fetch live products from Firestore
     db.collection("products").onSnapshot((snapshot) => {
       const grid = document.getElementById("productGrid");
       grid.innerHTML = "";
@@ -151,6 +154,7 @@
       selectedProductPrice = price;
       document.getElementById("modalProduct").value = `${title} - ${price} BDT`;
       document.getElementById("orderModal").style.display = "flex";
+      document.getElementById("orderStatus").innerText = "";
     }
 
     // Close Modal
@@ -158,30 +162,41 @@
       document.getElementById("orderModal").style.display = "none";
     }
 
-    // Place Order to WhatsApp
+    // Place Order directly to Firebase Firestore
     function placeOrder(e) {
       e.preventDefault();
-      
-      const size = document.getElementById("custSize").value;
-      const name = document.getElementById("custName").value;
-      const phone = document.getElementById("custPhone").value;
-      const address = document.getElementById("custAddress").value;
-      const payment = document.getElementById("payMethod").value;
 
-      // **এখানে আপনার নিজের হোয়াটসঅ্যাপ নম্বরটি দিন (যেমন: 88017XXXXXXXX)**
-      const adminWhatsApp = "8801700000000"; 
+      const btn = document.getElementById("subBtn");
+      const status = document.getElementById("orderStatus");
 
-      const message = `Hello VAYNRO, I want to place an order:%0A%0A` +
-        `🛍️ *Product:* ${selectedProductTitle}%0A` +
-        `💵 *Price:* ${selectedProductPrice} BDT%0A` +
-        `📏 *Size:* ${size}%0A` +
-        `👤 *Name:* ${name}%0A` +
-        `📞 *Phone:* ${phone}%0A` +
-        `🏠 *Address:* ${address}%0A` +
-        `💳 *Payment Method:* ${payment}`;
+      btn.disabled = true;
+      btn.innerText = "Processing...";
 
-      window.open(`https://wa.me/${adminWhatsApp}?text=${message}`, '_blank');
-      closeModal();
+      const orderData = {
+        product: selectedProductTitle,
+        price: selectedProductPrice,
+        size: document.getElementById("custSize").value,
+        customerName: document.getElementById("custName").value,
+        phone: document.getElementById("custPhone").value,
+        address: document.getElementById("custAddress").value,
+        paymentMethod: document.getElementById("payMethod").value,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+
+      db.collection("orders").add(orderData).then(() => {
+        status.innerText = "🎉 Order Placed Successfully!";
+        document.getElementById("orderForm").reset();
+        setTimeout(() => {
+          closeModal();
+          btn.disabled = false;
+          btn.innerText = "Confirm Order";
+        }, 2000);
+      }).catch((err) => {
+        console.error(err);
+        status.innerText = "❌ Order Failed. Please try again.";
+        btn.disabled = false;
+        btn.innerText = "Confirm Order";
+      });
     }
   </script>
 </body>
