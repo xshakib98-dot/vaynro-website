@@ -3,53 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VAYNRO | Admin Panel</title>
+  <title>VAYNRO | Aesthetic Fashion</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background: #0b0b0b; color: #fff; padding: 40px 20px; display: flex; justify-content: center; }
-    .admin-card { background: #141414; border: 1px solid #222; border-radius: 12px; padding: 30px; width: 100%; max-width: 500px; }
-    h2 { font-size: 22px; color: #d4af37; margin-bottom: 20px; text-align: center; text-transform: uppercase; letter-spacing: 2px; }
-    .form-group { margin-bottom: 18px; }
-    label { display: block; font-size: 12px; text-transform: uppercase; color: #a0a0a0; margin-bottom: 8px; letter-spacing: 1px; }
-    input[type="text"], input[type="number"] {
-      width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #222; background: #0b0b0b; color: #fff; font-size: 14px; outline: none;
-    }
-    input:focus { border-color: #d4af37; }
-    .submit-btn { width: 100%; background: #d4af37; color: #000; padding: 14px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-top: 10px; transition: 0.3s; }
-    .submit-btn:hover { background: #fff; }
-    .status-msg { margin-top: 15px; font-size: 13px; text-align: center; color: #d4af37; }
-    .hint { font-size: 11px; color: #888; margin-top: 4px; }
+    body { background: #0b0b0b; color: #fff; padding: 40px 20px; }
+    header { text-align: center; padding-bottom: 30px; border-bottom: 1px solid #222; }
+    h1 { font-size: 32px; letter-spacing: 4px; color: #d4af37; text-transform: uppercase; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 40px auto; }
+    .card { background: #141414; border: 1px solid #222; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+    .card img { width: 100%; height: 350px; object-fit: cover; background: #1a1a1a; }
+    .card-details { padding: 20px; text-align: center; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
+    .card-title { font-size: 18px; color: #fff; margin-bottom: 8px; font-weight: 600; }
+    .card-price { font-size: 16px; color: #d4af37; font-weight: 700; margin-bottom: 15px; }
+    .buy-btn { background: #d4af37; color: #000; border: none; padding: 12px; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+    .buy-btn:hover { background: #fff; }
   </style>
 </head>
 <body>
 
-  <div class="admin-card">
-    <h2>VAYNRO Product Uploader</h2>
-    <form id="uploadForm" onsubmit="uploadProduct(event)">
-      <div class="form-group">
-        <label>Product Title</label>
-        <input type="text" id="prodTitle" placeholder="e.g. VAYNRO Premium Jacket" required>
-      </div>
-      <div class="form-group">
-        <label>Price (BDT)</label>
-        <input type="number" id="prodPrice" placeholder="e.g. 2500" required>
-      </div>
-      <div class="form-group">
-        <label>Image Name / URL</label>
-        <input type="text" id="prodImage" placeholder="e.g. overcoat.jpg or image link" required>
-        <div class="hint">GitHub-এ আপলোড করা ছবির নাম (যেমন: tshirt.jpg) অথবা যেকোনো অনলাইন ছবির লিংক দিন।</div>
-      </div>
-      <button type="submit" class="submit-btn" id="uploadBtn">Publish Product</button>
-      <div class="status-msg" id="statusMsg"></div>
-    </form>
+  <header>
+    <h1>VAYNRO</h1>
+  </header>
+
+  <div class="product-grid" id="productGrid">
+    <p style="text-align: center; width: 100%; color: #888;">Loading catalog...</p>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
   <script>
-    // Firebase Configuration
     const firebaseConfig = {
       apiKey: "AIzaSyAw6PTjumhTGMog6LAyCaFNuyIg2E16fd8",
       authDomain: "vaynro-website.firebaseapp.com",
@@ -63,34 +47,32 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    function uploadProduct(e) {
-      e.preventDefault();
+    // Fetch live products from Firestore
+    db.collection("products").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
+      const grid = document.getElementById("productGrid");
+      grid.innerHTML = "";
 
-      const title = document.getElementById("prodTitle").value;
-      const price = parseFloat(document.getElementById("prodPrice").value);
-      const image = document.getElementById("prodImage").value;
-      const btn = document.getElementById("uploadBtn");
-      const status = document.getElementById("statusMsg");
+      if(snapshot.empty) {
+        grid.innerHTML = "<p style='text-align:center; width:100%; color:#888;'>No products available right now.</p>";
+        return;
+      }
 
-      btn.disabled = true;
-      btn.innerText = "Publishing...";
-
-      db.collection("products").add({
-        title: title,
-        price: price,
-        image: image,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => {
-        status.innerText = "✅ Product Published Successfully!";
-        document.getElementById("uploadForm").reset();
-      }).catch((err) => {
-        console.error(err);
-        status.innerText = "❌ Failed to publish: " + err.message;
-      }).finally(() => {
-        btn.disabled = false;
-        btn.innerText = "Publish Product";
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        grid.innerHTML += `
+          <div class="card">
+            <img src="${data.image}" alt="${data.title}" onerror="this.src='https://via.placeholder.com/350x350?text=Image+Not+Found'">
+            <div class="card-details">
+              <div>
+                <div class="card-title">${data.title}</div>
+                <div class="card-price">${data.price} BDT</div>
+              </div>
+              <button class="buy-btn" onclick="alert('Order placed for ${data.title}')">Buy Now</button>
+            </div>
+          </div>
+        `;
       });
-    }
+    });
   </script>
 </body>
 </html>
