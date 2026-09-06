@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VAYNRO | Aesthetic Fashion & Lifestyle</title>
     
-    <!-- Tab Logo (Favicon) -->
+    <!-- Tab Favicon -->
     <link rel="icon" type="image/svg+xml" href="logo.svg">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,7 +40,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 8%;
+            padding: 16px 8%;
             background: rgba(252, 251, 247, 0.95);
             backdrop-filter: blur(10px);
             position: sticky;
@@ -56,27 +56,28 @@
             object-fit: contain;
         }
 
-        /* Search Input Style */
+        /* Visible Search Input Bar */
         .search-box {
             position: relative;
             flex: 1;
-            max-width: 300px;
+            max-width: 280px;
         }
 
         .search-input {
             width: 100%;
-            padding: 8px 16px;
+            padding: 9px 16px;
             border-radius: 20px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-color);
+            border: 1px solid #dcd8ce;
+            background: #ffffff;
             font-size: 13px;
             outline: none;
+            color: var(--text-main);
             transition: all 0.3s ease;
         }
 
         .search-input:focus {
             border-color: var(--accent-dark);
-            background: #fff;
+            box-shadow: 0 0 5px rgba(0,0,0,0.05);
         }
 
         .nav-links {
@@ -114,16 +115,16 @@
 
         .hero {
             text-align: center;
-            padding: 70px 20px 50px;
+            padding: 60px 20px 40px;
             max-width: 650px;
             margin: 0 auto;
         }
 
         .hero h1 {
-            font-size: 36px;
+            font-size: 34px;
             font-weight: 400;
             letter-spacing: 2px;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             text-transform: uppercase;
         }
 
@@ -135,10 +136,10 @@
 
         .section-title {
             text-align: center;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 500;
             letter-spacing: 1px;
-            margin: 50px 0 30px;
+            margin: 40px 0 24px;
             text-transform: uppercase;
         }
 
@@ -164,11 +165,21 @@
             transform: translateY(-4px);
         }
 
-        .product-image {
+        /* Image Crop Issue Fix */
+        .product-image-container {
             width: 100%;
             height: 340px;
-            object-fit: cover;
-            background-color: #f5f4f0;
+            background-color: #f7f6f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .product-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* ছবি না কেটে পুরোটা দেখাবে */
         }
 
         .product-details {
@@ -234,12 +245,19 @@
             box-shadow: var(--shadow-soft);
         }
 
-        .founder-img {
-            width: 220px;
-            height: 220px;
-            object-fit: cover;
+        .founder-img-container {
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
             border: 2px solid var(--border-color);
+        }
+
+        .founder-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .about-text h2 {
@@ -366,7 +384,7 @@
                 display: none;
             }
             .search-box {
-                max-width: 160px;
+                max-width: 150px;
             }
         }
     </style>
@@ -376,9 +394,9 @@
     <nav>
         <img src="logo.svg" alt="VAYNRO" class="logo-img" onerror="this.outerHTML='<div style=\'font-size:22px; font-weight:600; letter-spacing:3px;\'>VAYNRO</div>'">
         
-        <!-- Live Search Bar -->
+        <!-- Live Search Box -->
         <div class="search-box">
-            <input type="text" id="searchInput" class="search-input" placeholder="Search products..." onkeyup="filterProducts()">
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search products..." onkeyup="filterProducts()">
         </div>
 
         <ul class="nav-links">
@@ -401,7 +419,9 @@
     <main class="products-grid" id="productsGrid">
         <!-- Product 1 -->
         <div class="product-card">
-            <img src="overcoat.jpg" alt="Cozy Overcoat" class="product-image" onerror="this.src='https://via.placeholder.com/300x400/f5f4f0/2c2a29?text=Overcoat'">
+            <div class="product-image-container">
+                <img src="overcoat.jpg" alt="Cozy Overcoat" class="product-image" onerror="this.src='https://via.placeholder.com/300x400/f5f4f0/2c2a29?text=Overcoat'">
+            </div>
             <div class="product-details">
                 <div class="product-title">Cozy Aesthetic Overcoat</div>
                 <div class="product-price">৳ ৩,৫০০</div>
@@ -420,7 +440,9 @@
 
         <!-- Product 2 -->
         <div class="product-card">
-            <img src="bag.png" alt="Aesthetic Leather Bag" class="product-image" onerror="this.src='https://via.placeholder.com/300x400/f5f4f0/2c2a29?text=Leather+Bag'">
+            <div class="product-image-container">
+                <img src="bag.png" alt="Aesthetic Leather Bag" class="product-image" onerror="this.src='https://via.placeholder.com/300x400/f5f4f0/2c2a29?text=Leather+Bag'">
+            </div>
             <div class="product-details">
                 <div class="product-title">Aesthetic Leather Bag</div>
                 <div class="product-price">৳ ১,৮০০</div>
@@ -436,7 +458,9 @@
     </main>
 
     <section class="about-section" id="about">
-        <img src="founder.jpg" alt="Founder" class="founder-img" onerror="this.src='https://via.placeholder.com/220/f5f4f0/2c2a29?text=Founder'">
+        <div class="founder-img-container">
+            <img src="founder.jpg" alt="Founder" class="founder-img" onerror="this.src='https://via.placeholder.com/200/f5f4f0/2c2a29?text=Founder'">
+        </div>
         <div class="about-text">
             <h2>About VAYNRO</h2>
             <p>VAYNRO হল একটি আধুনিক লাক্সারি ও এস্থেটিক ফ্যাশন ব্র্যান্ড। আমরা বিশ্বাস করি সাধারণের মাঝেও অনন্যতা তৈরি করা সম্ভব। আমাদের প্রতিটি প্রোডাক্ট সর্বোচ্চ গুণগত মান এবং আধুনিক মিনিমাল ডিজাইনের সমন্বয়।</p>
