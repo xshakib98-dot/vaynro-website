@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VAYNRO | Aesthetic Fashion & Apparel</title>
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <!-- Favicon Logo (Shows on Browser Tab) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230b0b0b'/><text x='50%' y='65%' font-size='60' font-weight='bold' fill='%23d4af37' font-family='sans-serif' text-anchor='middle'>V</text></svg>">
+  
   <!-- Google Fonts for Classy Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,13 +41,33 @@
       z-index: 100;
     }
 
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--accent-color);
+      color: #000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
     .logo {
       font-family: 'Cinzel', serif;
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 700;
-      letter-spacing: 4px;
+      letter-spacing: 3px;
       color: #fff;
-      cursor: pointer;
     }
 
     nav { display: flex; gap: 25px; align-items: center; }
@@ -69,10 +92,10 @@
       color: #fff;
       font-size: 13px;
       outline: none;
-      width: 180px;
+      width: 160px;
       transition: 0.3s;
     }
-    .search-box:focus { border-color: var(--accent-color); width: 220px; }
+    .search-box:focus { border-color: var(--accent-color); width: 200px; }
 
     .cart-btn {
       background: transparent;
@@ -138,21 +161,40 @@
     }
     .size-btn.selected { background: var(--text-main); color: #000; border-color: var(--text-main); }
 
+    /* Button Group for Add to Cart & Buy Now */
+    .btn-group { display: flex; gap: 10px; }
+
     .add-to-cart {
-      width: 100%;
+      flex: 1;
       background: #222;
       color: #fff;
-      padding: 12px;
+      padding: 12px 5px;
       border: 1px solid var(--border-color);
       border-radius: 6px;
       cursor: pointer;
       font-weight: 600;
-      font-size: 13px;
-      letter-spacing: 1px;
+      font-size: 12px;
+      letter-spacing: 0.5px;
       text-transform: uppercase;
       transition: 0.3s;
     }
-    .add-to-cart:hover { background: #fff; color: #000; }
+    .add-to-cart:hover { background: #333; }
+
+    .buy-now-btn {
+      flex: 1;
+      background: var(--accent-color);
+      color: #000;
+      padding: 12px 5px;
+      border: 1px solid var(--accent-color);
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      transition: 0.3s;
+    }
+    .buy-now-btn:hover { background: #fff; border-color: #fff; }
 
     /* About Us Section Styling */
     .about-container {
@@ -251,7 +293,10 @@
 <body>
 
   <header>
-    <div class="logo" onclick="switchTab('home')">VAYNRO</div>
+    <div class="logo-container" onclick="switchTab('home')">
+      <div class="logo-icon">V</div>
+      <div class="logo">VAYNRO</div>
+    </div>
     <nav>
       <a id="nav-home" class="active" onclick="switchTab('home')">Home</a>
       <a id="nav-about" onclick="switchTab('about')">About Us</a>
@@ -273,7 +318,7 @@
       
       <!-- Product 1 -->
       <div class="product-card">
-        <img src="https://via.placeholder.com/400x500/1e1e1e/ffffff?text=VAYNRO+Oversized+Tee" alt="VAYNRO Oversized Tee">
+        <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=800&auto=format&fit=crop" alt="VAYNRO Oversized Tee">
         <div class="product-title">VAYNRO Aesthetic Oversized Tee</div>
         <div class="product-price">BDT 1,250</div>
         
@@ -284,12 +329,15 @@
           <button class="size-btn" onclick="selectSize(this, 'XL')">XL</button>
         </div>
         
-        <button class="add-to-cart" onclick="addToCart('VAYNRO Aesthetic Oversized Tee', 1250, this)">Add To Cart</button>
+        <div class="btn-group">
+          <button class="add-to-cart" onclick="addToCart('VAYNRO Aesthetic Oversized Tee', 1250, this)">Add To Cart</button>
+          <button class="buy-now-btn" onclick="buyNow('VAYNRO Aesthetic Oversized Tee', 1250, this)">Buy Now</button>
+        </div>
       </div>
 
       <!-- Product 2 -->
       <div class="product-card">
-        <img src="https://via.placeholder.com/400x500/1e1e1e/ffffff?text=VAYNRO+Aesthetic+Hoodie" alt="VAYNRO Hoodie">
+        <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?q=80&w=800&auto=format&fit=crop" alt="VAYNRO Hoodie">
         <div class="product-title">VAYNRO Heavyweight Hoodie</div>
         <div class="product-price">BDT 2,450</div>
         
@@ -300,7 +348,10 @@
           <button class="size-btn" onclick="selectSize(this, 'XL')">XL</button>
         </div>
         
-        <button class="add-to-cart" onclick="addToCart('VAYNRO Heavyweight Hoodie', 2450, this)">Add To Cart</button>
+        <div class="btn-group">
+          <button class="add-to-cart" onclick="addToCart('VAYNRO Heavyweight Hoodie', 2450, this)">Add To Cart</button>
+          <button class="buy-now-btn" onclick="buyNow('VAYNRO Heavyweight Hoodie', 2450, this)">Buy Now</button>
+        </div>
       </div>
 
     </div>
@@ -311,7 +362,7 @@
     <div class="about-container">
       <h2>ABOUT VAYNRO</h2>
       <p>
-        VAYNRO is a modern aesthetic fashion brand dedicated to crafting high-end, minimalist streetwear and minimalist apparel. Designed for individuals who appreciate subtlety, premium quality, and effortless style.
+        VAYNRO is a modern aesthetic fashion brand dedicated to crafting high-end, minimalist streetwear and apparel. Designed for individuals who appreciate subtlety, premium quality, and effortless style.
       </p>
       
       <div class="founder-card">
@@ -434,6 +485,21 @@
       cart.push({ title, price, size });
       document.getElementById('cartCount').innerText = cart.length;
       alert(`Added "${title}" (Size: ${size}) to cart!`);
+    }
+
+    // Direct Buy Now
+    function buyNow(title, price, btn) {
+      const size = selectedSizes[title];
+      
+      if (!size) {
+        alert("Please select a size first!");
+        return;
+      }
+
+      // Set cart only to this item for quick checkout
+      cart = [{ title, price, size }];
+      document.getElementById('cartCount').innerText = cart.length;
+      openCheckout();
     }
 
     // Open Checkout Modal
