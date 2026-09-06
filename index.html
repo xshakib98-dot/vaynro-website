@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VAYNRO | Aesthetic Fashion & Lifestyle</title>
+    
+    <!-- Tab Logo (Favicon) -->
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -32,7 +36,6 @@
             scroll-behavior: smooth;
         }
 
-        /* Navigation Bar */
         nav {
             display: flex;
             justify-content: space-between;
@@ -63,11 +66,6 @@
             color: var(--text-main);
             font-size: 14px;
             font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--text-muted);
         }
 
         .cart-trigger {
@@ -90,7 +88,6 @@
             border-radius: 50%;
         }
 
-        /* Hero Section */
         .hero {
             text-align: center;
             padding: 70px 20px 50px;
@@ -112,7 +109,6 @@
             line-height: 1.6;
         }
 
-        /* Section Titles */
         .section-title {
             text-align: center;
             font-size: 22px;
@@ -122,7 +118,6 @@
             text-transform: uppercase;
         }
 
-        /* Product Grid */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -138,12 +133,11 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--shadow-soft);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
         .product-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
         }
 
         .product-image {
@@ -166,7 +160,30 @@
         .product-price {
             color: var(--text-muted);
             font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        /* Size Selector */
+        .size-option {
             margin-bottom: 16px;
+        }
+
+        .size-option label {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .size-select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-color);
+            color: var(--text-main);
+            font-size: 13px;
+            outline: none;
         }
 
         .add-to-cart-btn {
@@ -179,14 +196,8 @@
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
-            transition: background 0.2s ease;
         }
 
-        .add-to-cart-btn:hover {
-            background-color: #333333;
-        }
-
-        /* About Us Section */
         .about-section {
             max-width: 900px;
             margin: 80px auto;
@@ -220,7 +231,6 @@
             font-size: 14px;
         }
 
-        /* Contact Us Section */
         .contact-section {
             max-width: 600px;
             margin: 60px auto 80px;
@@ -242,7 +252,6 @@
             font-size: 14px;
         }
 
-        /* Footer */
         footer {
             text-align: center;
             padding: 30px;
@@ -251,7 +260,6 @@
             font-size: 13px;
         }
 
-        /* Cart Drawer Slide-out */
         .cart-modal {
             position: fixed;
             top: 0;
@@ -339,7 +347,6 @@
 </head>
 <body>
 
-    <!-- Header Navigation -->
     <nav>
         <img src="logo.svg" alt="VAYNRO" class="logo-img" onerror="this.outerHTML='<div style=\'font-size:22px; font-weight:600; letter-spacing:3px;\'>VAYNRO</div>'">
         <ul class="nav-links">
@@ -352,35 +359,49 @@
         </button>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
         <h1>Aesthetic Fashion & Lifestyle</h1>
         <p>সহজ ও সাবলীল ডিজাইনে তৈরি দৈনন্দিন লাক্সারি আউটফিট।</p>
     </section>
 
-    <!-- Products Showcase -->
     <div class="section-title" id="collection">Featured Collection</div>
     <main class="products-grid">
+        <!-- Product 1 -->
         <div class="product-card">
             <img src="overcoat.jpg" alt="Cozy Overcoat" class="product-image" onerror="this.src='https://via.placeholder.com/300x400/f5f4f0/2c2a29?text=Overcoat'">
             <div class="product-details">
                 <div class="product-title">Cozy Aesthetic Overcoat</div>
                 <div class="product-price">৳ ৩,৫০০</div>
-                <button class="add-to-cart-btn" onclick="addToCart('Cozy Aesthetic Overcoat', 3500)">Add to Cart</button>
+                <div class="size-option">
+                    <label for="size1">Select Size:</label>
+                    <select id="size1" class="size-select">
+                        <option value="S">Small (S)</option>
+                        <option value="M" selected>Medium (M)</option>
+                        <option value="L">Large (L)</option>
+                        <option value="XL">Extra Large (XL)</option>
+                    </select>
+                </div>
+                <button class="add-to-cart-btn" onclick="addToCart('Cozy Aesthetic Overcoat', 3500, 'size1')">Add to Cart</button>
             </div>
         </div>
 
+        <!-- Product 2 -->
         <div class="product-card">
             <img src="bag.png" alt="Aesthetic Leather Bag" class="product-image" onerror="this.src='https://via.placeholder.com/300x400/f5f4f0/2c2a29?text=Leather+Bag'">
             <div class="product-details">
                 <div class="product-title">Aesthetic Leather Bag</div>
                 <div class="product-price">৳ ১,৮০০</div>
-                <button class="add-to-cart-btn" onclick="addToCart('Aesthetic Leather Bag', 1800)">Add to Cart</button>
+                <div class="size-option">
+                    <label for="size2">Select Size:</label>
+                    <select id="size2" class="size-select">
+                        <option value="Regular" selected>Regular Size</option>
+                    </select>
+                </div>
+                <button class="add-to-cart-btn" onclick="addToCart('Aesthetic Leather Bag', 1800, 'size2')">Add to Cart</button>
             </div>
         </div>
     </main>
 
-    <!-- About Us Section -->
     <section class="about-section" id="about">
         <img src="founder.jpg" alt="Founder" class="founder-img" onerror="this.src='https://via.placeholder.com/220/f5f4f0/2c2a29?text=Founder'">
         <div class="about-text">
@@ -389,7 +410,6 @@
         </div>
     </section>
 
-    <!-- Contact Us Section -->
     <section class="contact-section" id="contact">
         <div class="section-title">Contact Us</div>
         <div class="contact-card">
@@ -399,12 +419,10 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         &copy; 2026 VAYNRO. All rights reserved.
     </footer>
 
-    <!-- Cart Drawer -->
     <div class="cart-modal" id="cartModal">
         <div class="cart-header">
             <h3>Your Selection</h3>
@@ -422,7 +440,6 @@
         </div>
     </div>
 
-    <!-- JavaScript Engine -->
     <script>
         let cart = JSON.parse(localStorage.getItem('vaynro_cart')) || [];
 
@@ -447,7 +464,7 @@
                 html += `
                     <div class="cart-item">
                         <div>
-                            <div>${item.name}</div>
+                            <div>${item.name} (${item.size})</div>
                             <div style="color: var(--text-muted); font-size: 12px;">৳ ${item.price}</div>
                         </div>
                         <button onclick="removeFromCart(${index})" style="background:none; border:none; color:red; cursor:pointer;">✕</button>
@@ -461,8 +478,11 @@
             localStorage.setItem('vaynro_cart', JSON.stringify(cart));
         }
 
-        function addToCart(name, price) {
-            cart.push({ name, price });
+        function addToCart(name, price, sizeSelectId) {
+            const sizeSelect = document.getElementById(sizeSelectId);
+            const selectedSize = sizeSelect ? sizeSelect.value : 'Default';
+            
+            cart.push({ name, price, size: selectedSize });
             updateCartUI();
             toggleCart(true);
         }
@@ -488,7 +508,7 @@
             let total = 0;
             
             cart.forEach((item, i) => {
-                message += `${i + 1}. ${item.name} - ৳${item.price}\n`;
+                message += `${i + 1}. ${item.name} [Size: ${item.size}] - ৳${item.price}\n`;
                 total += item.price;
             });
 
