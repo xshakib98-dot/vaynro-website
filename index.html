@@ -1,595 +1,201 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VAYNRO | Aesthetic Fashion & Lifestyle</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAYNRO | Aesthetic Fashion & Apparel</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+    body { background-color: #121212; color: #fff; padding-bottom: 50px; }
+    header { background: #1e1e1e; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; position: sticky; top: 0; z-index: 100; }
+    .logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; color: #fff; }
+    .search-box { padding: 8px 12px; border-radius: 5px; border: 1px solid #444; background: #2a2a2a; color: #fff; width: 40%; }
+    .cart-btn { background: #e50914; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
     
-    <!-- Tab Favicon -->
-    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    .container { max-width: 1100px; margin: 30px auto; padding: 0 15px; }
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .product-card { background: #1e1e1e; border-radius: 8px; overflow: hidden; padding: 15px; border: 1px solid #2e2e2e; text-align: center; }
+    .product-card img { width: 100%; height: 280px; object-fit: cover; border-radius: 5px; }
+    .product-title { font-size: 18px; margin: 10px 0 5px; }
+    .product-price { color: #e50914; font-size: 16px; font-weight: bold; margin-bottom: 10px; }
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg-color: #fcfbf7;
-            --card-bg: #ffffff;
-            --text-main: #2c2a29;
-            --text-muted: #787571;
-            --border-color: #f0ede6;
-            --accent-dark: #1a1a1a;
-            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.03);
-        }
+    .size-selector { margin-bottom: 15px; display: flex; justify-content: center; gap: 8px; }
+    .size-btn { background: #2a2a2a; border: 1px solid #444; color: #fff; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+    .size-btn.active { background: #e50914; border-color: #e50914; }
+    .add-to-cart { width: 100%; background: #333; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+    .add-to-cart:hover { background: #444; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            scroll-behavior: smooth;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 8%;
-            background: rgba(252, 251, 247, 0.95);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid var(--border-color);
-            gap: 15px;
-        }
-
-        .logo-img {
-            height: 35px;
-            width: auto;
-            object-fit: contain;
-        }
-
-        /* Visible Search Input Bar */
-        .search-box {
-            position: relative;
-            flex: 1;
-            max-width: 280px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 9px 16px;
-            border-radius: 20px;
-            border: 1px solid #dcd8ce;
-            background: #ffffff;
-            font-size: 13px;
-            outline: none;
-            color: var(--text-main);
-            transition: all 0.3s ease;
-        }
-
-        .search-input:focus {
-            border-color: var(--accent-dark);
-            box-shadow: 0 0 5px rgba(0,0,0,0.05);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-main);
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .cart-trigger {
-            background: none;
-            border: none;
-            font-size: 14px;
-            cursor: pointer;
-            color: var(--text-main);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .cart-count {
-            background: var(--accent-dark);
-            color: #fff;
-            font-size: 11px;
-            padding: 2px 7px;
-            border-radius: 50%;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 60px 20px 40px;
-            max-width: 650px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 34px;
-            font-weight: 400;
-            letter-spacing: 2px;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-        }
-
-        .hero p {
-            color: var(--text-muted);
-            font-size: 15px;
-            line-height: 1.6;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 20px;
-            font-weight: 500;
-            letter-spacing: 1px;
-            margin: 40px 0 24px;
-            text-transform: uppercase;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 28px;
-            padding: 0 8%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .product-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--shadow-soft);
-            transition: transform 0.3s ease;
-        }
-
-        .product-card:hover {
-            transform: translateY(-4px);
-        }
-
-        /* Image Crop Issue Fix */
-        .product-image-container {
-            width: 100%;
-            height: 340px;
-            background-color: #f7f6f2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-        }
-
-        .product-image {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain; /* ছবি না কেটে পুরোটা দেখাবে */
-        }
-
-        .product-details {
-            padding: 20px;
-        }
-
-        .product-title {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 6px;
-        }
-
-        .product-price {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-
-        .size-option {
-            margin-bottom: 16px;
-        }
-
-        .size-option label {
-            font-size: 12px;
-            color: var(--text-muted);
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .size-select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            background: var(--bg-color);
-            color: var(--text-main);
-            font-size: 13px;
-            outline: none;
-        }
-
-        .add-to-cart-btn {
-            width: 100%;
-            background-color: var(--accent-dark);
-            color: #ffffff;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-        }
-
-        .about-section {
-            max-width: 900px;
-            margin: 80px auto;
-            padding: 40px 8%;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            box-shadow: var(--shadow-soft);
-        }
-
-        .founder-img-container {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            overflow: hidden;
-            flex-shrink: 0;
-            border: 2px solid var(--border-color);
-        }
-
-        .founder-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .about-text h2 {
-            font-size: 24px;
-            margin-bottom: 12px;
-            font-weight: 500;
-        }
-
-        .about-text p {
-            color: var(--text-muted);
-            line-height: 1.7;
-            font-size: 14px;
-        }
-
-        .contact-section {
-            max-width: 600px;
-            margin: 60px auto 80px;
-            padding: 0 20px;
-            text-align: center;
-        }
-
-        .contact-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: var(--shadow-soft);
-        }
-
-        .contact-card p {
-            color: var(--text-muted);
-            margin: 8px 0;
-            font-size: 14px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-muted);
-            font-size: 13px;
-        }
-
-        .cart-modal {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 100%;
-            max-width: 380px;
-            height: 100%;
-            background: var(--card-bg);
-            box-shadow: -4px 0 25px rgba(0,0,0,0.08);
-            transition: right 0.3s ease;
-            z-index: 200;
-            display: flex;
-            flex-direction: column;
-            padding: 24px;
-        }
-
-        .cart-modal.open {
-            right: 0;
-        }
-
-        .cart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 16px;
-        }
-
-        .close-cart {
-            background: none;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            color: var(--text-muted);
-        }
-
-        .cart-items {
-            flex: 1;
-            overflow-y: auto;
-            margin: 20px 0;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            font-size: 14px;
-        }
-
-        .cart-footer {
-            border-top: 1px solid var(--border-color);
-            padding-top: 16px;
-        }
-
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-
-        .checkout-btn {
-            width: 100%;
-            background-color: #25d366;
-            color: #ffffff;
-            border: none;
-            padding: 14px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        @media (max-width: 768px) {
-            .about-section {
-                flex-direction: column;
-                text-align: center;
-            }
-            .nav-links {
-                display: none;
-            }
-            .search-box {
-                max-width: 150px;
-            }
-        }
-    </style>
+    /* Modal / Order Form Style */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 200; }
+    .modal-content { background: #1e1e1e; padding: 25px; border-radius: 8px; width: 90%; max-width: 450px; position: relative; }
+    .close-btn { position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; }
+    .form-group { margin-bottom: 15px; text-align: left; }
+    .form-group label { display: block; margin-bottom: 5px; font-size: 14px; }
+    .form-group input, .form-group textarea { width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #444; background: #2a2a2a; color: white; }
+    .submit-order-btn { width: 100%; background: #e50914; color: white; padding: 12px; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; }
+  </style>
 </head>
 <body>
 
-    <nav>
-        <img src="logo.svg" alt="VAYNRO" class="logo-img" onerror="this.outerHTML='<div style=\'font-size:22px; font-weight:600; letter-spacing:3px;\'>VAYNRO</div>'">
-        
-        <!-- Live Search Box -->
-        <div class="search-box">
-            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search products..." onkeyup="filterProducts()">
-        </div>
+  <header>
+    <div class="logo">VAYNRO</div>
+    <input type="text" id="searchBar" class="search-box" placeholder="Search products..." onkeyup="filterProducts()">
+    <button class="cart-btn" onclick="openCheckout()">Cart (<span id="cartCount">0</span>)</button>
+  </header>
 
-        <ul class="nav-links">
-            <li><a href="#collection">Collection</a></li>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <button class="cart-trigger" onclick="toggleCart()">
-            Cart <span class="cart-count" id="cartCount">0</span>
-        </button>
-    </nav>
+  <div class="container">
+    <div class="products-grid" id="productGrid">
+      
+      <!-- Sample Product 1 -->
+      <div class="product-card">
+        <img src="https://via.placeholder.com/300x350" alt="Aesthetic Tee">
+        <div class="product-title">VAYNRO Black Aesthetic Tee</div>
+        <div class="product-price">BDT 1,200</div>
+        <div class="size-selector">
+          <button class="size-btn" onclick="selectSize(this)">M</button>
+          <button class="size-btn" onclick="selectSize(this)">L</button>
+          <button class="size-btn" onclick="selectSize(this)">XL</button>
+        </div>
+        <button class="add-to-cart" onclick="addToCart('VAYNRO Black Aesthetic Tee', 1200, this)">Add to Cart</button>
+      </div>
 
-    <section class="hero">
-        <h1>Aesthetic Fashion & Lifestyle</h1>
-        <p>সহজ ও সাবলীল ডিজাইনে তৈরি দৈনন্দিন লাক্সারি আউটফিট।</p>
-    </section>
-
-    <div class="section-title" id="collection">Featured Collection</div>
-    
-    <main class="products-grid" id="productsGrid">
-        <!-- Product 1 -->
-        <div class="product-card">
-            <div class="product-image-container">
-                <img src="overcoat.jpg" alt="Cozy Overcoat" class="product-image" onerror="this.src='https://via.placeholder.com/300x400/f5f4f0/2c2a29?text=Overcoat'">
-            </div>
-            <div class="product-details">
-                <div class="product-title">Cozy Aesthetic Overcoat</div>
-                <div class="product-price">৳ ৩,৫০০</div>
-                <div class="size-option">
-                    <label for="size1">Select Size:</label>
-                    <select id="size1" class="size-select">
-                        <option value="S">Small (S)</option>
-                        <option value="M" selected>Medium (M)</option>
-                        <option value="L">Large (L)</option>
-                        <option value="XL">Extra Large (XL)</option>
-                    </select>
-                </div>
-                <button class="add-to-cart-btn" onclick="addToCart('Cozy Aesthetic Overcoat', 3500, 'size1')">Add to Cart</button>
-            </div>
-        </div>
-
-        <!-- Product 2 -->
-        <div class="product-card">
-            <div class="product-image-container">
-                <img src="bag.png" alt="Aesthetic Leather Bag" class="product-image" onerror="this.src='https://via.placeholder.com/300x400/f5f4f0/2c2a29?text=Leather+Bag'">
-            </div>
-            <div class="product-details">
-                <div class="product-title">Aesthetic Leather Bag</div>
-                <div class="product-price">৳ ১,৮০০</div>
-                <div class="size-option">
-                    <label for="size2">Select Size:</label>
-                    <select id="size2" class="size-select">
-                        <option value="Regular" selected>Regular Size</option>
-                    </select>
-                </div>
-                <button class="add-to-cart-btn" onclick="addToCart('Aesthetic Leather Bag', 1800, 'size2')">Add to Cart</button>
-            </div>
-        </div>
-    </main>
-
-    <section class="about-section" id="about">
-        <div class="founder-img-container">
-            <img src="founder.jpg" alt="Founder" class="founder-img" onerror="this.src='https://via.placeholder.com/200/f5f4f0/2c2a29?text=Founder'">
-        </div>
-        <div class="about-text">
-            <h2>About VAYNRO</h2>
-            <p>VAYNRO হল একটি আধুনিক লাক্সারি ও এস্থেটিক ফ্যাশন ব্র্যান্ড। আমরা বিশ্বাস করি সাধারণের মাঝেও অনন্যতা তৈরি করা সম্ভব। আমাদের প্রতিটি প্রোডাক্ট সর্বোচ্চ গুণগত মান এবং আধুনিক মিনিমাল ডিজাইনের সমন্বয়।</p>
-        </div>
-    </section>
-
-    <section class="contact-section" id="contact">
-        <div class="section-title">Contact Us</div>
-        <div class="contact-card">
-            <p><strong>Email:</strong> support@vaynro.com</p>
-            <p><strong>WhatsApp:</strong> +880 1700-000000</p>
-            <p><strong>Location:</strong> Dhaka, Bangladesh</p>
-        </div>
-    </section>
-
-    <footer>
-        &copy; 2026 VAYNRO. All rights reserved.
-    </footer>
-
-    <div class="cart-modal" id="cartModal">
-        <div class="cart-header">
-            <h3>Your Selection</h3>
-            <button class="close-cart" onclick="toggleCart()">✕</button>
-        </div>
-        <div class="cart-items" id="cartItems">
-            <p style="color: var(--text-muted); text-align: center; margin-top: 40px;">কার্ট বর্তমানে খালি রয়েছে।</p>
-        </div>
-        <div class="cart-footer">
-            <div class="cart-total">
-                <span>Total:</span>
-                <span id="cartTotal">৳ 0</span>
-            </div>
-            <button class="checkout-btn" onclick="checkoutWhatsApp()">Order via WhatsApp</button>
-        </div>
     </div>
+  </div>
 
-    <script>
-        let cart = JSON.parse(localStorage.getItem('vaynro_cart')) || [];
+  <!-- Checkout Modal -->
+  <div class="modal" id="orderModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeCheckout()">&times;</span>
+      <h2>Complete Your Order</h2>
+      <br>
+      <div id="cartSummary" style="margin-bottom: 15px; font-size: 14px; color: #aaa;"></div>
+      
+      <form id="orderForm" onsubmit="handleOrderSubmit(event)">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="custName" required placeholder="Enter full name">
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" id="custPhone" required placeholder="017XXXXXXXX">
+        </div>
+        <div class="form-group">
+          <label>Full Delivery Address</label>
+          <textarea id="custAddress" rows="3" required placeholder="House, Road, City..."></textarea>
+        </div>
+        <button type="submit" class="submit-order-btn" id="submitBtn">Place Order (Cash on Delivery)</button>
+      </form>
+    </div>
+  </div>
 
-        function filterProducts() {
-            const input = document.getElementById('searchInput').value.toLowerCase();
-            const cards = document.querySelectorAll('.product-card');
+  <!-- Firebase Web SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
-            cards.forEach(card => {
-                const title = card.querySelector('.product-title').innerText.toLowerCase();
-                if (title.includes(input)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAw6PTjumhTGMog6LAyCaFNuyIg2E16fd8",
+      authDomain: "vaynro-website.firebaseapp.com",
+      projectId: "vaynro-website",
+      storageBucket: "vaynro-website.firebasestorage.app",
+      messagingSenderId: "442609775562",
+      appId: "1:442609775562:web:51722b9bd1c34b6cac9533",
+      measurementId: "G-225DYYLGER"
+    };
 
-        function updateCartUI() {
-            const cartItemsContainer = document.getElementById('cartItems');
-            const cartCount = document.getElementById('cartCount');
-            const cartTotal = document.getElementById('cartTotal');
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-            cartCount.innerText = cart.length;
+    let cart = [];
+    let selectedSize = null;
 
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<p style="color: var(--text-muted); text-align: center; margin-top: 40px;">কার্ট বর্তমানে খালি রয়েছে।</p>';
-                cartTotal.innerText = '৳ 0';
-                return;
-            }
+    function selectSize(btn) {
+      const parent = btn.parentElement;
+      parent.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedSize = btn.innerText;
+    }
 
-            let html = '';
-            let total = 0;
+    function addToCart(title, price, btn) {
+      const parent = btn.parentElement;
+      const activeSizeBtn = parent.querySelector('.size-btn.active');
+      
+      if (!activeSizeBtn) {
+        alert("Please select a size first!");
+        return;
+      }
 
-            cart.forEach((item, index) => {
-                total += item.price;
-                html += `
-                    <div class="cart-item">
-                        <div>
-                            <div>${item.name} (${item.size})</div>
-                            <div style="color: var(--text-muted); font-size: 12px;">৳ ${item.price}</div>
-                        </div>
-                        <button onclick="removeFromCart(${index})" style="background:none; border:none; color:red; cursor:pointer;">✕</button>
-                    </div>
-                `;
-            });
+      cart.push({ title, price, size: activeSizeBtn.innerText });
+      document.getElementById('cartCount').innerText = cart.length;
+      alert("Added to cart!");
+    }
 
-            cartItemsContainer.innerHTML = html;
-            cartTotal.innerText = '৳ ' + total;
-            
-            localStorage.setItem('vaynro_cart', JSON.stringify(cart));
-        }
+    function openCheckout() {
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+      
+      let summaryText = "";
+      let total = 0;
+      cart.forEach((item, index) => {
+        summaryText += `${index + 1}. ${item.title} (${item.size}) - BDT ${item.price}<br>`;
+        total += item.price;
+      });
+      summaryText += `<br><strong>Total: BDT ${total}</strong>`;
+      
+      document.getElementById('cartSummary').innerHTML = summaryText;
+      document.getElementById('orderModal').style.display = 'flex';
+    }
 
-        function addToCart(name, price, sizeSelectId) {
-            const sizeSelect = document.getElementById(sizeSelectId);
-            const selectedSize = sizeSelect ? sizeSelect.value : 'Default';
-            
-            cart.push({ name, price, size: selectedSize });
-            updateCartUI();
-            toggleCart(true);
-        }
+    function closeCheckout() {
+      document.getElementById('orderModal').style.display = 'none';
+    }
 
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
+    function handleOrderSubmit(e) {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.innerText = "Placing Order...";
+      submitBtn.disabled = true;
 
-        function toggleCart(openState) {
-            const cartModal = document.getElementById('cartModal');
-            if (openState === true) {
-                cartModal.classList.add('open');
-            } else {
-                cartModal.classList.toggle('open');
-            }
-        }
+      const orderData = {
+        name: document.getElementById('custName').value,
+        phone: document.getElementById('custPhone').value,
+        address: document.getElementById('custAddress').value,
+        items: cart,
+        status: "Pending",
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
 
-        function checkoutWhatsApp() {
-            if (cart.length === 0) return alert("আপনার কার্ট খালি!");
-            
-            let message = "হ্যালো VAYNRO, আমি নিচের প্রোডাক্টগুলো অর্ডার করতে চাই:\n\n";
-            let total = 0;
-            
-            cart.forEach((item, i) => {
-                message += `${i + 1}. ${item.name} [Size: ${item.size}] - ৳${item.price}\n`;
-                total += item.price;
-            });
+      db.collection("orders").add(orderData)
+        .then(() => {
+          alert("ধন্যবাদ! আপনার অর্ডারটি সফলভাবে নেওয়া হয়েছে।");
+          cart = [];
+          document.getElementById('cartCount').innerText = "0";
+          document.getElementById('orderForm').reset();
+          closeCheckout();
+        })
+        .catch((error) => {
+          console.error("Order submit error: ", error);
+          alert("অর্ডার জমা দিতে সমস্যা হয়েছে, আবার চেষ্টা করুন।");
+        })
+        .finally(() => {
+          submitBtn.innerText = "Place Order (Cash on Delivery)";
+          submitBtn.disabled = false;
+        });
+    }
 
-            message += `\nমোট বিল: ৳${total}`;
-            
-            const phone = "8801700000000"; 
-            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
-        }
-
-        updateCartUI();
-    </script>
+    function filterProducts() {
+      const query = document.getElementById('searchBar').value.toLowerCase();
+      const products = document.querySelectorAll('.product-card');
+      products.forEach(p => {
+        const title = p.querySelector('.product-title').innerText.toLowerCase();
+        p.style.display = title.includes(query) ? 'block' : 'none';
+      });
+    }
+  </script>
 </body>
 </html>
