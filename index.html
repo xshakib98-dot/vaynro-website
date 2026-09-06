@@ -5,96 +5,381 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VAYNRO | Aesthetic Fashion & Apparel</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
-    body { background-color: #121212; color: #fff; padding-bottom: 50px; }
-    header { background: #1e1e1e; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; position: sticky; top: 0; z-index: 100; }
-    .logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; color: #fff; }
-    .search-box { padding: 8px 12px; border-radius: 5px; border: 1px solid #444; background: #2a2a2a; color: #fff; width: 40%; }
-    .cart-btn { background: #e50914; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-    
-    .container { max-width: 1100px; margin: 30px auto; padding: 0 15px; }
-    .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-    .product-card { background: #1e1e1e; border-radius: 8px; overflow: hidden; padding: 15px; border: 1px solid #2e2e2e; text-align: center; }
-    .product-card img { width: 100%; height: 280px; object-fit: cover; border-radius: 5px; }
-    .product-title { font-size: 18px; margin: 10px 0 5px; }
-    .product-price { color: #e50914; font-size: 16px; font-weight: bold; margin-bottom: 10px; }
-    
-    .size-selector { margin-bottom: 15px; display: flex; justify-content: center; gap: 8px; }
-    .size-btn { background: #2a2a2a; border: 1px solid #444; color: #fff; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
-    .size-btn.active { background: #e50914; border-color: #e50914; }
-    .add-to-cart { width: 100%; background: #333; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-    .add-to-cart:hover { background: #444; }
+  <!-- Google Fonts for Classy Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 
-    /* Modal / Order Form Style */
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 200; }
-    .modal-content { background: #1e1e1e; padding: 25px; border-radius: 8px; width: 90%; max-width: 450px; position: relative; }
-    .close-btn { position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; }
+  <style>
+    :root {
+      --bg-color: #0b0b0b;
+      --card-bg: #141414;
+      --accent-color: #d4af37; /* Aesthetic Gold Accent */
+      --bkash-color: #e2136e; /* bKash Brand Pink */
+      --text-main: #f5f5f5;
+      --text-muted: #a0a0a0;
+      --border-color: #222222;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg-color); color: var(--text-main); padding-bottom: 60px; min-height: 100vh; }
+
+    /* Classy Header */
+    header {
+      background: rgba(18, 18, 18, 0.85);
+      backdrop-filter: blur(12px);
+      padding: 18px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Cinzel', serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    nav { display: flex; gap: 25px; align-items: center; }
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    nav a.active, nav a:hover { color: var(--accent-color); }
+
+    .header-right { display: flex; align-items: center; gap: 15px; }
+
+    .search-box {
+      padding: 8px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      background: #181818;
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+      width: 180px;
+      transition: 0.3s;
+    }
+    .search-box:focus { border-color: var(--accent-color); width: 220px; }
+
+    .cart-btn {
+      background: transparent;
+      color: var(--text-main);
+      padding: 8px 16px;
+      border: 1px solid var(--accent-color);
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 1px;
+      transition: 0.3s;
+    }
+    .cart-btn:hover { background: var(--accent-color); color: #000; }
+
+    /* Sections */
+    .page-section { display: none; padding: 40px 5%; max-width: 1200px; margin: 0 auto; }
+    .page-section.active-section { display: block; }
+
+    /* Hero Banner */
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 40px;
+    }
+    .hero h1 { font-family: 'Cinzel', serif; font-size: 42px; font-weight: 500; letter-spacing: 6px; margin-bottom: 12px; }
+    .hero p { color: var(--text-muted); font-size: 15px; letter-spacing: 2px; text-transform: uppercase; }
+
+    /* Product Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 16px;
+      border: 1px solid var(--border-color);
+      text-align: center;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .product-card:hover { transform: translateY(-5px); border-color: #333; }
+    .product-card img { width: 100%; height: 340px; object-fit: cover; border-radius: 6px; margin-bottom: 15px; }
+    .product-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; letter-spacing: 0.5px; }
+    .product-price { color: var(--accent-color); font-size: 15px; font-weight: 600; margin-bottom: 15px; }
+
+    /* Size Selector */
+    .size-selector-label { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; }
+    .size-selector { display: flex; justify-content: center; gap: 10px; margin-bottom: 18px; }
+    .size-btn {
+      background: #1f1f1f;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    .size-btn.selected { background: var(--text-main); color: #000; border-color: var(--text-main); }
+
+    .add-to-cart {
+      width: 100%;
+      background: #222;
+      color: #fff;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: 0.3s;
+    }
+    .add-to-cart:hover { background: #fff; color: #000; }
+
+    /* About Us Section Styling */
+    .about-container {
+      max-width: 800px;
+      margin: 20px auto;
+      text-align: center;
+      background: var(--card-bg);
+      padding: 50px 30px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+    .about-container h2 { font-family: 'Cinzel', serif; font-size: 32px; letter-spacing: 4px; margin-bottom: 20px; color: var(--accent-color); }
+    .about-container p { color: var(--text-muted); line-height: 1.8; font-size: 15px; margin-bottom: 30px; }
+    
+    .founder-card {
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 1px solid var(--border-color);
+    }
+    .founder-title { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-color); margin-bottom: 5px; }
+    .founder-name { font-family: 'Cinzel', serif; font-size: 24px; font-weight: 700; color: #fff; }
+
+    /* Modal / Order Form */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(5px);
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+    }
+    .modal-content {
+      background: #181818;
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 480px;
+      border: 1px solid var(--border-color);
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: var(--text-muted); }
+    .close-btn:hover { color: #fff; }
+    .modal h3 { font-family: 'Cinzel', serif; font-size: 20px; letter-spacing: 2px; margin-bottom: 15px; }
+
+    .cart-item-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; color: var(--text-muted); }
+    .cart-total-row { display: flex; justify-content: space-between; font-size: 15px; font-weight: bold; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); color: #fff; }
+
     .form-group { margin-bottom: 15px; text-align: left; }
-    .form-group label { display: block; margin-bottom: 5px; font-size: 14px; }
-    .form-group input, .form-group textarea { width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #444; background: #2a2a2a; color: white; }
-    .submit-order-btn { width: 100%; background: #e50914; color: white; padding: 12px; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; }
+    .form-group label { display: block; margin-bottom: 6px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: #111;
+      color: white;
+      font-size: 14px;
+      outline: none;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent-color); }
+
+    /* bKash Payment Box */
+    .bkash-box {
+      display: none;
+      background: #1a0810;
+      border: 1px solid var(--bkash-color);
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .bkash-box strong { color: var(--bkash-color); font-size: 15px; }
+
+    .submit-order-btn {
+      width: 100%;
+      background: var(--accent-color);
+      color: #000;
+      padding: 14px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .submit-order-btn:hover { background: #fff; }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo">VAYNRO</div>
-    <input type="text" id="searchBar" class="search-box" placeholder="Search products..." onkeyup="filterProducts()">
-    <button class="cart-btn" onclick="openCheckout()">Cart (<span id="cartCount">0</span>)</button>
+    <div class="logo" onclick="switchTab('home')">VAYNRO</div>
+    <nav>
+      <a id="nav-home" class="active" onclick="switchTab('home')">Home</a>
+      <a id="nav-about" onclick="switchTab('about')">About Us</a>
+    </nav>
+    <div class="header-right">
+      <input type="text" id="searchBar" class="search-box" placeholder="Search..." onkeyup="filterProducts()">
+      <button class="cart-btn" onclick="openCheckout()">Cart (<span id="cartCount">0</span>)</button>
+    </div>
   </header>
 
-  <div class="container">
+  <!-- HOME / PRODUCTS SECTION -->
+  <section id="sec-home" class="page-section active-section">
+    <div class="hero">
+      <h1>AESTHETIC ESSENTIALS</h1>
+      <p>Minimalist Designs • Premium Quality</p>
+    </div>
+
     <div class="products-grid" id="productGrid">
       
-      <!-- Sample Product 1 -->
+      <!-- Product 1 -->
       <div class="product-card">
-        <img src="https://via.placeholder.com/300x350" alt="Aesthetic Tee">
-        <div class="product-title">VAYNRO Black Aesthetic Tee</div>
-        <div class="product-price">BDT 1,200</div>
+        <img src="https://via.placeholder.com/400x500/1e1e1e/ffffff?text=VAYNRO+Oversized+Tee" alt="VAYNRO Oversized Tee">
+        <div class="product-title">VAYNRO Aesthetic Oversized Tee</div>
+        <div class="product-price">BDT 1,250</div>
+        
+        <div class="size-selector-label">Select Size</div>
         <div class="size-selector">
-          <button class="size-btn" onclick="selectSize(this)">M</button>
-          <button class="size-btn" onclick="selectSize(this)">L</button>
-          <button class="size-btn" onclick="selectSize(this)">XL</button>
+          <button class="size-btn" onclick="selectSize(this, 'M')">M</button>
+          <button class="size-btn" onclick="selectSize(this, 'L')">L</button>
+          <button class="size-btn" onclick="selectSize(this, 'XL')">XL</button>
         </div>
-        <button class="add-to-cart" onclick="addToCart('VAYNRO Black Aesthetic Tee', 1200, this)">Add to Cart</button>
+        
+        <button class="add-to-cart" onclick="addToCart('VAYNRO Aesthetic Oversized Tee', 1250, this)">Add To Cart</button>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card">
+        <img src="https://via.placeholder.com/400x500/1e1e1e/ffffff?text=VAYNRO+Aesthetic+Hoodie" alt="VAYNRO Hoodie">
+        <div class="product-title">VAYNRO Heavyweight Hoodie</div>
+        <div class="product-price">BDT 2,450</div>
+        
+        <div class="size-selector-label">Select Size</div>
+        <div class="size-selector">
+          <button class="size-btn" onclick="selectSize(this, 'M')">M</button>
+          <button class="size-btn" onclick="selectSize(this, 'L')">L</button>
+          <button class="size-btn" onclick="selectSize(this, 'XL')">XL</button>
+        </div>
+        
+        <button class="add-to-cart" onclick="addToCart('VAYNRO Heavyweight Hoodie', 2450, this)">Add To Cart</button>
       </div>
 
     </div>
-  </div>
+  </section>
 
-  <!-- Checkout Modal -->
+  <!-- ABOUT US SECTION -->
+  <section id="sec-about" class="page-section">
+    <div class="about-container">
+      <h2>ABOUT VAYNRO</h2>
+      <p>
+        VAYNRO is a modern aesthetic fashion brand dedicated to crafting high-end, minimalist streetwear and minimalist apparel. Designed for individuals who appreciate subtlety, premium quality, and effortless style.
+      </p>
+      
+      <div class="founder-card">
+        <div class="founder-title">Founder & CEO</div>
+        <div class="founder-name">SHAKIB</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHECKOUT MODAL -->
   <div class="modal" id="orderModal">
     <div class="modal-content">
       <span class="close-btn" onclick="closeCheckout()">&times;</span>
-      <h2>Complete Your Order</h2>
+      <h3>YOUR ORDER</h3>
       <br>
-      <div id="cartSummary" style="margin-bottom: 15px; font-size: 14px; color: #aaa;"></div>
       
-      <form id="orderForm" onsubmit="handleOrderSubmit(event)">
+      <div id="cartSummary"></div>
+      
+      <form id="orderForm" onsubmit="handleOrderSubmit(event)" style="margin-top: 20px;">
         <div class="form-group">
-          <label>Your Name</label>
-          <input type="text" id="custName" required placeholder="Enter full name">
+          <label>Full Name</label>
+          <input type="text" id="custName" required placeholder="Enter your full name">
         </div>
         <div class="form-group">
           <label>Phone Number</label>
           <input type="tel" id="custPhone" required placeholder="017XXXXXXXX">
         </div>
         <div class="form-group">
-          <label>Full Delivery Address</label>
-          <textarea id="custAddress" rows="3" required placeholder="House, Road, City..."></textarea>
+          <label>Delivery Address</label>
+          <textarea id="custAddress" rows="3" required placeholder="House, Road, Area, City..."></textarea>
         </div>
-        <button type="submit" class="submit-order-btn" id="submitBtn">Place Order (Cash on Delivery)</button>
+
+        <!-- Payment Method Selection -->
+        <div class="form-group">
+          <label>Payment Method</label>
+          <select id="paymentMethod" onchange="togglePaymentFields()" required>
+            <option value="COD">Cash on Delivery</option>
+            <option value="bKash">bKash (Send Money)</option>
+          </select>
+        </div>
+
+        <!-- bKash Instructions & Inputs -->
+        <div class="bkash-box" id="bkashBox">
+          Please Send Money <strong id="totalBkashAmount">BDT 0</strong> to:
+          <br>
+          <strong style="font-size: 16px; color: #fff;">bKash Personal: 01725373633</strong>
+          <br><br>
+          <div class="form-group">
+            <label>Your bKash Number</label>
+            <input type="tel" id="bkashSenderNumber" placeholder="017XXXXXXXX">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label>bKash Transaction ID (TrxID)</label>
+            <input type="text" id="bkashTrxId" placeholder="e.g. 9J7X8K2L">
+          </div>
+        </div>
+
+        <button type="submit" class="submit-order-btn" id="submitBtn">Confirm Order</button>
       </form>
     </div>
   </div>
 
-  <!-- Firebase Web SDKs -->
+  <!-- Firebase Compatibility SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
   <script>
-    // Firebase Configuration
+    // Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyAw6PTjumhTGMog6LAyCaFNuyIg2E16fd8",
       authDomain: "vaynro-website.firebaseapp.com",
@@ -109,44 +394,77 @@
     const db = firebase.firestore();
 
     let cart = [];
-    let selectedSize = null;
+    let selectedSizes = {};
+    let grandTotal = 0;
 
-    function selectSize(btn) {
-      const parent = btn.parentElement;
-      parent.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      selectedSize = btn.innerText;
+    // Tab Navigation System
+    function switchTab(tabName) {
+      document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active-section'));
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+
+      if (tabName === 'home') {
+        document.getElementById('sec-home').classList.add('active-section');
+        document.getElementById('nav-home').classList.add('active');
+      } else if (tabName === 'about') {
+        document.getElementById('sec-about').classList.add('active-section');
+        document.getElementById('nav-about').classList.add('active');
+      }
     }
 
-    function addToCart(title, price, btn) {
+    // Size Selection Logic
+    function selectSize(btn, size) {
       const parent = btn.parentElement;
-      const activeSizeBtn = parent.querySelector('.size-btn.active');
+      parent.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
       
-      if (!activeSizeBtn) {
+      const card = btn.closest('.product-card');
+      const title = card.querySelector('.product-title').innerText;
+      selectedSizes[title] = size;
+    }
+
+    // Add To Cart
+    function addToCart(title, price, btn) {
+      const size = selectedSizes[title];
+      
+      if (!size) {
         alert("Please select a size first!");
         return;
       }
 
-      cart.push({ title, price, size: activeSizeBtn.innerText });
+      cart.push({ title, price, size });
       document.getElementById('cartCount').innerText = cart.length;
-      alert("Added to cart!");
+      alert(`Added "${title}" (Size: ${size}) to cart!`);
     }
 
+    // Open Checkout Modal
     function openCheckout() {
       if (cart.length === 0) {
         alert("Your cart is empty!");
         return;
       }
-      
-      let summaryText = "";
-      let total = 0;
-      cart.forEach((item, index) => {
-        summaryText += `${index + 1}. ${item.title} (${item.size}) - BDT ${item.price}<br>`;
-        total += item.price;
+
+      let summaryHTML = "";
+      grandTotal = 0;
+
+      cart.forEach((item) => {
+        summaryHTML += `
+          <div class="cart-item-row">
+            <span>${item.title} <strong>(${item.size})</strong></span>
+            <span>BDT ${item.price}</span>
+          </div>
+        `;
+        grandTotal += item.price;
       });
-      summaryText += `<br><strong>Total: BDT ${total}</strong>`;
-      
-      document.getElementById('cartSummary').innerHTML = summaryText;
+
+      summaryHTML += `
+        <div class="cart-total-row">
+          <span>Total Payable</span>
+          <span style="color: var(--accent-color);">BDT ${grandTotal}</span>
+        </div>
+      `;
+
+      document.getElementById('cartSummary').innerHTML = summaryHTML;
+      document.getElementById('totalBkashAmount').innerText = `BDT ${grandTotal}`;
       document.getElementById('orderModal').style.display = 'flex';
     }
 
@@ -154,40 +472,69 @@
       document.getElementById('orderModal').style.display = 'none';
     }
 
+    // Toggle bKash Fields
+    function togglePaymentFields() {
+      const method = document.getElementById('paymentMethod').value;
+      const bkashBox = document.getElementById('bkashBox');
+      if (method === 'bKash') {
+        bkashBox.style.display = 'block';
+      } else {
+        bkashBox.style.display = 'none';
+      }
+    }
+
+    // Submit Order To Firestore
     function handleOrderSubmit(e) {
       e.preventDefault();
-      
+
+      const paymentMethod = document.getElementById('paymentMethod').value;
+      const bkashNumber = document.getElementById('bkashSenderNumber').value;
+      const bkashTrx = document.getElementById('bkashTrxId').value;
+
+      if (paymentMethod === 'bKash' && (!bkashNumber || !bkashTrx)) {
+        alert("Please enter your bKash sender number and Transaction ID (TrxID)!");
+        return;
+      }
+
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.innerText = "Placing Order...";
       submitBtn.disabled = true;
 
       const orderData = {
-        name: document.getElementById('custName').value,
+        customerName: document.getElementById('custName').value,
         phone: document.getElementById('custPhone').value,
         address: document.getElementById('custAddress').value,
-        items: cart,
+        paymentMethod: paymentMethod,
+        bkashSenderNumber: paymentMethod === 'bKash' ? bkashNumber : "N/A",
+        bkashTrxId: paymentMethod === 'bKash' ? bkashTrx : "N/A",
+        totalAmount: grandTotal,
+        orderedItems: cart,
         status: "Pending",
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
 
       db.collection("orders").add(orderData)
         .then(() => {
-          alert("ধন্যবাদ! আপনার অর্ডারটি সফলভাবে নেওয়া হয়েছে।");
+          alert("ধন্যবাদ! আপনার অর্ডারটি সফলভাবে জমা হয়েছে।");
           cart = [];
+          selectedSizes = {};
+          document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
           document.getElementById('cartCount').innerText = "0";
           document.getElementById('orderForm').reset();
+          togglePaymentFields();
           closeCheckout();
         })
         .catch((error) => {
-          console.error("Order submit error: ", error);
-          alert("অর্ডার জমা দিতে সমস্যা হয়েছে, আবার চেষ্টা করুন।");
+          console.error("Firebase Error: ", error);
+          alert("অর্ডার জমা দিতে সমস্যা হয়েছে, অনুগ্রহ করে আবার চেষ্টা করুন।");
         })
         .finally(() => {
-          submitBtn.innerText = "Place Order (Cash on Delivery)";
+          submitBtn.innerText = "Confirm Order";
           submitBtn.disabled = false;
         });
     }
 
+    // Product Search Filter
     function filterProducts() {
       const query = document.getElementById('searchBar').value.toLowerCase();
       const products = document.querySelectorAll('.product-card');
