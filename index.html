@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VAYNRO | Aesthetic Fashion</title>
+    <title>VAYNRO | Aesthetic Fashion & Lifestyle</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
-        /* Minimal Cozy Aesthetic Style Base */
         :root {
             --bg-color: #fcfbf7;
             --card-bg: #ffffff;
@@ -30,7 +29,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            padding-bottom: 60px;
+            scroll-behavior: smooth;
         }
 
         /* Navigation Bar */
@@ -38,8 +37,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 24px 8%;
-            background: rgba(252, 251, 247, 0.9);
+            padding: 18px 8%;
+            background: rgba(252, 251, 247, 0.95);
             backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
@@ -47,18 +46,34 @@
             border-bottom: 1px solid var(--border-color);
         }
 
-        .brand-logo {
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--accent-dark);
+        .logo-img {
+            height: 35px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-muted);
         }
 
         .cart-trigger {
             background: none;
             border: none;
-            font-size: 15px;
+            font-size: 14px;
             cursor: pointer;
             color: var(--text-main);
             font-weight: 500;
@@ -78,16 +93,17 @@
         /* Hero Section */
         .hero {
             text-align: center;
-            padding: 60px 20px 40px;
-            max-width: 600px;
+            padding: 70px 20px 50px;
+            max-width: 650px;
             margin: 0 auto;
         }
 
         .hero h1 {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: 400;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+            text-transform: uppercase;
         }
 
         .hero p {
@@ -96,12 +112,22 @@
             line-height: 1.6;
         }
 
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin: 50px 0 30px;
+            text-transform: uppercase;
+        }
+
         /* Product Grid */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 28px;
-            padding: 20px 8%;
+            padding: 0 8%;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -122,7 +148,7 @@
 
         .product-image {
             width: 100%;
-            height: 320px;
+            height: 340px;
             object-fit: cover;
             background-color: #f5f4f0;
         }
@@ -158,6 +184,71 @@
 
         .add-to-cart-btn:hover {
             background-color: #333333;
+        }
+
+        /* About Us Section */
+        .about-section {
+            max-width: 900px;
+            margin: 80px auto;
+            padding: 40px 8%;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .founder-img {
+            width: 220px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+        }
+
+        .about-text h2 {
+            font-size: 24px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        /* Contact Us Section */
+        .contact-section {
+            max-width: 600px;
+            margin: 60px auto 80px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .contact-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .contact-card p {
+            color: var(--text-muted);
+            margin: 8px 0;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 13px;
         }
 
         /* Cart Drawer Slide-out */
@@ -234,13 +325,28 @@
             font-weight: 600;
             cursor: pointer;
         }
+
+        @media (max-width: 768px) {
+            .about-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
 
     <!-- Header Navigation -->
     <nav>
-        <div class="brand-logo">VAYNRO</div>
+        <img src="logo.svg" alt="VAYNRO" class="logo-img" onerror="this.outerHTML='<div style=\'font-size:22px; font-weight:600; letter-spacing:3px;\'>VAYNRO</div>'">
+        <ul class="nav-links">
+            <li><a href="#collection">Collection</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
         <button class="cart-trigger" onclick="toggleCart()">
             Cart <span class="cart-count" id="cartCount">0</span>
         </button>
@@ -248,23 +354,24 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <h1>Minimal & Aesthetic Fashion</h1>
+        <h1>Aesthetic Fashion & Lifestyle</h1>
         <p>সহজ ও সাবলীল ডিজাইনে তৈরি দৈনন্দিন লাক্সারি আউটফিট।</p>
     </section>
 
     <!-- Products Showcase -->
+    <div class="section-title" id="collection">Featured Collection</div>
     <main class="products-grid">
         <div class="product-card">
-            <img src="overcoat.jpg" alt="Minimal Overcoat" class="product-image" onerror="this.src='https://via.placeholder.com/300x400/f5f4f0/2c2a29?text=VAYNRO+Product'">
+            <img src="overcoat.jpg" alt="Cozy Overcoat" class="product-image" onerror="this.src='https://via.placeholder.com/300x400/f5f4f0/2c2a29?text=Overcoat'">
             <div class="product-details">
-                <div class="product-title">Cozy Minimal Overcoat</div>
+                <div class="product-title">Cozy Aesthetic Overcoat</div>
                 <div class="product-price">৳ ৩,৫০০</div>
-                <button class="add-to-cart-btn" onclick="addToCart('Cozy Minimal Overcoat', 3500)">Add to Cart</button>
+                <button class="add-to-cart-btn" onclick="addToCart('Cozy Aesthetic Overcoat', 3500)">Add to Cart</button>
             </div>
         </div>
 
         <div class="product-card">
-            <img src="bag.png" alt="Aesthetic Tote Bag" class="product-image" onerror="this.src='https://via.placeholder.com/300x400/f5f4f0/2c2a29?text=VAYNRO+Product'">
+            <img src="bag.png" alt="Aesthetic Leather Bag" class="product-image" onerror="this.src='https://via.placeholder.com/300x400/f5f4f0/2c2a29?text=Leather+Bag'">
             <div class="product-details">
                 <div class="product-title">Aesthetic Leather Bag</div>
                 <div class="product-price">৳ ১,৮০০</div>
@@ -272,6 +379,30 @@
             </div>
         </div>
     </main>
+
+    <!-- About Us Section -->
+    <section class="about-section" id="about">
+        <img src="founder.jpg" alt="Founder" class="founder-img" onerror="this.src='https://via.placeholder.com/220/f5f4f0/2c2a29?text=Founder'">
+        <div class="about-text">
+            <h2>About VAYNRO</h2>
+            <p>VAYNRO হল একটি আধুনিক লাক্সারি ও এস্থেটিক ফ্যাশন ব্র্যান্ড। আমরা বিশ্বাস করি সাধারণের মাঝেও অনন্যতা তৈরি করা সম্ভব। আমাদের প্রতিটি প্রোডাক্ট সর্বোচ্চ গুণগত মান এবং আধুনিক মিনিমাল ডিজাইনের সমন্বয়।</p>
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section class="contact-section" id="contact">
+        <div class="section-title">Contact Us</div>
+        <div class="contact-card">
+            <p><strong>Email:</strong> support@vaynro.com</p>
+            <p><strong>WhatsApp:</strong> +880 1700-000000</p>
+            <p><strong>Location:</strong> Dhaka, Bangladesh</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2026 VAYNRO. All rights reserved.
+    </footer>
 
     <!-- Cart Drawer -->
     <div class="cart-modal" id="cartModal">
@@ -327,7 +458,6 @@
             cartItemsContainer.innerHTML = html;
             cartTotal.innerText = '৳ ' + total;
             
-            // Save to browser
             localStorage.setItem('vaynro_cart', JSON.stringify(cart));
         }
 
@@ -364,12 +494,10 @@
 
             message += `\nমোট বিল: ৳${total}`;
             
-            // আপনার হোয়াটসঅ্যাপ নম্বরটি এখানে বসিয়ে নিন
             const phone = "8801700000000"; 
             window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
         }
 
-        // Initial Load
         updateCartUI();
     </script>
 </body>
