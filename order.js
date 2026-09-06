@@ -46,11 +46,14 @@ function openModal(product) {
   currentProduct = product;
   document.getElementById("modalImg").src = product.image;
   document.getElementById("modalTitle").innerText = product.title;
-  document.getElementById("productModal").style.display = "flex";
   
   // পেমেন্ট বক্স হাইড এবং ডেলিভারি চার্জ ক্যালকুলেট করা
   document.getElementById("bkashDetailsBox").style.display = "none";
+  document.getElementById("paymentMethod").value = "Cash on Delivery";
+  document.getElementById("deliveryLocation").value = "inside_dhaka";
+  
   calculateTotal();
+  document.getElementById("productModal").style.display = "flex";
 }
 
 function closeModal() {
@@ -58,7 +61,10 @@ function closeModal() {
 }
 
 function addToCart() {
-  if(!currentProduct) return;
+  if(!currentProduct) {
+    alert("Please select a product first!");
+    return;
+  }
   cart.push({ ...currentProduct, size: selectedSize });
   document.getElementById("cartCount").innerText = cart.length;
   alert(`Added ${currentProduct.title} (Size: ${selectedSize}) to Cart!`);
@@ -91,6 +97,11 @@ function calculateTotal() {
 
 // ফায়ারবেসে অর্ডার সাবমিট করার ফাংশন
 function placeOrder() {
+  if(!currentProduct) {
+    alert("No product selected!");
+    return;
+  }
+
   const name = document.getElementById("buyerName").value;
   const phone = document.getElementById("buyerPhone").value;
   const address = document.getElementById("buyerAddress").value;
