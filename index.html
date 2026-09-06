@@ -7,18 +7,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    
     body { background: #f3f0f9; color: #2d2342; padding: 20px; }
-    
-    /* Header / Navbar */
     header { max-width: 1200px; margin: 0 auto 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e1d9ec; padding-bottom: 20px; }
     h1.logo { font-size: 28px; letter-spacing: 4px; color: #7c5295; text-transform: uppercase; cursor: pointer; font-weight: 700; }
     .nav-links { display: flex; gap: 20px; align-items: center; }
     .nav-links a { color: #5a4b73; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
     .nav-links a:hover { color: #8e52bd; }
-    
     .cart-btn-trigger { background: #8e52bd; border: none; color: #fff; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 14px; transition: 0.3s; box-shadow: 0 4px 12px rgba(142, 82, 189, 0.2); }
-    .cart-btn-trigger:hover { background: #763fa2; transform: translateY(-2px); }
 
     /* Vogue Cover Styling */
     .vogue-cover-container {
@@ -34,7 +29,6 @@
       color: #ffffff;
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     }
-
     .vogue-cover-container .cover-bg {
       width: 100%;
       height: 100%;
@@ -43,7 +37,6 @@
       filter: grayscale(100%) contrast(110%);
       opacity: 0.9;
     }
-
     .vogue-title {
       position: absolute;
       top: 10px;
@@ -61,142 +54,25 @@
       text-align: center;
       pointer-events: none;
     }
-
-    .cover-meta {
-      position: absolute;
-      top: 130px;
-      font-family: 'Bodoni Moda', serif;
-      font-size: 13px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.85);
-      text-shadow: 0 2px 5px rgba(0,0,0,0.8);
-    }
+    .cover-meta { position: absolute; top: 130px; font-family: 'Bodoni Moda', serif; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255, 255, 255, 0.85); }
     .left-meta { left: 30px; }
     .right-meta { right: 30px; text-align: right; display: flex; flex-direction: column; }
-
-    .cover-text-group {
-      position: absolute;
-      top: 180px;
-      width: 200px;
-    }
+    .cover-text-group { position: absolute; top: 180px; width: 200px; }
     .left-group { left: 30px; text-align: left; }
     .right-group { right: 30px; text-align: right; }
-
-    .vogue-headline {
-      font-family: 'Bodoni Moda', serif;
-      font-size: clamp(14px, 1.8vw, 20px);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #ffffff;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.9);
-    }
-
-    .vogue-subtext {
-      font-size: 9px;
-      letter-spacing: 1px;
-      margin-top: 5px;
-      color: rgba(255, 255, 255, 0.75);
-      text-transform: uppercase;
-      line-height: 1.3;
-    }
-
-    .cover-footer {
-      position: absolute;
-      bottom: 20px;
-      width: 100%;
-      text-align: center;
-      padding: 0 20px;
-    }
-
-    .vogue-bottom-title {
-      font-family: 'Bodoni Moda', serif;
-      font-size: clamp(30px, 5vw, 65px);
-      font-weight: 800;
-      letter-spacing: 4px;
-      color: #ffffff;
-      text-shadow: 0 4px 12px rgba(0,0,0,0.8);
-      margin: 0;
-      line-height: 1;
-    }
-
-    .vogue-footer-sub {
-      font-size: 10px;
-      letter-spacing: 3px;
-      margin-top: 6px;
-      color: rgba(255, 255, 255, 0.8);
-      text-transform: uppercase;
-    }
-
-    @media (max-width: 768px) {
-      .vogue-cover-container { height: 65vh; min-height: 450px; }
-      .cover-meta { top: 85px; font-size: 10px; }
-      .left-meta { left: 15px; }
-      .right-meta { right: 15px; }
-      .cover-text-group { top: 120px; width: 130px; }
-      .left-group { left: 15px; }
-      .right-group { right: 15px; }
-      .vogue-subtext { display: none; }
-    }
+    .vogue-headline { font-family: 'Bodoni Moda', serif; font-size: clamp(14px, 1.8vw, 20px); font-weight: 700; line-height: 1.1; letter-spacing: 1.5px; text-transform: uppercase; color: #ffffff; }
+    .vogue-subtext { font-size: 9px; letter-spacing: 1px; margin-top: 5px; color: rgba(255, 255, 255, 0.75); text-transform: uppercase; }
+    .cover-footer { position: absolute; bottom: 20px; width: 100%; text-align: center; padding: 0 20px; }
+    .vogue-bottom-title { font-family: 'Bodoni Moda', serif; font-size: clamp(30px, 5vw, 65px); font-weight: 800; letter-spacing: 4px; color: #ffffff; margin: 0; }
+    .vogue-footer-sub { font-size: 10px; letter-spacing: 3px; margin-top: 6px; color: rgba(255, 255, 255, 0.8); text-transform: uppercase; }
 
     /* Product Grid */
     .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 40px auto; }
-    .card { background: #ffffff; border: 1px solid #e9e2f3; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
-    .card:hover { transform: translateY(-6px); box-shadow: 0 10px 25px rgba(142, 82, 189, 0.15); border-color: #d1bcbe; }
+    .card { background: #ffffff; border: 1px solid #e9e2f3; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.3s; }
     .card img { width: 100%; height: 350px; object-fit: cover; background: #eae5f2; }
     .card-details { padding: 20px; text-align: center; }
     .card-title { font-size: 18px; color: #2d2342; margin-bottom: 8px; font-weight: 600; }
     .card-price { font-size: 16px; color: #8e52bd; font-weight: 700; }
-
-    /* Modals UI */
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(45, 35, 66, 0.4); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
-    .close-btn { position: absolute; top: 15px; right: 20px; color: #7d6e93; font-size: 26px; cursor: pointer; z-index: 10; font-weight: bold; }
-    
-    .detail-modal-content { background: #ffffff; border: 1px solid #e1d9ec; border-radius: 20px; width: 100%; max-width: 900px; max-height: 90vh; overflow-y: auto; position: relative; padding: 35px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-    .detail-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 35px; }
-    @media (max-width: 768px) { .detail-layout { grid-template-columns: 1fr; } }
-    
-    .detail-img-box img { width: 100%; border-radius: 16px; height: 420px; object-fit: cover; border: 1px solid #e9e2f3; }
-    .detail-info { display: flex; flex-direction: column; justify-content: space-between; }
-    .detail-title { font-size: 26px; font-weight: 700; margin-bottom: 10px; color: #2d2342; }
-    .detail-rating { color: #ab6adb; font-size: 14px; margin-bottom: 15px; }
-    .detail-price { font-size: 22px; font-weight: 700; color: #8e52bd; margin-bottom: 15px; }
-    .detail-desc { font-size: 14px; color: #6b5b85; line-height: 1.6; margin-bottom: 20px; }
-    
-    .size-title { font-size: 13px; font-weight: 600; text-transform: uppercase; margin-bottom: 8px; color: #5a4b73; }
-    .size-options { display: flex; gap: 10px; margin-bottom: 25px; }
-    .size-btn { border: 1px solid #dcd1e8; background: #f8f5fc; color: #5a4b73; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.2s; }
-    .size-btn.active, .size-btn:hover { border-color: #8e52bd; background: #8e52bd; color: #fff; }
-
-    .action-btns { display: flex; gap: 12px; margin-bottom: 25px; }
-    .action-btns button { flex: 1; padding: 14px; border-radius: 10px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 13px; border: none; transition: 0.3s; }
-    .btn-add-cart { background: #e8def2; color: #6b359c; border: 1px solid #d1bcbe !important; }
-    .btn-buy-now { background: #8e52bd; color: #fff; }
-
-    .reviews-section { border-top: 1px solid #e1d9ec; padding-top: 25px; margin-top: 25px; }
-    .section-heading { font-size: 18px; font-weight: 700; color: #6b359c; margin-bottom: 15px; text-transform: uppercase; }
-    
-    .review-form { background: #f8f5fc; padding: 18px; border-radius: 12px; border: 1px solid #e1d9ec; margin-bottom: 20px; }
-    .review-form input, .review-form textarea, .review-form select { width: 100%; padding: 10px; background: #ffffff; border: 1px solid #dcd1e8; color: #2d2342; border-radius: 8px; margin-bottom: 10px; font-size: 13px; outline: none; }
-    .review-form button { background: #8e52bd; color: #fff; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 12px; }
-
-    .review-card { background: #f8f5fc; padding: 14px; border-radius: 10px; border: 1px solid #eae5f2; margin-bottom: 10px; }
-    .review-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
-    .reviewer-name { font-weight: 600; font-size: 14px; color: #2d2342; }
-    .reviewer-stars { color: #ab6adb; font-size: 12px; }
-    .review-text { font-size: 13px; color: #5a4b73; line-height: 1.4; }
-
-    .modal-content { background: #ffffff; border: 1px solid #e1d9ec; padding: 30px; border-radius: 16px; width: 100%; max-width: 480px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-    .form-group { margin-bottom: 14px; text-align: left; }
-    .form-group label { display: block; font-size: 12px; color: #6b5b85; margin-bottom: 5px; text-transform: uppercase; font-weight: 600; }
-    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; background: #f8f5fc; border: 1px solid #dcd1e8; color: #2d2342; border-radius: 8px; font-size: 14px; outline: none; }
-    
-    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #e1d9ec; }
-    .cart-total-box { display: flex; justify-content: space-between; margin: 15px 0; font-size: 16px; font-weight: 700; color: #8e52bd; border-top: 1px dashed #dcd1e8; padding-top: 10px; }
-    .payment-box { background: #f3ebfa; border: 1px solid #c9b1e0; padding: 15px; border-radius: 8px; margin-bottom: 15px; font-size: 13px; display: none; color: #2d2342; }
-    .confirm-btn { width: 100%; background: #8e52bd; color: #fff; border: none; padding: 12px; font-weight: 700; border-radius: 8px; cursor: pointer; text-transform: uppercase; font-size: 15px; box-shadow: 0 4px 12px rgba(142, 82, 189, 0.2); }
   </style>
 </head>
 <body>
@@ -206,10 +82,11 @@
     <div class="nav-links">
       <a href="about.html">About Us</a>
       <a href="contact.html">Contact Us</a>
-      <button class="cart-btn-trigger" onclick="openCartModal()">🛒 Cart (<span id="cartCount">0</span>)</button>
+      <button class="cart-btn-trigger">🛒 Cart (<span id="cartCount">0</span>)</button>
     </div>
   </header>
 
+  <!-- Vogue Magazine Cover Banner Section -->
   <div class="vogue-cover-container">
     <img src="https://i.ibb.co/C060f7n1/VideoCapture-20260907-001518.jpg" alt="VAYNRO Cover" class="cover-bg">
     <h1 class="vogue-title">VAYNRO</h1>
@@ -224,17 +101,11 @@
     <div class="cover-text-group left-group">
       <div class="vogue-headline">NEW<br>SEASON<br>NEW<br>ATTITUDE</div>
       <p class="vogue-subtext">FRESH LOOKS<br>BOLD STATEMENTS</p>
-      
-      <div class="vogue-headline" style="margin-top: 25px;">BEAUTY<br>REDEFINED</div>
-      <p class="vogue-subtext">BE CONFIDENT.<br>BE YOU.</p>
     </div>
 
     <div class="cover-text-group right-group">
       <div class="vogue-headline">LESS<br>IS THE<br>NEW MORE</div>
       <p class="vogue-subtext">THE POWER OF<br>SIMPLICITY</p>
-
-      <div class="vogue-headline" style="margin-top: 25px;">TIMELESS<br>ELEGANCE</div>
-      <p class="vogue-subtext">STYLE THAT<br>NEVER FADES</p>
     </div>
 
     <div class="cover-footer">
@@ -247,129 +118,8 @@
     <p style="text-align: center; width: 100%; color: #7d6e93;">Loading catalog...</p>
   </div>
 
-  <div class="modal-overlay" id="detailModal">
-    <div class="detail-modal-content">
-      <span class="close-btn" onclick="closeDetailModal()">&times;</span>
-      
-      <div class="detail-layout">
-        <div class="detail-img-box">
-          <img id="dtImg" src="" alt="Product Image">
-        </div>
-        <div class="detail-info">
-          <div>
-            <div class="detail-title" id="dtTitle">Product Name</div>
-            <div class="detail-rating">★ ★ ★ ★ ★ <span style="color: #7d6e93; margin-left: 5px;" id="dtRatingCount">(5.0)</span></div>
-            <div class="detail-price" id="dtPrice">0 BDT</div>
-            <div class="detail-desc">Crafted with premium heavyweight fabric, offering exceptional comfort and modern aesthetic streetwear fit for your everyday style.</div>
-            
-            <div class="size-title">Select Size:</div>
-            <div class="size-options">
-              <button class="size-btn" onclick="selectSize(this, 'M')">M</button>
-              <button class="size-btn active" onclick="selectSize(this, 'L')">L</button>
-              <button class="size-btn" onclick="selectSize(this, 'XL')">XL</button>
-              <button class="size-btn" onclick="selectSize(this, 'XXL')">XXL</button>
-            </div>
-          </div>
-
-          <div class="action-btns">
-            <button class="btn-add-cart" onclick="addCurrentToCart()">Add To Cart</button>
-            <button class="btn-buy-now" onclick="buyCurrentNow()">Buy Now</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="reviews-section">
-        <div class="section-heading">Customer Reviews & Comments</div>
-        
-        <div class="review-form">
-          <input type="text" id="revName" placeholder="Your Name" required>
-          <select id="revStars">
-            <option value="5">5 Stars (★★★★★)</option>
-            <option value="4">4 Stars (★★★★☆)</option>
-            <option value="3">3 Stars (★★★☆☆)</option>
-            <option value="2">2 Stars (★★☆☆☆)</option>
-            <option value="1">1 Star (★☆☆☆☆)</option>
-          </select>
-          <textarea id="revComment" rows="2" placeholder="Write your review or experience about this product..." required></textarea>
-          <button onclick="submitReview()">Submit Review</button>
-        </div>
-
-        <div id="reviewsList">
-          <p style="color: #8a7b9f; font-size: 13px;">No reviews yet. Be the first to leave a comment!</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="cartModal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeCartModal()">&times;</span>
-      <div style="font-size: 20px; color: #8e52bd; margin-bottom: 15px; text-align: center; text-transform: uppercase; font-weight: bold;">Your Shopping Cart</div>
-      <div id="cartItemsContainer"><p style="text-align: center; color: #7d6e93;">Your cart is empty.</p></div>
-      <div class="cart-total-box" id="cartTotalBox" style="display: none;">
-        <span>Total:</span><span id="cartTotalAmount">0 BDT</span>
-      </div>
-      <button class="confirm-btn" id="checkoutCartBtn" style="display: none;" onclick="openCheckoutFromCart()">Proceed to Checkout</button>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="orderModal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeOrderModal()">&times;</span>
-      <div style="font-size: 20px; color: #8e52bd; margin-bottom: 15px; text-align: center; text-transform: uppercase; font-weight: bold;">Checkout Order</div>
-      
-      <form id="orderForm" onsubmit="placeOrder(event)">
-        <div class="form-group">
-          <label>Selected Product</label>
-          <input type="text" id="modalProduct" readonly style="color: #8e52bd; font-weight: bold;">
-        </div>
-        <div class="form-group">
-          <label>Selected Size</label>
-          <input type="text" id="custSize" readonly style="color: #2d2342; font-weight: bold;">
-        </div>
-        <div class="form-group">
-          <label>Full Name</label>
-          <input type="text" id="custName" placeholder="Enter your full name" required>
-        </div>
-        <div class="form-group">
-          <label>Phone Number</label>
-          <input type="tel" id="custPhone" placeholder="017XXXXXXXX" required>
-        </div>
-        <div class="form-group">
-          <label>Delivery Address</label>
-          <textarea id="custAddress" rows="2" placeholder="House/Road, Area, City" required></textarea>
-        </div>
-        <div class="form-group">
-          <label>Payment Method</label>
-          <select id="payMethod" onchange="togglePaymentInfo()" required>
-            <option value="Cash on Delivery">Cash on Delivery (COD)</option>
-            <option value="bKash">bKash (Send Money)</option>
-          </select>
-        </div>
-
-        <div class="payment-box" id="bkashBox">
-          <p>Please <b>Send Money</b> to this bKash Number:</p>
-          <p style="color: #8e52bd; font-weight: bold; font-size: 15px; margin: 5px 0;">📱 01725373633 (Personal)</p>
-          <div class="form-group" style="margin-top: 10px;">
-            <label>Sender bKash Number</label>
-            <input type="tel" id="bkashSenderNum" placeholder="যে নম্বর থেকে টাকা পাঠিয়েছেন">
-          </div>
-          <div class="form-group">
-            <label>Transaction ID (TrxID)</label>
-            <input type="text" id="bkashTrxId" placeholder="e.g. 9J7X8KLMNO">
-          </div>
-        </div>
-
-        <button type="submit" class="confirm-btn" id="subBtn">Confirm Order</button>
-        <div style="margin-top: 10px; font-size: 13px; text-align: center; color: #25d366;" id="orderStatus"></div>
-      </form>
-    </div>
-  </div>
-
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAw6PTjumhTGMog6LAyCaFNuyIg2E16fd8",
@@ -380,15 +130,9 @@
       appId: "1:442609775562:web:51722b9bd1c34b6cac9533",
       measurementId: "G-225DYYLGER"
     };
-
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    let cart = [];
-    let currentDocId = "";
-    let currentProduct = { title: "", price: 0, image: "", size: "L" };
-
-    // Load Products
     db.collection("products").onSnapshot((snapshot) => {
       const grid = document.getElementById("productGrid");
       grid.innerHTML = "";
@@ -399,8 +143,8 @@
       snapshot.forEach((doc) => {
         const data = doc.data();
         grid.innerHTML += `
-          <div class="card" onclick="openProductDetail('${doc.id}', '${data.title}', ${data.price}, '${data.image}')">
-            <img src="${data.image}" alt="${data.title}" referrerpolicy="no-referrer" onerror="this.src='https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500'">
+          <div class="card">
+            <img src="${data.image}">
             <div class="card-details">
               <div class="card-title">${data.title}</div>
               <div class="card-price">${data.price} BDT</div>
@@ -409,171 +153,6 @@
         `;
       });
     });
-
-    function openProductDetail(docId, title, price, image) {
-      currentDocId = docId;
-      currentProduct = { title, price: Number(price), image, size: "L" };
-      document.getElementById("dtTitle").innerText = title;
-      document.getElementById("dtPrice").innerText = price + " BDT";
-      document.getElementById("dtImg").src = image;
-      document.getElementById("detailModal").style.display = "flex";
-      loadReviews(docId);
-    }
-
-    function selectSize(btn, size) {
-      document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      currentProduct.size = size;
-    }
-
-    function closeDetailModal() { document.getElementById("detailModal").style.display = "none"; }
-
-    function addCurrentToCart() {
-      cart.push({...currentProduct});
-      updateCartUI();
-      closeDetailModal();
-      openCartModal();
-    }
-
-    function buyCurrentNow() {
-      closeDetailModal();
-      document.getElementById("modalProduct").value = `${currentProduct.title} - ${currentProduct.price} BDT`;
-      document.getElementById("custSize").value = currentProduct.size;
-      document.getElementById("orderModal").style.display = "flex";
-      togglePaymentInfo();
-    }
-
-    function loadReviews(docId) {
-      const list = document.getElementById("reviewsList");
-      db.collection("products").doc(docId).collection("reviews").orderBy("createdAt", "desc").onSnapshot(snapshot => {
-        if(snapshot.empty) {
-          list.innerHTML = `<p style="color: #8a7b9f; font-size: 13px;">No comments yet. Write a review!</p>`;
-          return;
-        }
-        let html = "";
-        snapshot.forEach(doc => {
-          const r = doc.data();
-          const stars = "★".repeat(r.stars) + "☆".repeat(5 - r.stars);
-          html += `
-            <div class="review-card">
-              <div class="review-header">
-                <span class="reviewer-name">${r.name}</span>
-                <span class="reviewer-stars">${stars}</span>
-              </div>
-              <div class="review-text">${r.comment}</div>
-            </div>
-          `;
-        });
-        list.innerHTML = html;
-      });
-    }
-
-    function submitReview() {
-      const name = document.getElementById("revName").value.trim();
-      const comment = document.getElementById("revComment").value.trim();
-      const stars = Number(document.getElementById("revStars").value);
-
-      if(!name || !comment) return alert("Please enter your name and comment.");
-
-      db.collection("products").doc(currentDocId).collection("reviews").add({
-        name, comment, stars, createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => {
-        document.getElementById("revName").value = "";
-        document.getElementById("revComment").value = "";
-      });
-    }
-
-    function openCartModal() { document.getElementById("cartModal").style.display = "flex"; }
-    function closeCartModal() { document.getElementById("cartModal").style.display = "none"; }
-    function closeOrderModal() { document.getElementById("orderModal").style.display = "none"; }
-
-    function updateCartUI() {
-      document.getElementById("cartCount").innerText = cart.length;
-      const container = document.getElementById("cartItemsContainer");
-      const totalBox = document.getElementById("cartTotalBox");
-      const checkoutBtn = document.getElementById("checkoutCartBtn");
-
-      if (cart.length === 0) {
-        container.innerHTML = `<p style="text-align: center; color: #7d6e93;">Your cart is empty.</p>`;
-        totalBox.style.display = "none";
-        checkoutBtn.style.display = "none";
-        return;
-      }
-
-      let html = "";
-      let total = 0;
-      cart.forEach((item, index) => {
-        total += item.price;
-        html += `
-          <div class="cart-item">
-            <div>
-              <div style="font-size: 14px; font-weight: 600; color: #2d2342;">${item.title} (${item.size})</div>
-              <div style="color: #8e52bd; font-size: 13px; font-weight: bold;">${item.price} BDT</div>
-            </div>
-            <span style="color: #e74c3c; cursor: pointer; font-size: 18px;" onclick="cart.splice(${index},1); updateCartUI();">&times;</span>
-          </div>
-        `;
-      });
-      container.innerHTML = html;
-      document.getElementById("cartTotalAmount").innerText = total + " BDT";
-      totalBox.style.display = "flex";
-      checkoutBtn.style.display = "block";
-    }
-
-    function openCheckoutFromCart() {
-      closeCartModal();
-      const titles = cart.map(i => `${i.title} (${i.size})`).join(", ");
-      document.getElementById("modalProduct").value = titles;
-      document.getElementById("custSize").value = "Cart Batch";
-      document.getElementById("orderModal").style.display = "flex";
-      togglePaymentInfo();
-    }
-
-    function togglePaymentInfo() {
-      const payMethod = document.getElementById("payMethod").value;
-      const bkashBox = document.getElementById("bkashBox");
-      if (payMethod === "bKash") {
-        bkashBox.style.display = "block";
-        document.getElementById("bkashSenderNum").required = true;
-        document.getElementById("bkashTrxId").required = true;
-      } else {
-        bkashBox.style.display = "none";
-        document.getElementById("bkashSenderNum").required = false;
-        document.getElementById("bkashTrxId").required = false;
-      }
-    }
-
-    function placeOrder(e) {
-      e.preventDefault();
-      const btn = document.getElementById("subBtn");
-      const status = document.getElementById("orderStatus");
-      const payMethod = document.getElementById("payMethod").value;
-
-      btn.disabled = true;
-      btn.innerText = "Processing...";
-
-      db.collection("orders").add({
-        product: document.getElementById("modalProduct").value,
-        size: document.getElementById("custSize").value,
-        customerName: document.getElementById("custName").value,
-        phone: document.getElementById("custPhone").value,
-        address: document.getElementById("custAddress").value,
-        paymentMethod: payMethod,
-        bkashSenderNumber: payMethod === "bKash" ? document.getElementById("bkashSenderNum").value : "N/A",
-        transactionId: payMethod === "bKash" ? document.getElementById("bkashTrxId").value : "N/A",
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => {
-        status.innerText = "🎉 Order Placed Successfully!";
-        document.getElementById("orderForm").reset();
-        cart = [];
-        updateCartUI();
-        setTimeout(() => { closeOrderModal(); btn.disabled = false; btn.innerText = "Confirm Order"; }, 2000);
-      }).catch(err => {
-        status.innerText = "❌ Order Failed.";
-        btn.disabled = false;
-        btn.innerText = "Confirm Order";
-      });
-    }
   </script>
 </body>
 </html>
