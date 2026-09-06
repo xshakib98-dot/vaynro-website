@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VAYNRO | Aesthetic Fashion & Apparel</title>
   
-  <!-- Favicon Logo (Shows on Browser Tab) -->
+  <!-- Favicon Logo (Browser Tab) -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230b0b0b'/><text x='50%' y='65%' font-size='60' font-weight='bold' fill='%23d4af37' font-family='sans-serif' text-anchor='middle'>V</text></svg>">
   
-  <!-- Google Fonts for Classy Typography -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
@@ -17,8 +17,8 @@
     :root {
       --bg-color: #0b0b0b;
       --card-bg: #141414;
-      --accent-color: #d4af37; /* Aesthetic Gold Accent */
-      --bkash-color: #e2136e; /* bKash Brand Pink */
+      --accent-color: #d4af37;
+      --bkash-color: #e2136e;
       --text-main: #f5f5f5;
       --text-muted: #a0a0a0;
       --border-color: #222222;
@@ -27,7 +27,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
     body { background-color: var(--bg-color); color: var(--text-main); padding-bottom: 60px; min-height: 100vh; }
 
-    /* Classy Header */
+    /* Header */
     header {
       background: rgba(18, 18, 18, 0.85);
       backdrop-filter: blur(12px);
@@ -41,104 +41,49 @@
       z-index: 100;
     }
 
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-    }
-
+    .logo-container { display: flex; align-items: center; gap: 10px; cursor: pointer; }
     .logo-icon {
-      width: 32px;
-      height: 32px;
-      background: var(--accent-color);
-      color: #000;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Cinzel', serif;
-      font-weight: bold;
-      font-size: 18px;
+      width: 32px; height: 32px; background: var(--accent-color); color: #000;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-family: 'Cinzel', serif; font-weight: bold; font-size: 18px;
     }
-
-    .logo {
-      font-family: 'Cinzel', serif;
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      color: #fff;
-    }
+    .logo { font-family: 'Cinzel', serif; font-size: 24px; font-weight: 700; letter-spacing: 3px; color: #fff; }
 
     nav { display: flex; gap: 25px; align-items: center; }
     nav a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 14px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: 0.3s;
-      cursor: pointer;
+      color: var(--text-muted); text-decoration: none; font-size: 14px;
+      letter-spacing: 1px; text-transform: uppercase; transition: 0.3s; cursor: pointer;
     }
     nav a.active, nav a:hover { color: var(--accent-color); }
 
     .header-right { display: flex; align-items: center; gap: 15px; }
-
     .search-box {
-      padding: 8px 14px;
-      border-radius: 20px;
-      border: 1px solid var(--border-color);
-      background: #181818;
-      color: #fff;
-      font-size: 13px;
-      outline: none;
-      width: 160px;
-      transition: 0.3s;
+      padding: 8px 14px; border-radius: 20px; border: 1px solid var(--border-color);
+      background: #181818; color: #fff; font-size: 13px; outline: none; width: 160px; transition: 0.3s;
     }
     .search-box:focus { border-color: var(--accent-color); width: 200px; }
 
     .cart-btn {
-      background: transparent;
-      color: var(--text-main);
-      padding: 8px 16px;
-      border: 1px solid var(--accent-color);
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 13px;
-      letter-spacing: 1px;
-      transition: 0.3s;
+      background: transparent; color: var(--text-main); padding: 8px 16px;
+      border: 1px solid var(--accent-color); border-radius: 20px; cursor: pointer;
+      font-weight: 600; font-size: 13px; letter-spacing: 1px; transition: 0.3s;
     }
     .cart-btn:hover { background: var(--accent-color); color: #000; }
 
-    /* Sections */
+    /* Page Sections */
     .page-section { display: none; padding: 40px 5%; max-width: 1200px; margin: 0 auto; }
     .page-section.active-section { display: block; }
 
     /* Hero Banner */
-    .hero {
-      text-align: center;
-      padding: 60px 20px;
-      border-bottom: 1px solid var(--border-color);
-      margin-bottom: 40px;
-    }
+    .hero { text-align: center; padding: 60px 20px; border-bottom: 1px solid var(--border-color); margin-bottom: 40px; }
     .hero h1 { font-family: 'Cinzel', serif; font-size: 42px; font-weight: 500; letter-spacing: 6px; margin-bottom: 12px; }
     .hero p { color: var(--text-muted); font-size: 15px; letter-spacing: 2px; text-transform: uppercase; }
 
     /* Product Grid */
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 30px;
-    }
-
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
     .product-card {
-      background: var(--card-bg);
-      border-radius: 8px;
-      padding: 16px;
-      border: 1px solid var(--border-color);
-      text-align: center;
-      transition: transform 0.3s, border-color 0.3s;
+      background: var(--card-bg); border-radius: 8px; padding: 16px;
+      border: 1px solid var(--border-color); text-align: center; transition: transform 0.3s, border-color 0.3s;
     }
     .product-card:hover { transform: translateY(-5px); border-color: #333; }
     .product-card img { width: 100%; height: 340px; object-fit: cover; border-radius: 6px; margin-bottom: 15px; }
@@ -149,95 +94,50 @@
     .size-selector-label { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; }
     .size-selector { display: flex; justify-content: center; gap: 10px; margin-bottom: 18px; }
     .size-btn {
-      background: #1f1f1f;
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 6px 14px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 600;
-      transition: 0.2s;
+      background: #1f1f1f; border: 1px solid var(--border-color); color: var(--text-main);
+      padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; transition: 0.2s;
     }
     .size-btn.selected { background: var(--text-main); color: #000; border-color: var(--text-main); }
 
-    /* Button Group for Add to Cart & Buy Now */
     .btn-group { display: flex; gap: 10px; }
-
     .add-to-cart {
-      flex: 1;
-      background: #222;
-      color: #fff;
-      padding: 12px 5px;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 12px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      transition: 0.3s;
+      flex: 1; background: #222; color: #fff; padding: 12px 5px; border: 1px solid var(--border-color);
+      border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px; text-transform: uppercase; transition: 0.3s;
     }
     .add-to-cart:hover { background: #333; }
-
     .buy-now-btn {
-      flex: 1;
-      background: var(--accent-color);
-      color: #000;
-      padding: 12px 5px;
-      border: 1px solid var(--accent-color);
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 12px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      transition: 0.3s;
+      flex: 1; background: var(--accent-color); color: #000; padding: 12px 5px; border: 1px solid var(--accent-color);
+      border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 12px; text-transform: uppercase; transition: 0.3s;
     }
     .buy-now-btn:hover { background: #fff; border-color: #fff; }
 
-    /* About Us Section Styling */
+    /* About Us & Founder Section */
     .about-container {
-      max-width: 800px;
-      margin: 20px auto;
-      text-align: center;
-      background: var(--card-bg);
-      padding: 50px 30px;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
+      max-width: 800px; margin: 20px auto; text-align: center;
+      background: var(--card-bg); padding: 50px 30px; border-radius: 12px; border: 1px solid var(--border-color);
     }
     .about-container h2 { font-family: 'Cinzel', serif; font-size: 32px; letter-spacing: 4px; margin-bottom: 20px; color: var(--accent-color); }
     .about-container p { color: var(--text-muted); line-height: 1.8; font-size: 15px; margin-bottom: 30px; }
     
     .founder-card {
-      margin-top: 40px;
-      padding-top: 30px;
-      border-top: 1px solid var(--border-color);
+      margin-top: 40px; padding-top: 30px; border-top: 1px solid var(--border-color);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px;
     }
-    .founder-title { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-color); margin-bottom: 5px; }
+    .founder-img {
+      width: 130px; height: 130px; border-radius: 50%; object-fit: cover;
+      border: 2px solid var(--accent-color); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+    }
+    .founder-title { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-color); }
     .founder-name { font-family: 'Cinzel', serif; font-size: 24px; font-weight: 700; color: #fff; }
 
     /* Modal / Order Form */
     .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(5px);
-      justify-content: center;
-      align-items: center;
-      z-index: 200;
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); justify-content: center; align-items: center; z-index: 200;
     }
     .modal-content {
-      background: #181818;
-      padding: 30px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 480px;
-      border: 1px solid var(--border-color);
-      position: relative;
-      max-height: 90vh;
-      overflow-y: auto;
+      background: #181818; padding: 30px; border-radius: 10px; width: 90%; max-width: 480px;
+      border: 1px solid var(--border-color); position: relative; max-height: 90vh; overflow-y: auto;
     }
     .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: var(--text-muted); }
     .close-btn:hover { color: #fff; }
@@ -249,43 +149,21 @@
     .form-group { margin-bottom: 15px; text-align: left; }
     .form-group label { display: block; margin-bottom: 6px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
     .form-group input, .form-group textarea, .form-group select {
-      width: 100%;
-      padding: 12px;
-      border-radius: 6px;
-      border: 1px solid var(--border-color);
-      background: #111;
-      color: white;
-      font-size: 14px;
-      outline: none;
+      width: 100%; padding: 12px; border-radius: 6px; border: 1px solid var(--border-color);
+      background: #111; color: white; font-size: 14px; outline: none;
     }
     .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent-color); }
 
-    /* bKash Payment Box */
+    /* bKash Box */
     .bkash-box {
-      display: none;
-      background: #1a0810;
-      border: 1px solid var(--bkash-color);
-      padding: 15px;
-      border-radius: 6px;
-      margin-bottom: 15px;
-      font-size: 13px;
-      line-height: 1.6;
+      display: none; background: #1a0810; border: 1px solid var(--bkash-color);
+      padding: 15px; border-radius: 6px; margin-bottom: 15px; font-size: 13px; line-height: 1.6;
     }
     .bkash-box strong { color: var(--bkash-color); font-size: 15px; }
 
     .submit-order-btn {
-      width: 100%;
-      background: var(--accent-color);
-      color: #000;
-      padding: 14px;
-      border: none;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: 0.3s;
+      width: 100%; background: var(--accent-color); color: #000; padding: 14px; border: none;
+      border-radius: 6px; font-size: 14px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: 0.3s;
     }
     .submit-order-btn:hover { background: #fff; }
   </style>
@@ -307,7 +185,7 @@
     </div>
   </header>
 
-  <!-- HOME / PRODUCTS SECTION -->
+  <!-- HOME SECTION -->
   <section id="sec-home" class="page-section active-section">
     <div class="hero">
       <h1>AESTHETIC ESSENTIALS</h1>
@@ -354,9 +232,9 @@
         </div>
       </div>
 
-      <!-- Product 3: Overcoat -->
+      <!-- Product 3: Overcoat (Uses overcoat.jpg from GitHub) -->
       <div class="product-card">
-        <img src="https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=800&auto=format&fit=crop" alt="VAYNRO Overcoat">
+        <img src="overcoat.jpg" alt="VAYNRO Overcoat" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=800&auto=format&fit=crop';">
         <div class="product-title">VAYNRO Premium Wool Overcoat</div>
         <div class="product-price">BDT 3,850</div>
         
@@ -384,9 +262,13 @@
         VAYNRO is a modern aesthetic fashion brand dedicated to crafting high-end, minimalist streetwear and apparel. Designed for individuals who appreciate subtlety, premium quality, and effortless style.
       </p>
       
+      <!-- CEO / Founder Profile (Uses founder.jpg from GitHub) -->
       <div class="founder-card">
-        <div class="founder-title">Founder & CEO</div>
-        <div class="founder-name">SHAKIB</div>
+        <img src="founder.jpg" alt="SHAKIB - Founder & CEO" class="founder-img" onerror="this.onerror=null; this.src='https://via.placeholder.com/150/d4af37/000000?text=SHAKIB';">
+        <div>
+          <div class="founder-title">Founder & CEO</div>
+          <div class="founder-name">SHAKIB</div>
+        </div>
       </div>
     </div>
   </section>
@@ -423,7 +305,7 @@
           </select>
         </div>
 
-        <!-- bKash Instructions & Inputs -->
+        <!-- bKash Box -->
         <div class="bkash-box" id="bkashBox">
           Please Send Money <strong id="totalBkashAmount">BDT 0</strong> to:
           <br>
@@ -467,7 +349,6 @@
     let selectedSizes = {};
     let grandTotal = 0;
 
-    // Tab Navigation System
     function switchTab(tabName) {
       document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active-section'));
       document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
@@ -481,7 +362,6 @@
       }
     }
 
-    // Size Selection Logic
     function selectSize(btn, size) {
       const parent = btn.parentElement;
       parent.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
@@ -492,35 +372,28 @@
       selectedSizes[title] = size;
     }
 
-    // Add To Cart
     function addToCart(title, price, btn) {
       const size = selectedSizes[title];
-      
       if (!size) {
         alert("Please select a size first!");
         return;
       }
-
       cart.push({ title, price, size });
       document.getElementById('cartCount').innerText = cart.length;
       alert(`Added "${title}" (Size: ${size}) to cart!`);
     }
 
-    // Direct Buy Now
     function buyNow(title, price, btn) {
       const size = selectedSizes[title];
-      
       if (!size) {
         alert("Please select a size first!");
         return;
       }
-
       cart = [{ title, price, size }];
       document.getElementById('cartCount').innerText = cart.length;
       openCheckout();
     }
 
-    // Open Checkout Modal
     function openCheckout() {
       if (cart.length === 0) {
         alert("Your cart is empty!");
@@ -556,7 +429,6 @@
       document.getElementById('orderModal').style.display = 'none';
     }
 
-    // Toggle bKash Fields
     function togglePaymentFields() {
       const method = document.getElementById('paymentMethod').value;
       const bkashBox = document.getElementById('bkashBox');
@@ -567,7 +439,6 @@
       }
     }
 
-    // Submit Order To Firestore
     function handleOrderSubmit(e) {
       e.preventDefault();
 
@@ -618,7 +489,6 @@
         });
     }
 
-    // Product Search Filter
     function filterProducts() {
       const query = document.getElementById('searchBar').value.toLowerCase();
       const products = document.querySelectorAll('.product-card');
