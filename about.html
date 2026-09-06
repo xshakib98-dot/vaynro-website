@@ -4,48 +4,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About Us | VAYNRO</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
     body { background: #f3f0f9; color: #2d2342; padding: 20px; }
-    
-    nav { max-width: 1200px; margin: 0 auto 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e1d9ec; padding-bottom: 20px; }
-    nav .logo { font-size: 26px; font-weight: 700; color: #7c5295; letter-spacing: 3px; text-decoration: none; }
-    nav .nav-links { display: flex; gap: 20px; align-items: center; }
-    nav .nav-links a { color: #5a4b73; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-    nav a.back-btn { background: #8e52bd; color: #fff; text-decoration: none; padding: 8px 18px; border-radius: 20px; font-size: 14px; font-weight: 600; }
+    header { max-width: 1000px; margin: 0 auto 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e1d9ec; padding-bottom: 20px; }
+    h1.logo { font-size: 28px; letter-spacing: 4px; color: #7c5295; text-transform: uppercase; font-weight: 700; }
+    .nav-links { display: flex; gap: 20px; align-items: center; }
+    .nav-links a { color: #5a4b73; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; }
+    .back-btn { background: #8e52bd; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 20px; font-weight: 700; font-size: 13px; }
 
-    .about-container { max-width: 1000px; margin: 40px auto; background: #ffffff; border: 1px solid #e1d9ec; border-radius: 20px; padding: 40px; display: flex; flex-wrap: wrap; align-items: center; gap: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-    .about-img-box { flex: 1; min-width: 280px; text-align: center; }
-    .about-img-box img { width: 100%; max-width: 340px; height: 420px; object-fit: cover; border-radius: 16px; border: 2px solid #8e52bd; }
-    
-    .about-details { flex: 1.5; min-width: 280px; }
-    .founder-title { font-size: 30px; font-weight: 700; color: #2d2342; margin-bottom: 5px; }
-    .founder-role { font-size: 15px; color: #8e52bd; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
-    .about-details p { color: #5a4b73; line-height: 1.8; font-size: 15px; margin-bottom: 15px; }
+    .about-card { max-width: 1000px; margin: 0 auto; background: #fff; border-radius: 20px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: grid; grid-template-columns: 350px 1fr; gap: 40px; align-items: center; }
+    .about-img img { width: 100%; height: 420px; object-fit: cover; border-radius: 16px; border: 1px solid #e1d9ec; }
+    .about-title { font-size: 32px; font-weight: 700; color: #7c5295; margin-bottom: 15px; }
+    .about-text { font-size: 15px; color: #5a4b73; line-height: 1.8; white-space: pre-line; }
+
+    @media (max-width: 768px) {
+      .about-card { grid-template-columns: 1fr; padding: 25px; }
+      .about-img img { height: 300px; }
+    }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a href="index.html" class="logo">VAYNRO</a>
+  <header>
+    <h1 class="logo">VAYNRO</h1>
     <div class="nav-links">
-      <a href="about.html" style="color: #8e52bd;">About Us</a>
-      <a href="contact.html">Contact Us</a>
-      <a href="index.html" class="back-btn">← Back to Shop</a>
+      <a href="about.html" style="color: #8e52bd;">ABOUT US</a>
+      <a href="contact.html">CONTACT US</a>
+      <a href="index.html" class="back-btn">← BACK TO SHOP</a>
     </div>
-  </nav>
+  </header>
 
-  <div class="about-container">
-    <div class="about-img-box">
-      <img id="fImg" src="" alt="Founder" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500'">
+  <div class="about-card">
+    <div class="about-img">
+      <!-- Your Image Link -->
+      <img id="ownerImg" src="https://i.ibb.co/C060f7n1/VideoCapture-20260907-001518.jpg" alt="VAYNRO Owner">
     </div>
-    <div class="about-details">
-      <div class="founder-title" id="fName">Loading...</div>
-      <div class="founder-role" id="fRole">...</div>
-      
-      <p id="fBio1">...</p>
-      <p id="fBio2"></p>
+    <div>
+      <div class="about-title" id="aboutTitle">Welcome to VAYNRO</div>
+      <div class="about-text" id="aboutText">
+        Welcome to VAYNRO! We provide high-quality modern fashion and aesthetic apparel designed for individuals who love style, comfort, and timeless confidence.
+
+        Our collection brings carefully crafted clothing right to your doorstep with maximum comfort and premium materials.
+      </div>
     </div>
   </div>
 
@@ -58,20 +60,17 @@
       projectId: "vaynro-website",
       storageBucket: "vaynro-website.firebasestorage.app",
       messagingSenderId: "442609775562",
-      appId: "1:442609775562:web:51722b9bd1c34b6cac9533",
-      measurementId: "G-225DYYLGER"
+      appId: "1:442609775562:web:51722b9bd1c34b6cac9533"
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    db.collection("site_settings").doc("about").onSnapshot(doc => {
+    db.collection("settings").doc("aboutUs").onSnapshot(doc => {
       if(doc.exists) {
-        const d = doc.data();
-        document.getElementById("fName").innerText = d.name || "Shakib";
-        document.getElementById("fRole").innerText = d.role || "Founder & CEO, VAYNRO";
-        document.getElementById("fImg").src = d.img || "";
-        document.getElementById("fBio1").innerText = d.bio1 || "";
-        document.getElementById("fBio2").innerText = d.bio2 || "";
+        const data = doc.data();
+        if(data.title) document.getElementById("aboutTitle").innerText = data.title;
+        if(data.text) document.getElementById("aboutText").innerText = data.text;
+        if(data.image) document.getElementById("ownerImg").src = data.image;
       }
     });
   </script>
