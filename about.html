@@ -12,6 +12,9 @@
     /* Navigation Bar */
     nav { max-width: 1200px; margin: 0 auto 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 20px; }
     nav .logo { font-size: 24px; font-weight: 700; color: #d4af37; letter-spacing: 3px; text-decoration: none; }
+    nav .nav-links { display: flex; gap: 20px; align-items: center; }
+    nav .nav-links a { color: #aaa; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+    nav .nav-links a:hover, nav .nav-links a.active { color: #d4af37; }
     nav a.back-btn { color: #fff; text-decoration: none; border: 1px solid #333; padding: 8px 16px; border-radius: 6px; font-size: 14px; transition: 0.3s; }
     nav a.back-btn:hover { border-color: #d4af37; color: #d4af37; }
 
@@ -31,7 +34,11 @@
 
   <nav>
     <a href="index.html" class="logo">VAYNRO</a>
-    <a href="index.html" class="back-btn">← Back to Shop</a>
+    <div class="nav-links">
+      <a href="about.html" class="active">About Us</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="index.html" class="back-btn">← Back to Shop</a>
+    </div>
   </nav>
 
   <div class="about-container">
