@@ -7,82 +7,84 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background: #0b0b0b; color: #fff; padding: 20px; }
+    
+    /* Lavender Soft Theme Palette */
+    body { background: #f3f0f9; color: #2d2342; padding: 20px; }
     
     /* Header / Navbar */
-    header { max-width: 1200px; margin: 0 auto 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 20px; }
-    h1 { font-size: 28px; letter-spacing: 4px; color: #d4af37; text-transform: uppercase; cursor: pointer; }
+    header { max-width: 1200px; margin: 0 auto 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e1d9ec; padding-bottom: 20px; }
+    h1 { font-size: 28px; letter-spacing: 4px; color: #7c5295; text-transform: uppercase; cursor: pointer; font-weight: 700; }
     .nav-links { display: flex; gap: 20px; align-items: center; }
-    .nav-links a { color: #aaa; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
-    .nav-links a:hover { color: #d4af37; }
+    .nav-links a { color: #5a4b73; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+    .nav-links a:hover { color: #8e52bd; }
     
-    .cart-btn-trigger { background: #141414; border: 1px solid #d4af37; color: #d4af37; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 14px; transition: 0.3s; }
-    .cart-btn-trigger:hover { background: #d4af37; color: #000; }
+    .cart-btn-trigger { background: #8e52bd; border: none; color: #fff; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 14px; transition: 0.3s; box-shadow: 0 4px 12px rgba(142, 82, 189, 0.2); }
+    .cart-btn-trigger:hover { background: #763fa2; transform: translateY(-2px); }
 
     /* Product Grid */
     .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 40px auto; }
-    .card { background: #141414; border: 1px solid #222; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.2s, border-color 0.2s; }
-    .card:hover { transform: translateY(-5px); border-color: #d4af37; }
-    .card img { width: 100%; height: 350px; object-fit: cover; background: #1a1a1a; }
+    .card { background: #ffffff; border: 1px solid #e9e2f3; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 10px 25px rgba(142, 82, 189, 0.15); border-color: #d1bcbe; }
+    .card img { width: 100%; height: 350px; object-fit: cover; background: #eae5f2; }
     .card-details { padding: 20px; text-align: center; }
-    .card-title { font-size: 18px; color: #fff; margin-bottom: 8px; font-weight: 600; }
-    .card-price { font-size: 16px; color: #d4af37; font-weight: 700; }
+    .card-title { font-size: 18px; color: #2d2342; margin-bottom: 8px; font-weight: 600; }
+    .card-price { font-size: 16px; color: #8e52bd; font-weight: 700; }
 
     /* General Overlay & Modals */
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
-    .close-btn { position: absolute; top: 15px; right: 20px; color: #aaa; font-size: 26px; cursor: pointer; z-index: 10; }
-    .close-btn:hover { color: #fff; }
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(45, 35, 66, 0.4); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
+    .close-btn { position: absolute; top: 15px; right: 20px; color: #7d6e93; font-size: 26px; cursor: pointer; z-index: 10; font-weight: bold; }
+    .close-btn:hover { color: #8e52bd; }
 
-    /* Modern Product Detail Modal UI (Image Layout Style) */
-    .detail-modal-content { background: #141414; border: 1px solid #333; border-radius: 16px; width: 100%; max-width: 900px; max-height: 90vh; overflow-y: auto; position: relative; padding: 30px; }
+    /* Product Detail Modal UI (Lavender Theme) */
+    .detail-modal-content { background: #ffffff; border: 1px solid #e1d9ec; border-radius: 20px; width: 100%; max-width: 900px; max-height: 90vh; overflow-y: auto; position: relative; padding: 35px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
     .detail-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 35px; }
     @media (max-width: 768px) { .detail-layout { grid-template-columns: 1fr; } }
     
-    .detail-img-box img { width: 100%; border-radius: 12px; height: 420px; object-fit: cover; border: 1px solid #222; }
+    .detail-img-box img { width: 100%; border-radius: 16px; height: 420px; object-fit: cover; border: 1px solid #e9e2f3; }
     .detail-info { display: flex; flex-direction: column; justify-content: space-between; }
-    .detail-title { font-size: 26px; font-weight: 700; margin-bottom: 10px; }
-    .detail-rating { color: #d4af37; font-size: 14px; margin-bottom: 15px; }
-    .detail-price { font-size: 22px; font-weight: 700; color: #d4af37; margin-bottom: 15px; }
-    .detail-desc { font-size: 14px; color: #aaa; line-height: 1.6; margin-bottom: 20px; }
+    .detail-title { font-size: 26px; font-weight: 700; margin-bottom: 10px; color: #2d2342; }
+    .detail-rating { color: #ab6adb; font-size: 14px; margin-bottom: 15px; }
+    .detail-price { font-size: 22px; font-weight: 700; color: #8e52bd; margin-bottom: 15px; }
+    .detail-desc { font-size: 14px; color: #6b5b85; line-height: 1.6; margin-bottom: 20px; }
     
     /* Size Selector UI */
-    .size-title { font-size: 13px; font-weight: 600; text-transform: uppercase; margin-bottom: 8px; color: #ccc; }
+    .size-title { font-size: 13px; font-weight: 600; text-transform: uppercase; margin-bottom: 8px; color: #5a4b73; }
     .size-options { display: flex; gap: 10px; margin-bottom: 25px; }
-    .size-btn { border: 1px solid #333; background: #0b0b0b; color: #fff; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.2s; }
-    .size-btn.active, .size-btn:hover { border-color: #d4af37; background: #d4af37; color: #000; }
+    .size-btn { border: 1px solid #dcd1e8; background: #f8f5fc; color: #5a4b73; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.2s; }
+    .size-btn.active, .size-btn:hover { border-color: #8e52bd; background: #8e52bd; color: #fff; }
 
-    /* Action Buttons Inside Detail Modal */
+    /* Action Buttons */
     .action-btns { display: flex; gap: 12px; margin-bottom: 25px; }
-    .action-btns button { flex: 1; padding: 14px; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 13px; border: none; transition: 0.3s; }
-    .btn-add-cart { background: #222; color: #fff; border: 1px solid #444 !important; }
-    .btn-add-cart:hover { border-color: #d4af37 !important; color: #d4af37; }
-    .btn-buy-now { background: #d4af37; color: #000; }
-    .btn-buy-now:hover { background: #fff; }
+    .action-btns button { flex: 1; padding: 14px; border-radius: 10px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 13px; border: none; transition: 0.3s; }
+    .btn-add-cart { background: #e8def2; color: #6b359c; border: 1px solid #d1bcbe !important; }
+    .btn-add-cart:hover { background: #dcd0ea; }
+    .btn-buy-now { background: #8e52bd; color: #fff; box-shadow: 0 4px 12px rgba(142, 82, 189, 0.25); }
+    .btn-buy-now:hover { background: #763fa2; }
 
     /* Reviews Section Style */
-    .reviews-section { border-top: 1px solid #222; padding-top: 25px; margin-top: 25px; }
-    .section-heading { font-size: 18px; font-weight: 700; color: #d4af37; margin-bottom: 15px; text-transform: uppercase; }
+    .reviews-section { border-top: 1px solid #e1d9ec; padding-top: 25px; margin-top: 25px; }
+    .section-heading { font-size: 18px; font-weight: 700; color: #6b359c; margin-bottom: 15px; text-transform: uppercase; }
     
-    .review-form { background: #0b0b0b; padding: 15px; border-radius: 8px; border: 1px solid #222; margin-bottom: 20px; }
-    .review-form input, .review-form textarea, .review-form select { width: 100%; padding: 10px; background: #141414; border: 1px solid #333; color: #fff; border-radius: 6px; margin-bottom: 10px; font-size: 13px; outline: none; }
-    .review-form button { background: #d4af37; color: #000; border: none; padding: 10px 15px; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 12px; }
+    .review-form { background: #f8f5fc; padding: 18px; border-radius: 12px; border: 1px solid #e1d9ec; margin-bottom: 20px; }
+    .review-form input, .review-form textarea, .review-form select { width: 100%; padding: 10px; background: #ffffff; border: 1px solid #dcd1e8; color: #2d2342; border-radius: 8px; margin-bottom: 10px; font-size: 13px; outline: none; }
+    .review-form button { background: #8e52bd; color: #fff; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 12px; }
 
-    .review-card { background: #0b0b0b; padding: 12px; border-radius: 8px; border: 1px solid #1a1a1a; margin-bottom: 10px; }
+    .review-card { background: #f8f5fc; padding: 14px; border-radius: 10px; border: 1px solid #eae5f2; margin-bottom: 10px; }
     .review-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
-    .reviewer-name { font-weight: 600; font-size: 14px; color: #fff; }
-    .reviewer-stars { color: #d4af37; font-size: 12px; }
-    .review-text { font-size: 13px; color: #aaa; line-height: 1.4; }
+    .reviewer-name { font-weight: 600; font-size: 14px; color: #2d2342; }
+    .reviewer-stars { color: #ab6adb; font-size: 12px; }
+    .review-text { font-size: 13px; color: #5a4b73; line-height: 1.4; }
 
-    /* Standard Forms & Cart Modal */
-    .modal-content { background: #141414; border: 1px solid #d4af37; padding: 25px; border-radius: 12px; width: 100%; max-width: 480px; position: relative; max-height: 90vh; overflow-y: auto; }
+    /* Standard Checkout Form Modal */
+    .modal-content { background: #ffffff; border: 1px solid #e1d9ec; padding: 30px; border-radius: 16px; width: 100%; max-width: 480px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
     .form-group { margin-bottom: 14px; text-align: left; }
-    .form-group label { display: block; font-size: 12px; color: #aaa; margin-bottom: 5px; text-transform: uppercase; }
-    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; background: #0b0b0b; border: 1px solid #333; color: #fff; border-radius: 6px; font-size: 14px; outline: none; }
+    .form-group label { display: block; font-size: 12px; color: #6b5b85; margin-bottom: 5px; text-transform: uppercase; font-weight: 600; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; background: #f8f5fc; border: 1px solid #dcd1e8; color: #2d2342; border-radius: 8px; font-size: 14px; outline: none; }
     
-    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #222; }
-    .cart-total-box { display: flex; justify-content: space-between; margin: 15px 0; font-size: 16px; font-weight: 700; color: #d4af37; border-top: 1px dashed #333; padding-top: 10px; }
-    .payment-box { background: #1c1a14; border: 1px solid #d4af37; padding: 15px; border-radius: 8px; margin-bottom: 15px; font-size: 13px; display: none; }
-    .confirm-btn { width: 100%; background: #d4af37; color: #000; border: none; padding: 12px; font-weight: 700; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 15px; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #e1d9ec; }
+    .cart-total-box { display: flex; justify-content: space-between; margin: 15px 0; font-size: 16px; font-weight: 700; color: #8e52bd; border-top: 1px dashed #dcd1e8; padding-top: 10px; }
+    .payment-box { background: #f3ebfa; border: 1px solid #c9b1e0; padding: 15px; border-radius: 8px; margin-bottom: 15px; font-size: 13px; display: none; color: #2d2342; }
+    .confirm-btn { width: 100%; background: #8e52bd; color: #fff; border: none; padding: 12px; font-weight: 700; border-radius: 8px; cursor: pointer; text-transform: uppercase; font-size: 15px; box-shadow: 0 4px 12px rgba(142, 82, 189, 0.2); }
   </style>
 </head>
 <body>
@@ -98,10 +100,10 @@
 
   <!-- Product Catalog Grid -->
   <div class="product-grid" id="productGrid">
-    <p style="text-align: center; width: 100%; color: #888;">Loading catalog...</p>
+    <p style="text-align: center; width: 100%; color: #7d6e93;">Loading catalog...</p>
   </div>
 
-  <!-- Product Detail Modal (Image Design Layout) -->
+  <!-- Product Detail Modal (Lavender Design Layout) -->
   <div class="modal-overlay" id="detailModal">
     <div class="detail-modal-content">
       <span class="close-btn" onclick="closeDetailModal()">&times;</span>
@@ -113,7 +115,7 @@
         <div class="detail-info">
           <div>
             <div class="detail-title" id="dtTitle">Product Name</div>
-            <div class="detail-rating">★ ★ ★ ★ ★ <span style="color: #aaa; margin-left: 5px;" id="dtRatingCount">(5.0)</span></div>
+            <div class="detail-rating">★ ★ ★ ★ ★ <span style="color: #7d6e93; margin-left: 5px;" id="dtRatingCount">(5.0)</span></div>
             <div class="detail-price" id="dtPrice">0 BDT</div>
             <div class="detail-desc">Crafted with premium heavyweight fabric, offering exceptional comfort and modern aesthetic streetwear fit for your everyday style.</div>
             
@@ -137,7 +139,6 @@
       <div class="reviews-section">
         <div class="section-heading">Customer Reviews & Comments</div>
         
-        <!-- Submit Review Form -->
         <div class="review-form">
           <input type="text" id="revName" placeholder="Your Name" required>
           <select id="revStars">
@@ -151,9 +152,8 @@
           <button onclick="submitReview()">Submit Review</button>
         </div>
 
-        <!-- Review List Box -->
         <div id="reviewsList">
-          <p style="color: #666; font-size: 13px;">No reviews yet. Be the first to leave a comment!</p>
+          <p style="color: #8a7b9f; font-size: 13px;">No reviews yet. Be the first to leave a comment!</p>
         </div>
       </div>
 
@@ -164,8 +164,8 @@
   <div class="modal-overlay" id="cartModal">
     <div class="modal-content">
       <span class="close-btn" onclick="closeCartModal()">&times;</span>
-      <div style="font-size: 20px; color: #d4af37; margin-bottom: 15px; text-align: center; text-transform: uppercase; font-weight: bold;">Your Shopping Cart</div>
-      <div id="cartItemsContainer"><p style="text-align: center; color: #888;">Your cart is empty.</p></div>
+      <div style="font-size: 20px; color: #8e52bd; margin-bottom: 15px; text-align: center; text-transform: uppercase; font-weight: bold;">Your Shopping Cart</div>
+      <div id="cartItemsContainer"><p style="text-align: center; color: #7d6e93;">Your cart is empty.</p></div>
       <div class="cart-total-box" id="cartTotalBox" style="display: none;">
         <span>Total:</span><span id="cartTotalAmount">0 BDT</span>
       </div>
@@ -177,16 +177,16 @@
   <div class="modal-overlay" id="orderModal">
     <div class="modal-content">
       <span class="close-btn" onclick="closeOrderModal()">&times;</span>
-      <div style="font-size: 20px; color: #d4af37; margin-bottom: 15px; text-align: center; text-transform: uppercase; font-weight: bold;">Checkout Order</div>
+      <div style="font-size: 20px; color: #8e52bd; margin-bottom: 15px; text-align: center; text-transform: uppercase; font-weight: bold;">Checkout Order</div>
       
       <form id="orderForm" onsubmit="placeOrder(event)">
         <div class="form-group">
           <label>Selected Product</label>
-          <input type="text" id="modalProduct" readonly style="color: #d4af37; font-weight: bold;">
+          <input type="text" id="modalProduct" readonly style="color: #8e52bd; font-weight: bold;">
         </div>
         <div class="form-group">
           <label>Selected Size</label>
-          <input type="text" id="custSize" readonly style="color: #fff; font-weight: bold;">
+          <input type="text" id="custSize" readonly style="color: #2d2342; font-weight: bold;">
         </div>
         <div class="form-group">
           <label>Full Name</label>
@@ -210,7 +210,7 @@
 
         <div class="payment-box" id="bkashBox">
           <p>Please <b>Send Money</b> to this bKash Number:</p>
-          <p style="color: #d4af37; font-weight: bold; font-size: 15px; margin: 5px 0;">📱 01725373633 (Personal)</p>
+          <p style="color: #8e52bd; font-weight: bold; font-size: 15px; margin: 5px 0;">📱 01725373633 (Personal)</p>
           <div class="form-group" style="margin-top: 10px;">
             <label>Sender bKash Number</label>
             <input type="tel" id="bkashSenderNum" placeholder="যে নম্বর থেকে টাকা পাঠিয়েছেন">
@@ -253,7 +253,7 @@
       const grid = document.getElementById("productGrid");
       grid.innerHTML = "";
       if(snapshot.empty) {
-        grid.innerHTML = "<p style='text-align:center; width:100%; color:#888;'>No products available.</p>";
+        grid.innerHTML = "<p style='text-align:center; width:100%; color:#7d6e93;'>No products available.</p>";
         return;
       }
       snapshot.forEach((doc) => {
@@ -270,7 +270,7 @@
       });
     });
 
-    // Open Modern Detail Modal
+    // Open Detail Modal
     function openProductDetail(docId, title, price, image) {
       currentDocId = docId;
       currentProduct = { title, price: Number(price), image, size: "L" };
@@ -314,7 +314,7 @@
       const list = document.getElementById("reviewsList");
       db.collection("products").doc(docId).collection("reviews").orderBy("createdAt", "desc").onSnapshot(snapshot => {
         if(snapshot.empty) {
-          list.innerHTML = `<p style="color: #666; font-size: 13px;">No comments yet. Write a review!</p>`;
+          list.innerHTML = `<p style="color: #8a7b9f; font-size: 13px;">No comments yet. Write a review!</p>`;
           return;
         }
         let html = "";
@@ -368,7 +368,7 @@
       const checkoutBtn = document.getElementById("checkoutCartBtn");
 
       if (cart.length === 0) {
-        container.innerHTML = `<p style="text-align: center; color: #888;">Your cart is empty.</p>`;
+        container.innerHTML = `<p style="text-align: center; color: #7d6e93;">Your cart is empty.</p>`;
         totalBox.style.display = "none";
         checkoutBtn.style.display = "none";
         return;
@@ -381,10 +381,10 @@
         html += `
           <div class="cart-item">
             <div>
-              <div style="font-size: 14px; font-weight: 600;">${item.title} (${item.size})</div>
-              <div style="color: #d4af37; font-size: 13px;">${item.price} BDT</div>
+              <div style="font-size: 14px; font-weight: 600; color: #2d2342;">${item.title} (${item.size})</div>
+              <div style="color: #8e52bd; font-size: 13px; font-weight: bold;">${item.price} BDT</div>
             </div>
-            <span style="color: #ff4d4d; cursor: pointer; font-size: 18px;" onclick="cart.splice(${index},1); updateCartUI();">&times;</span>
+            <span style="color: #e74c3c; cursor: pointer; font-size: 18px;" onclick="cart.splice(${index},1); updateCartUI();">&times;</span>
           </div>
         `;
       });
