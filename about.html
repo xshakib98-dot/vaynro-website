@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | VAYNRO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background: #0b0b0b; color: #fff; padding: 20px; }
+    
+    /* Navigation Bar */
+    nav { max-width: 1200px; margin: 0 auto 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 20px; }
+    nav .logo { font-size: 24px; font-weight: 700; color: #d4af37; letter-spacing: 3px; text-decoration: none; }
+    nav a.back-btn { color: #fff; text-decoration: none; border: 1px solid #333; padding: 8px 16px; border-radius: 6px; font-size: 14px; transition: 0.3s; }
+    nav a.back-btn:hover { border-color: #d4af37; color: #d4af37; }
+
+    /* About Card Container */
+    .about-container { max-width: 1000px; margin: 40px auto; background: #141414; border: 1px solid #222; border-radius: 16px; padding: 40px; display: flex; flex-wrap: wrap; align-items: center; gap: 40px; }
+    .about-img-box { flex: 1; min-width: 280px; text-align: center; }
+    .about-img-box img { width: 100%; max-width: 340px; height: 420px; object-fit: cover; border-radius: 12px; border: 2px solid #d4af37; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15); }
+    
+    .about-details { flex: 1.5; min-width: 280px; }
+    .founder-title { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 5px; }
+    .founder-role { font-size: 16px; color: #d4af37; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+    
+    .about-details p { color: #ccc; line-height: 1.8; font-size: 15px; margin-bottom: 15px; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">VAYNRO</a>
+    <a href="index.html" class="back-btn">← Back to Shop</a>
+  </nav>
+
+  <div class="about-container">
+    <div class="about-img-box">
+      <img src="founder.jpg" alt="Shakib - Founder & CEO" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500'">
+    </div>
+    <div class="about-details">
+      <div class="founder-title">Shakib</div>
+      <div class="founder-role">Founder & CEO, VAYNRO</div>
+      
+      <p>Welcome to <b>VAYNRO</b>. I founded this brand with a vision to redefine modern fashion and provide premium, aesthetic streetwear for style enthusiasts.</p>
+      
+      <p>Every piece in our collection is thoughtfully crafted with high attention to detail, superior fabric quality, and timeless design. Our mission is to empower individual expression through effortless, bold, and high-quality clothing.</p>
+      
+      <p>Thank you for being part of our journey.</p>
+    </div>
+  </div>
+
+</body>
+</html>
