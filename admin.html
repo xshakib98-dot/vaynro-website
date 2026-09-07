@@ -13,7 +13,7 @@
     h2 { font-size: 20px; color: #e5b869; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
     .form-group { margin-bottom: 15px; }
     label { display: block; font-size: 12px; color: #aaa; margin-bottom: 5px; text-transform: uppercase; font-weight: 600; }
-    input, textarea { width: 100%; padding: 12px; background: #2a2a2a; border: 1px solid #444; color: #fff; border-radius: 8px; font-size: 14px; outline: none; }
+    input, textarea, select { width: 100%; padding: 12px; background: #2a2a2a; border: 1px solid #444; color: #fff; border-radius: 8px; font-size: 14px; outline: none; }
     button { width: 100%; padding: 12px; background: #e5b869; color: #121212; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; text-transform: uppercase; margin-top: 10px; transition: 0.3s; }
     button:hover { background: #d4a555; }
     
@@ -40,6 +40,16 @@
       <div class="form-group">
         <label>Image URL</label>
         <input type="text" id="pImg" placeholder="https://...">
+      </div>
+      <!-- ক্যাটাগরি সিলেক্ট করার নতুন ড্রপডাউন -->
+      <div class="form-group">
+        <label>Product Category</label>
+        <select id="pCategory">
+          <option value="tshirt">T-Shirt</option>
+          <option value="hoodie">Hoodie</option>
+          <option value="shirt">Shirt</option>
+          <option value="pants">Pants</option>
+        </select>
       </div>
       <button onclick="uploadProduct()">Publish Product</button>
     </div>
@@ -113,24 +123,32 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // Product Upload Function
+    // Product Upload Function with Category
     function uploadProduct() {
       const title = document.getElementById("pTitle").value;
       const price = Number(document.getElementById("pPrice").value);
       const image = document.getElementById("pImg").value;
+      const category = document.getElementById("pCategory").value; // ক্যাটাগরি ভ্যালু নেওয়া হচ্ছে
 
       if(!title || !price || !image) return alert("Fill all fields!");
 
-      db.collection("products").add({ title, price, image, createdAt: firebase.firestore.FieldValue.serverTimestamp() })
+      db.collection("products").add({ 
+        title, 
+        price, 
+        image, 
+        category, // ফায়ারস্টোরে ক্যাটাগরি সেভ হচ্ছে
+        createdAt: firebase.firestore.FieldValue.serverTimestamp() 
+      })
       .then(() => {
-        alert("Product Added!");
+        alert("Product Added Successfully!");
         document.getElementById("pTitle").value = "";
         document.getElementById("pPrice").value = "";
         document.getElementById("pImg").value = "";
+        document.getElementById("pCategory").value = "tshirt";
       });
     }
 
-    // Load Existing Products
+    // Load Existing Products with Category Info
     db.collection("products").onSnapshot(snapshot => {
       const list = document.getElementById("pList");
       list.innerHTML = "";
@@ -138,7 +156,7 @@
         const d = doc.data();
         list.innerHTML += `
           <div class="product-item">
-            <div><b>${d.title}</b> - ${d.price} BDT</div>
+            <div><b>${d.title}</b> - ${d.price} BDT <span style="font-size:11px; color:#e5b869; margin-left:8px;">[${d.category || 'general'}]</span></div>
             <button class="delete-btn" onclick="deleteProduct('${doc.id}')">Delete</button>
           </div>
         `;
