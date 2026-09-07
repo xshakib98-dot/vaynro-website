@@ -5,25 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VAYNRO | Aesthetic Fashion</title>
   
-  <!-- SEO Meta Tags for Google Search -->
   <meta name="description" content="VAYNRO - Aesthetic Fashion brand. Shop exclusive clothing and apparel online in Bangladesh.">
   <meta name="keywords" content="Vaynro, Aesthetic Fashion, Bangladesh Fashion, Online Shopping Bangladesh">
   <meta name="robots" content="index, follow">
 
-  <!-- Open Graph Tags for Social Media Sharing -->
   <meta property="og:title" content="VAYNRO | Aesthetic Fashion">
   <meta property="og:description" content="Discover exclusive aesthetic fashion and clothing at VAYNRO.">
   <meta property="og:url" content="https://xshakib98.github.io/vaynro-website/index.html">
   <meta property="og:type" content="website">
   
-  <!-- Tab-এ লোগো দেখানোর জন্য Favicon (SVG Data URI) -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='25' fill='%238e52bd'/%3E%3Ctext x='505' y='62' font-family='Plus Jakarta Sans, sans-serif' font-weight='700' font-size='50' fill='%23ffffff' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E">
 
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.3s, color 0.3s; }
     
-    /* Light Theme (Default) */
     :root {
       --bg-color: #f3f0f9;
       --text-color: #2d2342;
@@ -36,7 +32,6 @@
       --modal-bg: #fff;
     }
 
-    /* Dark Theme */
     [data-theme="dark"] {
       --bg-color: #121017;
       --text-color: #f3f0f9;
@@ -45,7 +40,7 @@
       --header-border: #2c2538;
       --primary-color: #a36acf;
       --primary-hover: #b582df;
-      --subtext-color: #bfaed;
+      --subtext-color: #bfaed5;
       --modal-bg: #1a1622;
     }
 
@@ -58,7 +53,6 @@
     .nav-links a:hover { color: var(--primary-color); }
     .cart-btn-trigger { background: var(--primary-color); border: none; color: #fff; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 14px; transition: 0.3s; box-shadow: 0 4px 12px rgba(142, 82, 189, 0.2); }
 
-    /* Three Dot Menu Styling */
     .menu-container { position: relative; display: inline-block; }
     .three-dot-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--subtext-color); padding: 0 5px; font-weight: bold; }
     .three-dot-btn:hover { color: var(--primary-color); }
@@ -95,7 +89,6 @@
     .dropdown-item:last-child { border-bottom: none; }
     .dropdown-item:hover { background: var(--bg-color); color: var(--primary-color); }
 
-    /* Search & Category Filter Bar */
     .store-controls { max-width: 1200px; margin: 0 auto 30px auto; display: flex; flex-direction: column; gap: 15px; }
     .search-bar-container { width: 100%; }
     .search-bar-container input { width: 100%; padding: 12px 20px; border-radius: 30px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-color); font-size: 15px; outline: none; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
@@ -104,7 +97,6 @@
     .cat-btn { padding: 8px 18px; border-radius: 20px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--subtext-color); font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s; }
     .cat-btn.active, .cat-btn:hover { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
 
-    /* Cover Photo Container & Floating Logo Badge */
     .vogue-cover-container {
       position: relative;
       width: 100%;
@@ -120,12 +112,7 @@
       box-shadow: 0 15px 35px rgba(142, 82, 189, 0.15);
       border: 1px solid var(--card-border);
     }
-    .vogue-cover-container .cover-bg {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
+    .vogue-cover-container .cover-bg { width: 100%; height: 100%; object-fit: contain; display: block; }
     
     .cover-logo-badge {
       position: absolute;
@@ -142,24 +129,34 @@
       border: 1px solid rgba(255,255,255,0.2);
       z-index: 10;
     }
-    .cover-logo-badge span {
-      color: #fff;
-      font-weight: 700;
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
+    .cover-logo-badge span { color: #fff; font-weight: 700; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
 
-    /* Product Grid */
     .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto 40px auto; }
-    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.03); position: relative; }
     .card:hover { transform: translateY(-5px); }
     .card img { width: 100%; height: 350px; object-fit: contain; background: var(--bg-color); }
+    
+    /* Stock Out Badge on Product Card */
+    .stock-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #e74c3c;
+      color: #fff;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+      z-index: 5;
+    }
+
     .card-details { padding: 20px; text-align: center; }
     .card-title { font-size: 18px; color: var(--text-color); margin-bottom: 8px; font-weight: 600; }
     .card-price { font-size: 16px; color: var(--primary-color); font-weight: 700; }
 
-    /* Aesthetic Popup / Modal */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; backdrop-filter: blur(5px); }
     .modal-content { background: var(--modal-bg); color: var(--text-color); max-width: 500px; width: 100%; border-radius: 24px; padding: 30px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.2); border: 1px solid var(--card-border); }
     .close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: var(--primary-hover); background: none; border: none; }
@@ -167,7 +164,6 @@
     .modal-title { font-size: 22px; font-weight: 700; color: var(--text-color); margin-bottom: 5px; }
     .modal-price { font-size: 16px; font-weight: 700; color: var(--primary-color); margin-bottom: 15px; }
     
-    /* Size Selector */
     .size-container { margin-bottom: 15px; text-align: left; }
     .size-container label { display: block; font-size: 13px; font-weight: 600; color: var(--subtext-color); margin-bottom: 8px; }
     .sizes { display: flex; gap: 10px; }
@@ -183,7 +179,6 @@
     .cart-action-btn:hover { opacity: 0.8; }
     .order-action-btn { flex: 1; background: var(--primary-color); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; }
 
-    /* Customer Review & Comment Section inside Modal */
     .reviews-section { margin-top: 25px; border-top: 1px solid var(--card-border); padding-top: 15px; text-align: left; }
     .reviews-section h4 { font-size: 15px; font-weight: 700; color: var(--text-color); margin-bottom: 10px; }
     .review-list { max-height: 140px; overflow-y: auto; margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px; }
@@ -201,7 +196,6 @@
       <a href="contact.html">Contact Us</a>
       <button class="cart-btn-trigger" onclick="openCartModal()">🛒 Cart (<span id="cartCount">0</span>)</button>
       
-      <!-- Three Dot Menu -->
       <div class="menu-container">
         <button class="three-dot-btn" onclick="toggleMenu(event)">⋮</button>
         <div class="dropdown-menu" id="dropdownMenu">
@@ -214,7 +208,6 @@
     </div>
   </header>
 
-  <!-- Full Magazine Cover Display with Floating Logo Badge -->
   <div class="vogue-cover-container">
     <div class="cover-logo-badge">
       <svg width="20" height="20" viewBox="0 0 100 100"><rect width="100" height="100" rx="25" fill="#fff"/><text x="50" y="68" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="55" fill="#8e52bd" text-anchor="middle">V</text></svg>
@@ -223,7 +216,6 @@
     <img src="cover.jpg" alt="VAYNRO Cover" class="cover-bg">
   </div>
 
-  <!-- Search & Category Filters Bar (Shoe এবং Bag সহ আপডেট করা হয়েছে) -->
   <div class="store-controls">
     <div class="search-bar-container">
       <input type="text" id="searchInput" placeholder="Search for aesthetic apparel, shoes, bags, hoodies..." oninput="filterProducts()">
@@ -243,7 +235,6 @@
     <p style="text-align: center; width: 100%; color: var(--subtext-color);">Loading catalog...</p>
   </div>
 
-  <!-- Aesthetic Product Details & Checkout Modal -->
   <div class="modal-overlay" id="productModal">
     <div class="modal-content">
       <button class="close-modal" onclick="closeModal()">&times;</button>
@@ -251,75 +242,73 @@
       <div class="modal-title" id="modalTitle"></div>
       <div class="modal-price" id="modalPrice"></div>
       
-      <!-- Size Selection -->
-      <div class="size-container">
-        <label>Select Size</label>
-        <div class="sizes">
-          <button class="size-btn active" onclick="selectSize(this, 'S')">S</button>
-          <button class="size-btn" onclick="selectSize(this, 'M')">M</button>
-          <button class="size-btn" onclick="selectSize(this, 'L')">L</button>
-          <button class="size-btn" onclick="selectSize(this, 'XL')">XL</button>
+      <div id="stockOutWarning" style="display: none; background: #ffebee; color: #c62828; padding: 12px; border-radius: 8px; font-weight: 700; text-align: center; margin-bottom: 15px; border: 1px solid #ef9a9a;">
+        ⚠️ This product is currently STOCK OUT! Order is unavailable.
+      </div>
+
+      <div id="orderFormContainer">
+        <div class="size-container">
+          <label>Select Size</label>
+          <div class="sizes">
+            <button class="size-btn active" onclick="selectSize(this, 'S')">S</button>
+            <button class="size-btn" onclick="selectSize(this, 'M')">M</button>
+            <button class="size-btn" onclick="selectSize(this, 'L')">L</button>
+            <button class="size-btn" onclick="selectSize(this, 'XL')">XL</button>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label>Your Name</label>
-        <input type="text" id="buyerName" placeholder="Enter your full name">
-      </div>
-      <div class="form-group">
-        <label>Phone Number</label>
-        <input type="text" id="buyerPhone" placeholder="01XXXXXXXXX">
-      </div>
-      <div class="form-group">
-        <label>Delivery Address</label>
-        <input type="text" id="buyerAddress" placeholder="House, Road, City">
-      </div>
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="buyerName" placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="text" id="buyerPhone" placeholder="01XXXXXXXXX">
+        </div>
+        <div class="form-group">
+          <label>Delivery Address</label>
+          <input type="text" id="buyerAddress" placeholder="House, Road, City">
+        </div>
 
-      <!-- Delivery Location (Charge calculation) -->
-      <div class="form-group">
-        <label>Delivery Area</label>
-        <select id="deliveryLocation">
-          <option value="inside_dhaka">Inside Dhaka (Charge: 70 BDT)</option>
-          <option value="outside_dhaka">Outside Dhaka (Charge: 150 BDT)</option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label>Delivery Area</label>
+          <select id="deliveryLocation">
+            <option value="inside_dhaka">Inside Dhaka (Charge: 70 BDT)</option>
+            <option value="outside_dhaka">Outside Dhaka (Charge: 150 BDT)</option>
+          </select>
+        </div>
 
-      <div class="form-group">
-        <label>Payment Method</label>
-        <select id="paymentMethod">
-          <option value="Cash on Delivery">Cash on Delivery</option>
-          <option value="bKash">bKash Payment</option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label>Payment Method</label>
+          <select id="paymentMethod" onchange="toggleBkashBox()">
+            <option value="Cash on Delivery">Cash on Delivery</option>
+            <option value="bKash">bKash Payment</option>
+          </select>
+        </div>
 
-      <!-- বিকাশ পেমেন্ট বক্স -->
-      <div id="bkashDetailsBox" style="display: none; background: var(--bg-color); padding: 15px; border-radius: 12px; margin-bottom: 12px; border: 1px dashed var(--primary-color); text-align: left;">
-        <p style="font-size: 13px; font-weight: 700; color: var(--primary-hover); margin-bottom: 8px;">
-          bkash Send Money: <span style="color: #d81b60; font-size: 14px;">01725373633</span>
-        </p>
-        <p style="font-size: 12px; color: var(--subtext-color); margin-bottom: 10px;">সম্পূর্ণ টাকা পেমেন্ট করে নিচের তথ্য দিন:</p>
+        <div id="bkashDetailsBox" style="display: none; background: var(--bg-color); padding: 15px; border-radius: 12px; margin-bottom: 12px; border: 1px dashed var(--primary-color); text-align: left;">
+          <p style="font-size: 13px; font-weight: 700; color: var(--primary-hover); margin-bottom: 8px;">
+            bkash Send Money: <span style="color: #d81b60; font-size: 14px;">01725373633</span>
+          </p>
+          <div class="form-group" style="margin-bottom: 8px;">
+            <label style="font-size: 12px;">Your bKash Number</label>
+            <input type="text" id="bkashSenderPhone" placeholder="01XXXXXXXXX" style="padding: 8px; font-size: 13px;">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label style="font-size: 12px;">Transaction ID (TrxID)</label>
+            <input type="text" id="bkashTrxId" placeholder="e.g. 9N7A..." style="padding: 8px; font-size: 13px;">
+          </div>
+        </div>
         
-        <div class="form-group" style="margin-bottom: 8px;">
-          <label style="font-size: 12px;">Your bKash Number</label>
-          <input type="text" id="bkashSenderPhone" placeholder="01XXXXXXXXX" style="padding: 8px; font-size: 13px;">
+        <div class="action-buttons">
+          <button class="cart-action-btn" id="addToCartBtn" onclick="addToCart()">Add to Cart</button>
+          <button class="order-action-btn" id="orderNowBtn" onclick="placeOrder()">Order Now</button>
         </div>
-        <div class="form-group" style="margin-bottom: 0;">
-          <label style="font-size: 12px;">Transaction ID (TrxID)</label>
-          <input type="text" id="bkashTrxId" placeholder="e.g. 9N7A..." style="padding: 8px; font-size: 13px;">
-        </div>
-      </div>
-      
-      <div class="action-buttons">
-        <button class="cart-action-btn" onclick="addToCart()">Add to Cart</button>
-        <button class="order-action-btn" onclick="placeOrder()">Order Now</button>
       </div>
 
-      <!-- Customer Reviews & Comments Section inside Modal -->
       <div class="reviews-section">
         <h4>Customer Reviews & Comments</h4>
-        <div class="review-list" id="reviewListContainer">
-          <!-- Dynamic reviews loaded here -->
-        </div>
+        <div class="review-list" id="reviewListContainer"></div>
         <div class="form-group" style="margin-bottom: 8px;">
           <input type="text" id="reviewAuthor" placeholder="Your Name" style="padding: 8px; font-size: 12px;">
         </div>
@@ -339,20 +328,16 @@
     </div>
   </div>
 
-  <!-- Cart Items Modal -->
   <div class="modal-overlay" id="cartModal">
     <div class="modal-content">
       <button class="close-modal" onclick="closeCartModal()">&times;</button>
       <div class="modal-title" style="margin-bottom: 15px;">Your Shopping Cart</div>
-      <div id="cartItemsContainer" style="max-height: 300px; overflow-y: auto; margin-bottom: 15px;">
-        <!-- Cart items will be loaded here dynamically -->
-      </div>
+      <div id="cartItemsContainer" style="max-height: 300px; overflow-y: auto; margin-bottom: 15px;"></div>
       <div style="font-weight: 700; font-size: 16px; color: var(--primary-color); text-align: right; margin-bottom: 15px;" id="cartTotalPrice">Total: 0 BDT</div>
       <button class="order-action-btn" style="width: 100%;" onclick="closeCartModal()">Continue Shopping</button>
     </div>
   </div>
 
-  <!-- Feedback Modal -->
   <div class="modal-overlay" id="feedbackModal">
     <div class="modal-content">
       <button class="close-modal" onclick="closeFeedbackModal()">&times;</button>
@@ -369,38 +354,30 @@
     </div>
   </div>
 
-  <!-- Terms & Privacy Modal -->
   <div class="modal-overlay" id="termsModal">
     <div class="modal-content">
       <button class="close-modal" onclick="closeTermsModal()">&times;</button>
       <div class="modal-title" style="margin-bottom: 15px;">Terms & Privacy Policy</div>
       <div style="font-size: 13px; line-height: 1.6; color: var(--subtext-color); text-align: left; max-height: 300px; overflow-y: auto;">
-        <p style="margin-bottom: 10px;"><strong>1. Terms of Use:</strong> By using VAYNRO, you agree to our standard ordering, shipping, and return protocols. All aesthetic designs and products are subject to availability.</p>
-        <p style="margin-bottom: 10px;"><strong>2. Privacy Policy:</strong> We respect your personal information (name, phone, address). Your data is strictly used for order processing and delivery purposes and will never be shared with third parties.</p>
-        <p><strong>3. Return & Refund:</strong> Issues with sizing or delivery must be reported within 24 hours of receiving the product.</p>
+        <p style="margin-bottom: 10px;"><strong>1. Terms of Use:</strong> By using VAYNRO, you agree to our standard ordering, shipping, and return protocols.</p>
+        <p style="margin-bottom: 10px;"><strong>2. Privacy Policy:</strong> We respect your personal information. Your data is strictly used for order processing.</p>
       </div>
     </div>
   </div>
 
-  <!-- JavaScript for 3-dot Menu and Extra Features -->
   <script>
     function toggleMenu(event) {
       event.stopPropagation();
       document.getElementById("dropdownMenu").classList.toggle("show");
     }
-
     window.onclick = function(event) {
       if (!event.target.matches('.three-dot-btn')) {
         var dropdowns = document.getElementsByClassName("dropdown-menu");
         for (var i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
+          dropdowns[i].classList.remove('show');
         }
       }
     }
-
     function toggleDarkMode() {
       const html = document.documentElement;
       const darkModeText = document.getElementById("darkModeText");
@@ -414,50 +391,36 @@
         localStorage.setItem("theme", "dark");
       }
     }
-
     window.addEventListener("DOMContentLoaded", () => {
       if (localStorage.getItem("theme") === "dark") {
         document.documentElement.setAttribute("data-theme", "dark");
         document.getElementById("darkModeText").innerText = "Light Mode";
       }
     });
-
     function shareWebsite() {
       if (navigator.share) {
-        navigator.share({
-          title: 'VAYNRO | Aesthetic Fashion',
-          url: window.location.href
-        }).catch(console.error);
+        navigator.share({ title: 'VAYNRO | Aesthetic Fashion', url: window.location.href }).catch(console.error);
       } else {
         navigator.clipboard.writeText(window.location.href);
         alert("Link copied to clipboard!");
       }
     }
-
-    function openFeedbackModal() {
-      document.getElementById("feedbackModal").style.display = "flex";
-    }
-    function closeFeedbackModal() {
-      document.getElementById("feedbackModal").style.display = "none";
-    }
+    function openFeedbackModal() { document.getElementById("feedbackModal").style.display = "flex"; }
+    function closeFeedbackModal() { document.getElementById("feedbackModal").style.display = "none"; }
     function submitFeedback() {
       const name = document.getElementById("feedbackName").value;
       const text = document.getElementById("feedbackText").value;
-      if(!name || !text) {
-        alert("Please fill in all fields.");
-        return;
-      }
+      if(!name || !text) { alert("Please fill in all fields."); return; }
       alert("Thank you for your valuable feedback!");
       closeFeedbackModal();
       document.getElementById("feedbackName").value = "";
       document.getElementById("feedbackText").value = "";
     }
-
-    function openTermsModal() {
-      document.getElementById("termsModal").style.display = "flex";
-    }
-    function closeTermsModal() {
-      document.getElementById("termsModal").style.display = "none";
+    function openTermsModal() { document.getElementById("termsModal").style.display = "flex"; }
+    function closeTermsModal() { document.getElementById("termsModal").style.display = "none"; }
+    function toggleBkashBox() {
+      const pm = document.getElementById("paymentMethod").value;
+      document.getElementById("bkashDetailsBox").style.display = (pm === "bKash") ? "block" : "none";
     }
   </script>
 
