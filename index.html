@@ -6,14 +6,79 @@
   <title>VAYNRO | Aesthetic Fashion</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background: #f3f0f9; color: #2d2342; padding: 20px; }
-    header { max-width: 1200px; margin: 0 auto 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e1d9ec; padding-bottom: 20px; }
-    h1.logo { font-size: 28px; letter-spacing: 4px; color: #7c5295; text-transform: uppercase; cursor: pointer; font-weight: 700; }
-    .nav-links { display: flex; gap: 20px; align-items: center; }
-    .nav-links a { color: #5a4b73; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
-    .nav-links a:hover { color: #8e52bd; }
-    .cart-btn-trigger { background: #8e52bd; border: none; color: #fff; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 14px; transition: 0.3s; box-shadow: 0 4px 12px rgba(142, 82, 189, 0.2); }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.3s, color 0.3s; }
+    
+    /* Light Theme (Default) */
+    :root {
+      --bg-color: #f3f0f9;
+      --text-color: #2d2342;
+      --card-bg: #ffffff;
+      --card-border: #e9e2f3;
+      --header-border: #e1d9ec;
+      --primary-color: #8e52bd;
+      --primary-hover: #7c5295;
+      --subtext-color: #5a4b73;
+      --modal-bg: #fff;
+    }
+
+    /* Dark Theme */
+    [data-theme="dark"] {
+      --bg-color: #121017;
+      --text-color: #f3f0f9;
+      --card-bg: #1a1622;
+      --card-border: #2c2538;
+      --header-border: #2c2538;
+      --primary-color: #a36acf;
+      --primary-hover: #b582df;
+      --subtext-color: #bfaed;
+      --modal-bg: #1a1622;
+    }
+
+    body { background: var(--bg-color); color: var(--text-color); padding: 20px; }
+    header { max-width: 1200px; margin: 0 auto 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--header-border); padding-bottom: 20px; }
+    h1.logo { font-size: 28px; letter-spacing: 4px; color: var(--primary-hover); text-transform: uppercase; cursor: pointer; font-weight: 700; }
+    
+    .nav-links { display: flex; gap: 20px; align-items: center; position: relative; }
+    .nav-links a { color: var(--subtext-color); text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+    .nav-links a:hover { color: var(--primary-color); }
+    .cart-btn-trigger { background: var(--primary-color); border: none; color: #fff; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 14px; transition: 0.3s; box-shadow: 0 4px 12px rgba(142, 82, 189, 0.2); }
+
+    /* Three Dot Menu Styling */
+    .menu-container { position: relative; display: inline-block; }
+    .three-dot-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--subtext-color); padding: 0 5px; font-weight: bold; }
+    .three-dot-btn:hover { color: var(--primary-color); }
+    
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 35px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      border-radius: 12px;
+      width: 180px;
+      z-index: 100;
+      overflow: hidden;
+    }
+    .dropdown-menu.show { display: block; }
+    .dropdown-item {
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-color);
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .dropdown-item:last-child { border-bottom: none; }
+    .dropdown-item:hover { background: var(--bg-color); color: var(--primary-color); }
 
     /* Cover Photo Fix */
     .vogue-cover-container {
@@ -24,11 +89,12 @@
       margin: 0 auto 40px auto;
       border-radius: 20px;
       overflow: hidden;
-      background: #f3f0f9;
+      background: var(--card-bg);
       display: flex;
       justify-content: center;
       align-items: center;
       box-shadow: 0 15px 35px rgba(142, 82, 189, 0.15);
+      border: 1px solid var(--card-border);
     }
     .vogue-cover-container .cover-bg {
       width: 100%;
@@ -39,36 +105,36 @@
 
     /* Product Grid */
     .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 40px auto; }
-    .card { background: #ffffff; border: 1px solid #e9e2f3; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
     .card:hover { transform: translateY(-5px); }
-    .card img { width: 100%; height: 350px; object-fit: contain; background: #eae5f2; }
+    .card img { width: 100%; height: 350px; object-fit: contain; background: var(--bg-color); }
     .card-details { padding: 20px; text-align: center; }
-    .card-title { font-size: 18px; color: #2d2342; margin-bottom: 8px; font-weight: 600; }
-    .card-price { font-size: 16px; color: #8e52bd; font-weight: 700; }
+    .card-title { font-size: 18px; color: var(--text-color); margin-bottom: 8px; font-weight: 600; }
+    .card-price { font-size: 16px; color: var(--primary-color); font-weight: 700; }
 
     /* Aesthetic Popup / Modal */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; backdrop-filter: blur(5px); }
-    .modal-content { background: #fff; max-width: 500px; width: 100%; border-radius: 24px; padding: 30px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
-    .close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: #7c5295; background: none; border: none; }
-    .modal-img { width: 100%; height: 280px; object-fit: contain; border-radius: 16px; margin-bottom: 15px; border: 1px solid #e9e2f3; background: #eae5f2; }
-    .modal-title { font-size: 22px; font-weight: 700; color: #2d2342; margin-bottom: 5px; }
-    .modal-price { font-size: 16px; font-weight: 700; color: #8e52bd; margin-bottom: 15px; }
+    .modal-content { background: var(--modal-bg); color: var(--text-color); max-width: 500px; width: 100%; border-radius: 24px; padding: 30px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.2); border: 1px solid var(--card-border); }
+    .close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: var(--primary-hover); background: none; border: none; }
+    .modal-img { width: 100%; height: 280px; object-fit: contain; border-radius: 16px; margin-bottom: 15px; border: 1px solid var(--card-border); background: var(--bg-color); }
+    .modal-title { font-size: 22px; font-weight: 700; color: var(--text-color); margin-bottom: 5px; }
+    .modal-price { font-size: 16px; font-weight: 700; color: var(--primary-color); margin-bottom: 15px; }
     
     /* Size Selector */
     .size-container { margin-bottom: 15px; text-align: left; }
-    .size-container label { display: block; font-size: 13px; font-weight: 600; color: #5a4b73; margin-bottom: 8px; }
+    .size-container label { display: block; font-size: 13px; font-weight: 600; color: var(--subtext-color); margin-bottom: 8px; }
     .sizes { display: flex; gap: 10px; }
-    .size-btn { padding: 8px 16px; border: 1px solid #e1d9ec; background: #fff; border-radius: 8px; cursor: pointer; font-weight: 600; color: #5a4b73; transition: 0.2s; }
-    .size-btn.active { background: #8e52bd; color: #fff; border-color: #8e52bd; }
+    .size-btn { padding: 8px 16px; border: 1px solid var(--card-border); background: var(--card-bg); border-radius: 8px; cursor: pointer; font-weight: 600; color: var(--subtext-color); transition: 0.2s; }
+    .size-btn.active { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
 
     .form-group { margin-bottom: 12px; text-align: left; }
-    .form-group label { display: block; font-size: 13px; font-weight: 600; color: #5a4b73; margin-bottom: 5px; }
-    .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #e1d9ec; border-radius: 8px; font-size: 14px; outline: none; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--subtext-color); margin-bottom: 5px; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid var(--card-border); background: var(--bg-color); color: var(--text-color); border-radius: 8px; font-size: 14px; outline: none; }
     
     .action-buttons { display: flex; gap: 10px; margin-top: 20px; }
-    .cart-action-btn { flex: 1; background: #f3f0f9; color: #8e52bd; border: 1px solid #8e52bd; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; }
-    .cart-action-btn:hover { background: #e9e2f3; }
-    .order-action-btn { flex: 1; background: #8e52bd; color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; }
+    .cart-action-btn { flex: 1; background: var(--bg-color); color: var(--primary-color); border: 1px solid var(--primary-color); padding: 12px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; }
+    .cart-action-btn:hover { opacity: 0.8; }
+    .order-action-btn { flex: 1; background: var(--primary-color); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -79,6 +145,17 @@
       <a href="about.html">About Us</a>
       <a href="contact.html">Contact Us</a>
       <button class="cart-btn-trigger" onclick="openCartModal()">🛒 Cart (<span id="cartCount">0</span>)</button>
+      
+      <!-- Three Dot Menu -->
+      <div class="menu-container">
+        <button class="three-dot-btn" onclick="toggleMenu(event)">⋮</button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <button class="dropdown-item" onclick="toggleDarkMode()">🌙 <span id="darkModeText">Dark Mode</span></button>
+          <button class="dropdown-item" onclick="shareWebsite()">🔗 Share</button>
+          <button class="dropdown-item" onclick="openFeedbackModal()">💬 Feedback</button>
+          <button class="dropdown-item" onclick="openTermsModal()">📄 Terms & Privacy</button>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -88,7 +165,7 @@
   </div>
 
   <div class="product-grid" id="productGrid">
-    <p style="text-align: center; width: 100%; color: #7d6e93;">Loading catalog...</p>
+    <p style="text-align: center; width: 100%; color: var(--subtext-color);">Loading catalog...</p>
   </div>
 
   <!-- Aesthetic Product Details & Checkout Modal -->
@@ -141,11 +218,11 @@
       </div>
 
       <!-- বিকাশ পেমেন্ট বক্স -->
-      <div id="bkashDetailsBox" style="display: none; background: #f9f5fc; padding: 15px; border-radius: 12px; margin-bottom: 12px; border: 1px dashed #8e52bd; text-align: left;">
-        <p style="font-size: 13px; font-weight: 700; color: #7c5295; margin-bottom: 8px;">
+      <div id="bkashDetailsBox" style="display: none; background: var(--bg-color); padding: 15px; border-radius: 12px; margin-bottom: 12px; border: 1px dashed var(--primary-color); text-align: left;">
+        <p style="font-size: 13px; font-weight: 700; color: var(--primary-hover); margin-bottom: 8px;">
           bkash Send Money: <span style="color: #d81b60; font-size: 14px;">01725373633</span>
         </p>
-        <p style="font-size: 12px; color: #5a4b73; margin-bottom: 10px;">সম্পূর্ণ টাকা পেমেন্ট করে নিচের তথ্য দিন:</p>
+        <p style="font-size: 12px; color: var(--subtext-color); margin-bottom: 10px;">সম্পূর্ণ টাকা পেমেন্ট করে নিচের তথ্য দিন:</p>
         
         <div class="form-group" style="margin-bottom: 8px;">
           <label style="font-size: 12px;">Your bKash Number</label>
@@ -172,10 +249,119 @@
       <div id="cartItemsContainer" style="max-height: 300px; overflow-y: auto; margin-bottom: 15px;">
         <!-- Cart items will be loaded here dynamically -->
       </div>
-      <div style="font-weight: 700; font-size: 16px; color: #8e52bd; text-align: right; margin-bottom: 15px;" id="cartTotalPrice">Total: 0 BDT</div>
+      <div style="font-weight: 700; font-size: 16px; color: var(--primary-color); text-align: right; margin-bottom: 15px;" id="cartTotalPrice">Total: 0 BDT</div>
       <button class="order-action-btn" style="width: 100%;" onclick="closeCartModal()">Continue Shopping</button>
     </div>
   </div>
+
+  <!-- Feedback Modal -->
+  <div class="modal-overlay" id="feedbackModal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeFeedbackModal()">&times;</button>
+      <div class="modal-title" style="margin-bottom: 15px;">Send Your Feedback</div>
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="feedbackName" placeholder="Enter your name">
+      </div>
+      <div class="form-group">
+        <label>Your Message</label>
+        <textarea id="feedbackText" rows="4" placeholder="Write your thoughts or suggestions..."></textarea>
+      </div>
+      <button class="order-action-btn" style="width: 100%; margin-top: 10px;" onclick="submitFeedback()">Submit Feedback</button>
+    </div>
+  </div>
+
+  <!-- Terms & Privacy Modal -->
+  <div class="modal-overlay" id="termsModal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeTermsModal()">&times;</button>
+      <div class="modal-title" style="margin-bottom: 15px;">Terms & Privacy Policy</div>
+      <div style="font-size: 13px; line-height: 1.6; color: var(--subtext-color); text-align: left; max-height: 300px; overflow-y: auto;">
+        <p style="margin-bottom: 10px;"><strong>1. Terms of Use:</strong> By using VAYNRO, you agree to our standard ordering, shipping, and return protocols. All aesthetic designs and products are subject to availability.</p>
+        <p style="margin-bottom: 10px;"><strong>2. Privacy Policy:</strong> We respect your personal information (name, phone, address). Your data is strictly used for order processing and delivery purposes and will never be shared with third parties.</p>
+        <p><strong>3. Return & Refund:</strong> Issues with sizing or delivery must be reported within 24 hours of receiving the product.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript for 3-dot Menu and Extra Features -->
+  <script>
+    function toggleMenu(event) {
+      event.stopPropagation();
+      document.getElementById("dropdownMenu").classList.toggle("show");
+    }
+
+    window.onclick = function(event) {
+      if (!event.target.matches('.three-dot-btn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-menu");
+        for (var i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+
+    function toggleDarkMode() {
+      const html = document.documentElement;
+      const darkModeText = document.getElementById("darkModeText");
+      if (html.getAttribute("data-theme") === "dark") {
+        html.removeAttribute("data-theme");
+        darkModeText.innerText = "Dark Mode";
+        localStorage.setItem("theme", "light");
+      } else {
+        html.setAttribute("data-theme", "dark");
+        darkModeText.innerText = "Light Mode";
+        localStorage.setItem("theme", "dark");
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      if (localStorage.getItem("theme") === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+        document.getElementById("darkModeText").innerText = "Light Mode";
+      }
+    });
+
+    function shareWebsite() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'VAYNRO | Aesthetic Fashion',
+          url: window.location.href
+        }).catch(console.error);
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+        alert("Link copied to clipboard!");
+      }
+    }
+
+    function openFeedbackModal() {
+      document.getElementById("feedbackModal").style.display = "flex";
+    }
+    function closeFeedbackModal() {
+      document.getElementById("feedbackModal").style.display = "none";
+    }
+    function submitFeedback() {
+      const name = document.getElementById("feedbackName").value;
+      const text = document.getElementById("feedbackText").value;
+      if(!name || !text) {
+        alert("Please fill in all fields.");
+        return;
+      }
+      alert("Thank you for your valuable feedback!");
+      closeFeedbackModal();
+      document.getElementById("feedbackName").value = "";
+      document.getElementById("feedbackText").value = "";
+    }
+
+    function openTermsModal() {
+      document.getElementById("termsModal").style.display = "flex";
+    }
+    function closeTermsModal() {
+      document.getElementById("termsModal").style.display = "none";
+    }
+  </script>
 
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
