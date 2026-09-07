@@ -95,7 +95,7 @@
     .dropdown-item:last-child { border-bottom: none; }
     .dropdown-item:hover { background: var(--bg-color); color: var(--primary-color); }
 
-    /* Search & Category Filter Bar (নতুন যোগ করা হয়েছে) */
+    /* Search & Category Filter Bar */
     .store-controls { max-width: 1200px; margin: 0 auto 30px auto; display: flex; flex-direction: column; gap: 15px; }
     .search-bar-container { width: 100%; }
     .search-bar-container input { width: 100%; padding: 12px 20px; border-radius: 30px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-color); font-size: 15px; outline: none; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
@@ -183,7 +183,7 @@
     .cart-action-btn:hover { opacity: 0.8; }
     .order-action-btn { flex: 1; background: var(--primary-color); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; }
 
-    /* Customer Review & Comment Section inside Modal (নতুন যোগ করা হয়েছে) */
+    /* Customer Review & Comment Section inside Modal */
     .reviews-section { margin-top: 25px; border-top: 1px solid var(--card-border); padding-top: 15px; text-align: left; }
     .reviews-section h4 { font-size: 15px; font-weight: 700; color: var(--text-color); margin-bottom: 10px; }
     .review-list { max-height: 140px; overflow-y: auto; margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px; }
@@ -223,10 +223,10 @@
     <img src="cover.jpg" alt="VAYNRO Cover" class="cover-bg">
   </div>
 
-  <!-- Search & Category Filters Bar -->
+  <!-- Search & Category Filters Bar (Shoe এবং Bag সহ আপডেট করা হয়েছে) -->
   <div class="store-controls">
     <div class="search-bar-container">
-      <input type="text" id="searchInput" placeholder="Search for aesthetic apparel, hoodies, t-shirts..." oninput="filterProducts()">
+      <input type="text" id="searchInput" placeholder="Search for aesthetic apparel, shoes, bags, hoodies..." oninput="filterProducts()">
     </div>
     <div class="category-filters">
       <button class="cat-btn active" onclick="setCategory('all', this)">All Products</button>
@@ -234,6 +234,8 @@
       <button class="cat-btn" onclick="setCategory('hoodie', this)">Hoodies</button>
       <button class="cat-btn" onclick="setCategory('shirt', this)">Shirts</button>
       <button class="cat-btn" onclick="setCategory('pants', this)">Pants</button>
+      <button class="cat-btn" onclick="setCategory('shoe', this)">Shoe</button>
+      <button class="cat-btn" onclick="setCategory('bag', this)">Bag</button>
     </div>
   </div>
 
