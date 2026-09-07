@@ -33,7 +33,7 @@ db.collection("products").onSnapshot((snapshot) => {
   snapshot.forEach((doc) => {
     allProducts.push({ id: doc.id, ...doc.data() });
   });
-  filterProducts(); // ফিল্টার অনুযায়ী প্রোডাক্ট রেন্ডার হবে
+  filterProducts(); // ফিল্টার অনুযায়ী প্রোডাক্ট রেন্ডার হবে
 });
 
 // Category Filtering Function
@@ -65,7 +65,7 @@ function filterProducts() {
   renderProductsGrid(filtered);
 }
 
-// Render Products to Grid
+// Render Products to Grid with Stock Out Badge Support
 function renderProductsGrid(products) {
   const grid = document.getElementById("productGrid");
   if (!grid) return;
@@ -77,8 +77,11 @@ function renderProductsGrid(products) {
   }
 
   products.forEach((product) => {
+    const inStock = product.inStock !== false; // স্টক আউট কিনা চেক করা
+    
     grid.innerHTML += `
       <div class="card" onclick='openModal(${JSON.stringify(product)})'>
+        ${!inStock ? '<div class="stock-badge">Stock Out</div>' : ''}
         <img src="${product.image}">
         <div class="card-details">
           <div class="card-title">${product.title}</div>
@@ -103,14 +106,42 @@ function openModal(product) {
     else btn.classList.remove('active');
   });
 
-  document.getElementById("bkashDetailsBox").style.display = "none";
-  document.getElementById("paymentMethod").value = "Cash on Delivery";
-  document.getElementById("deliveryLocation").value = "inside_dhaka";
-  document.getElementById("buyerName").value = '';
-  document.getElementById("buyerPhone").value = '';
-  document.getElementById("buyerAddress").value = '';
-  document.getElementById("bkashSenderPhone").value = '';
-  document.getElementById("bkashTrxId").value = '';
+  // Stock Out চেক করে মোডাল ফর্ম হ্যান্ডেল করা
+  const inStock = product.inStock !== false;
+  let warningBox = document.getElementById("stockOutWarning");
+  const orderFormContainer = document.getElementById("orderFormContainer");
+
+  // যদি ইনডেক্স ফাইলে স্টক আউট ওয়ার্নিং বক্স না থাকে, তবে ডাইনামিক তৈরি করে নেব
+  if (!warningBox) {
+    warningBox = document.createElement("div");
+    warningBox.id = "stockOutWarning";
+    warningBox.style.cssText = "display: none; background: #ffebee; color: #c62828; padding: 12px; border-radius: 8px; font-weight: 700; text-align: center; margin-bottom: 15px; border: 1px solid #ef9a9a;";
+    warningBox.innerText = "⚠️ This product is currently STOCK OUT! Order is unavailable.";
+    const modalContent = document.querySelector(".modal-content");
+    const modalPriceEl = document.getElementById("modalPrice");
+    if (modalContent && modalPriceEl) {
+      modalContent.insertBefore(warningBox, modalPriceEl.nextSibling);
+    }
+  }
+
+  if (!inStock) {
+    warningBox.style.display = "block";
+    if (orderFormContainer) orderFormContainer.style.display = "none";
+  } else {
+    warningBox.style.display = "none";
+    if (orderFormContainer) orderFormContainer.style.display = "block";
+  }
+
+  const bkashBox = document.getElementById("bkashDetailsBox");
+  if (bkashBox) bkashBox.style.display = "none";
+  
+  if (document.getElementById("paymentMethod")) document.getElementById("paymentMethod").value = "Cash on Delivery";
+  if (document.getElementById("deliveryLocation")) document.getElementById("deliveryLocation").value = "inside_dhaka";
+  if (document.getElementById("buyerName")) document.getElementById("buyerName").value = '';
+  if (document.getElementById("buyerPhone")) document.getElementById("buyerPhone").value = '';
+  if (document.getElementById("buyerAddress")) document.getElementById("buyerAddress").value = '';
+  if (document.getElementById("bkashSenderPhone")) document.getElementById("bkashSenderPhone").value = '';
+  if (document.getElementById("bkashTrxId")) document.getElementById("bkashTrxId").value = '';
   
   calculateTotal();
 
@@ -176,6 +207,12 @@ function addToCart() {
     alert("Please select a product first!");
     return;
   }
+  // স্টক আউট প্রোডাক্ট কার্টে অ্যাড করা থেকে বিরত রাখা
+  if(currentProduct.inStock === false) {
+    alert("This product is currently out of stock and cannot be added to cart.");
+    return;
+  }
+  
   cart.push({ ...currentProduct, size: selectedSize });
   localStorage.setItem('vaynro_cart', JSON.stringify(cart));
   updateCartCount();
@@ -191,9 +228,9 @@ function updateCartCount() {
 document.getElementById("paymentMethod")?.addEventListener("change", function() {
   const bkashBox = document.getElementById("bkashDetailsBox");
   if(this.value === "bKash") {
-    bkashBox.style.display = "block";
+    if (bkashBox) bkashBox.style.display = "block";
   } else {
-    bkashBox.style.display = "none";
+    if (bkashBox) bkashBox.style.display = "none";
   }
 });
 
@@ -203,7 +240,8 @@ document.getElementById("deliveryLocation")?.addEventListener("change", function
 
 function calculateTotal() {
   if(!currentProduct) return;
-  const location = document.getElementById("deliveryLocation").value;
+  const locationEl = document.getElementById("deliveryLocation");
+  const location = locationEl ? locationEl.value : "inside_dhaka";
   let deliveryFee = location === "inside_dhaka" ? 70 : 150;
   let totalPrice = Number(currentProduct.price) + deliveryFee;
   
@@ -216,6 +254,11 @@ function calculateTotal() {
 function placeOrder() {
   if(!currentProduct) {
     alert("No product selected!");
+    return;
+  }
+
+  if(currentProduct.inStock === false) {
+    alert("Sorry, this product is out of stock.");
     return;
   }
 
