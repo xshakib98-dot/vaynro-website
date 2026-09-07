@@ -18,15 +18,17 @@
     button:hover { background: #d4a555; }
     
     .product-list { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-    .product-item { display: flex; justify-content: space-between; align-items: center; background: #2a2a2a; padding: 10px 15px; border-radius: 8px; }
-    .delete-btn { background: #e74c3c; color: #fff; width: auto; padding: 6px 12px; font-size: 12px; margin-top: 0; }
+    .product-item { display: flex; justify-content: space-between; align-items: center; background: #2a2a2a; padding: 10px 15px; border-radius: 8px; flex-wrap: wrap; gap: 10px; }
+    .btn-group { display: flex; gap: 8px; }
+    .stock-btn { background: #f39c12; color: #fff; width: auto; padding: 6px 12px; font-size: 12px; margin-top: 0; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; }
+    .stock-btn.in-stock { background: #27ae60; }
+    .delete-btn { background: #e74c3c; color: #fff; width: auto; padding: 6px 12px; font-size: 12px; margin-top: 0; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; }
   </style>
 </head>
 <body>
 
   <div class="admin-container">
     
-    <!-- 1. Product Uploader -->
     <div class="card">
       <h2>Product Uploader</h2>
       <div class="form-group">
@@ -41,7 +43,6 @@
         <label>Image URL</label>
         <input type="text" id="pImg" placeholder="https://...">
       </div>
-      <!-- ক্যাটাগরি সিলেক্ট ড্রপডাউনে Shoe এবং Bag যোগ করা হয়েছে -->
       <div class="form-group">
         <label>Product Category</label>
         <select id="pCategory">
@@ -56,13 +57,11 @@
       <button onclick="uploadProduct()">Publish Product</button>
     </div>
 
-    <!-- 2. Existing Products -->
     <div class="card">
-      <h2>Existing Products</h2>
+      <h2>Existing Products & Stock Control</h2>
       <div class="product-list" id="pList">Loading...</div>
     </div>
 
-    <!-- 3. Dynamic About Us Manager -->
     <div class="card">
       <h2>Manage About Us Page</h2>
       <div class="form-group">
@@ -88,7 +87,6 @@
       <button onclick="saveAboutSettings()">Save About Us Info</button>
     </div>
 
-    <!-- 4. Dynamic Contact Us Manager -->
     <div class="card">
       <h2>Manage Contact Us Page</h2>
       <div class="form-group">
@@ -125,7 +123,7 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // Product Upload Function with Category
+    // Product Upload Function with Category and Stock
     function uploadProduct() {
       const title = document.getElementById("pTitle").value;
       const price = Number(document.getElementById("pPrice").value);
@@ -138,7 +136,8 @@
         title, 
         price, 
         image, 
-        category, 
+        category,
+        inStock: true, // ডিফল্টভাবে প্রোডাক্ট ইন-স্টক থাকবে
         createdAt: firebase.firestore.FieldValue.serverTimestamp() 
       })
       .then(() => {
@@ -150,20 +149,35 @@
       });
     }
 
-    // Load Existing Products with Category Info
+    // Load Existing Products with Stock Toggle & Category Info
     db.collection("products").onSnapshot(snapshot => {
       const list = document.getElementById("pList");
       list.innerHTML = "";
       snapshot.forEach(doc => {
         const d = doc.data();
+        const inStock = d.inStock !== false; // চেক করা হচ্ছে স্টক স্ট্যাটাস
         list.innerHTML += `
           <div class="product-item">
             <div><b>${d.title}</b> - ${d.price} BDT <span style="font-size:11px; color:#e5b869; margin-left:8px;">[${d.category || 'general'}]</span></div>
-            <button class="delete-btn" onclick="deleteProduct('${doc.id}')">Delete</button>
+            <div class="btn-group">
+              <button class="stock-btn ${inStock ? 'in-stock' : ''}" onclick="toggleStock('${doc.id}', ${inStock})">
+                ${inStock ? 'In Stock' : 'Stock Out'}
+              </button>
+              <button class="delete-btn" onclick="deleteProduct('${doc.id}')">Delete</button>
+            </div>
           </div>
         `;
       });
     });
+
+    // Toggle Stock Status Function
+    function toggleStock(id, currentStatus) {
+      db.collection("products").doc(id).update({
+        inStock: !currentStatus
+      }).then(() => {
+        console.log("Stock status updated");
+      });
+    }
 
     function deleteProduct(id) {
       if(confirm("Delete this product?")) {
