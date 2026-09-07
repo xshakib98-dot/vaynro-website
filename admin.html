@@ -41,7 +41,7 @@
         <label>Image URL</label>
         <input type="text" id="pImg" placeholder="https://...">
       </div>
-      <!-- ক্যাটাগরি সিলেক্ট করার নতুন ড্রপডাউন -->
+      <!-- ক্যাটাগরি সিলেক্ট ড্রপডাউনে Shoe এবং Bag যোগ করা হয়েছে -->
       <div class="form-group">
         <label>Product Category</label>
         <select id="pCategory">
@@ -49,6 +49,8 @@
           <option value="hoodie">Hoodie</option>
           <option value="shirt">Shirt</option>
           <option value="pants">Pants</option>
+          <option value="shoe">Shoe</option>
+          <option value="bag">Bag</option>
         </select>
       </div>
       <button onclick="uploadProduct()">Publish Product</button>
@@ -128,7 +130,7 @@
       const title = document.getElementById("pTitle").value;
       const price = Number(document.getElementById("pPrice").value);
       const image = document.getElementById("pImg").value;
-      const category = document.getElementById("pCategory").value; // ক্যাটাগরি ভ্যালু নেওয়া হচ্ছে
+      const category = document.getElementById("pCategory").value;
 
       if(!title || !price || !image) return alert("Fill all fields!");
 
@@ -136,7 +138,7 @@
         title, 
         price, 
         image, 
-        category, // ফায়ারস্টোরে ক্যাটাগরি সেভ হচ্ছে
+        category, 
         createdAt: firebase.firestore.FieldValue.serverTimestamp() 
       })
       .then(() => {
