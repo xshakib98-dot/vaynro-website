@@ -50,7 +50,7 @@
     }
 
     body { background: var(--bg-color); color: var(--text-color); padding: 20px; }
-    header { max-width: 1200px; margin: 0 auto 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--header-border); padding-bottom: 20px; }
+    header { max-width: 1200px; margin: 0 auto 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--header-border); padding-bottom: 20px; flex-wrap: wrap; gap: 15px; }
     h1.logo { font-size: 28px; letter-spacing: 4px; color: var(--primary-hover); text-transform: uppercase; cursor: pointer; font-weight: 700; }
     
     .nav-links { display: flex; gap: 20px; align-items: center; position: relative; }
@@ -95,6 +95,15 @@
     .dropdown-item:last-child { border-bottom: none; }
     .dropdown-item:hover { background: var(--bg-color); color: var(--primary-color); }
 
+    /* Search & Category Filter Bar (নতুন যোগ করা হয়েছে) */
+    .store-controls { max-width: 1200px; margin: 0 auto 30px auto; display: flex; flex-direction: column; gap: 15px; }
+    .search-bar-container { width: 100%; }
+    .search-bar-container input { width: 100%; padding: 12px 20px; border-radius: 30px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-color); font-size: 15px; outline: none; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+    
+    .category-filters { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .cat-btn { padding: 8px 18px; border-radius: 20px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--subtext-color); font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+    .cat-btn.active, .cat-btn:hover { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
+
     /* Cover Photo Container & Floating Logo Badge */
     .vogue-cover-container {
       position: relative;
@@ -118,7 +127,6 @@
       display: block;
     }
     
-    /* কভার ছবির ওপর ফ্লোটিং লোগো ব্যাজ */
     .cover-logo-badge {
       position: absolute;
       top: 20px;
@@ -143,7 +151,7 @@
     }
 
     /* Product Grid */
-    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 40px auto; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto 40px auto; }
     .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
     .card:hover { transform: translateY(-5px); }
     .card img { width: 100%; height: 350px; object-fit: contain; background: var(--bg-color); }
@@ -174,6 +182,14 @@
     .cart-action-btn { flex: 1; background: var(--bg-color); color: var(--primary-color); border: 1px solid var(--primary-color); padding: 12px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; }
     .cart-action-btn:hover { opacity: 0.8; }
     .order-action-btn { flex: 1; background: var(--primary-color); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; }
+
+    /* Customer Review & Comment Section inside Modal (নতুন যোগ করা হয়েছে) */
+    .reviews-section { margin-top: 25px; border-top: 1px solid var(--card-border); padding-top: 15px; text-align: left; }
+    .reviews-section h4 { font-size: 15px; font-weight: 700; color: var(--text-color); margin-bottom: 10px; }
+    .review-list { max-height: 140px; overflow-y: auto; margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px; }
+    .review-item { background: var(--bg-color); padding: 10px; border-radius: 10px; font-size: 12px; border: 1px solid var(--card-border); }
+    .review-author { font-weight: 700; color: var(--primary-hover); margin-bottom: 3px; display: flex; justify-content: space-between; }
+    .review-stars { color: #f39c12; }
   </style>
 </head>
 <body>
@@ -205,6 +221,20 @@
       <span>VAYNRO</span>
     </div>
     <img src="cover.jpg" alt="VAYNRO Cover" class="cover-bg">
+  </div>
+
+  <!-- Search & Category Filters Bar -->
+  <div class="store-controls">
+    <div class="search-bar-container">
+      <input type="text" id="searchInput" placeholder="Search for aesthetic apparel, hoodies, t-shirts..." oninput="filterProducts()">
+    </div>
+    <div class="category-filters">
+      <button class="cat-btn active" onclick="setCategory('all', this)">All Products</button>
+      <button class="cat-btn" onclick="setCategory('tshirt', this)">T-Shirts</button>
+      <button class="cat-btn" onclick="setCategory('hoodie', this)">Hoodies</button>
+      <button class="cat-btn" onclick="setCategory('shirt', this)">Shirts</button>
+      <button class="cat-btn" onclick="setCategory('pants', this)">Pants</button>
+    </div>
   </div>
 
   <div class="product-grid" id="productGrid">
@@ -281,6 +311,29 @@
         <button class="cart-action-btn" onclick="addToCart()">Add to Cart</button>
         <button class="order-action-btn" onclick="placeOrder()">Order Now</button>
       </div>
+
+      <!-- Customer Reviews & Comments Section inside Modal -->
+      <div class="reviews-section">
+        <h4>Customer Reviews & Comments</h4>
+        <div class="review-list" id="reviewListContainer">
+          <!-- Dynamic reviews loaded here -->
+        </div>
+        <div class="form-group" style="margin-bottom: 8px;">
+          <input type="text" id="reviewAuthor" placeholder="Your Name" style="padding: 8px; font-size: 12px;">
+        </div>
+        <div class="form-group" style="margin-bottom: 8px;">
+          <select id="reviewRating" style="padding: 8px; font-size: 12px;">
+            <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
+            <option value="4">⭐⭐⭐⭐ (4/5)</option>
+            <option value="3">⭐⭐⭐ (3/5)</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom: 8px;">
+          <textarea id="reviewComment" rows="2" placeholder="Write your feedback..." style="padding: 8px; font-size: 12px;"></textarea>
+        </div>
+        <button class="cart-action-btn" style="width: 100%; padding: 8px; font-size: 12px;" onclick="submitProductReview()">Post Review</button>
+      </div>
+
     </div>
   </div>
 
