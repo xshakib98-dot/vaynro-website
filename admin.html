@@ -17,6 +17,12 @@
     button { width: 100%; padding: 12px; background: #e5b869; color: #121212; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; text-transform: uppercase; margin-top: 10px; transition: 0.3s; }
     button:hover { background: #d4a555; }
     
+    /* Image Tab & Dropzone Custom Styles */
+    .img-tab-btn { background: #2a2a2a; color: #aaa; border: 1px solid #444; padding: 8px; font-size: 12px; font-weight: 600; border-radius: 6px; cursor: pointer; flex: 1; margin-top: 0; text-transform: none; transition: 0.2s; }
+    .img-tab-btn.active { background: #e5b869; color: #121212; border-color: #e5b869; }
+    #dropZone { border: 2px dashed #555; padding: 20px; text-align: center; border-radius: 8px; background: #2a2a2a; cursor: pointer; position: relative; transition: 0.2s; }
+    #dropZone:hover { border-color: #e5b869; }
+
     .product-list { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
     .product-item { display: flex; justify-content: space-between; align-items: center; background: #2a2a2a; padding: 10px 15px; border-radius: 8px; flex-wrap: wrap; gap: 10px; }
     .btn-group { display: flex; gap: 8px; }
@@ -39,10 +45,38 @@
         <label>Price (BDT)</label>
         <input type="number" id="pPrice" placeholder="e.g. 2500">
       </div>
+
+      <!-- Image Source Section with Tabs (File / Drag-Drop / URL) -->
       <div class="form-group">
-        <label>Image URL</label>
-        <input type="text" id="pImg" placeholder="https://...">
+        <label>Product Image Source</label>
+        
+        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+          <button type="button" class="img-tab-btn active" onclick="switchImageTab('file')">📁 Browse / Drag File</button>
+          <button type="button" class="img-tab-btn" onclick="switchImageTab('url')">🔗 Image URL</button>
+        </div>
+
+        <!-- Option 1: File Browse & Drag & Drop -->
+        <div id="fileUploadTab">
+          <div id="dropZone">
+            <input type="file" id="productImageFile" accept="image/*" style="position: absolute; inset: 0; opacity: 0; cursor: pointer;" onchange="handleFileSelect(this)">
+            <div id="dropText">
+              <p style="font-size: 13px; font-weight: 600; color: #fff;">Drag & drop your image here</p>
+              <p style="font-size: 11px; color: #aaa; margin-top: 4px;">or <span style="color: #e5b869; text-decoration: underline;">Browse from device</span></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Option 2: Image URL -->
+        <div id="urlUploadTab" style="display: none;">
+          <input type="text" id="pImg" placeholder="https://example.com/image.jpg">
+        </div>
+
+        <!-- Image Preview Box -->
+        <div id="imagePreviewContainer" style="display: none; margin-top: 10px; text-align: center;">
+          <img id="imagePreview" src="" alt="Preview" style="max-height: 100px; border-radius: 6px; border: 1px solid #444;">
+        </div>
       </div>
+
       <div class="form-group">
         <label>Product Category</label>
         <select id="pCategory">
@@ -123,21 +157,111 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
+    let uploadedImageBase64 = "";
+
+    // Switch between File Upload/Drag & Drop and Image URL tabs
+    function switchImageTab(type) {
+      const fileTab = document.getElementById("fileUploadTab");
+      const urlTab = document.getElementById("urlUploadTab");
+      const btns = document.querySelectorAll(".img-tab-btn");
+
+      btns.forEach(b => b.classList.remove("active"));
+      
+      if(type === 'file') {
+        fileTab.style.display = "block";
+        urlTab.style.display = "none";
+        btns[0].classList.add("active");
+      } else {
+        fileTab.style.display = "none";
+        urlTab.style.display = "block";
+        btns[1].classList.add("active");
+      }
+    }
+
+    // Handle File Browse Selection
+    function handleFileSelect(input) {
+      if (input.files && input.files[0]) {
+        processFile(input.files[0]);
+      }
+    }
+
+    // Drag & Drop Event Listeners
+    const dropZone = document.getElementById("dropZone");
+    if (dropZone) {
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropZone.style.background = "#333";
+        }, false);
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropZone.style.background = "#2a2a2a";
+        }, false);
+      });
+
+      dropZone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if (files && files[0]) {
+          processFile(files[0]);
+        }
+      });
+    }
+
+    // Convert file to Base64 and show preview
+    function processFile(file) {
+      if (!file.type.startsWith('image/')) {
+        alert("Please select a valid image file.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        uploadedImageBase64 = e.target.result;
+        
+        const previewContainer = document.getElementById("imagePreviewContainer");
+        const previewImg = document.getElementById("imagePreview");
+        previewImg.src = uploadedImageBase64;
+        previewContainer.style.display = "block";
+        
+        document.getElementById("dropText").innerHTML = `<p style="font-size: 12px; font-weight: 600; color: #27ae60;">✅ File Selected: ${file.name}</p>`;
+      }
+      reader.readAsDataURL(file);
+    }
+
+    // Determine final image string based on active tab
+    function getProductImageValue() {
+      const urlTabDisplay = document.getElementById("urlUploadTab").style.display;
+      if (urlTabDisplay !== "none") {
+        return document.getElementById("pImg").value.trim();
+      } else {
+        return uploadedImageBase64;
+      }
+    }
+
     // Product Upload Function with Category and Stock
     function uploadProduct() {
-      const title = document.getElementById("pTitle").value;
+      const title = document.getElementById("pTitle").value.trim();
       const price = Number(document.getElementById("pPrice").value);
-      const image = document.getElementById("pImg").value;
+      const image = getProductImageValue();
       const category = document.getElementById("pCategory").value;
 
-      if(!title || !price || !image) return alert("Fill all fields!");
+      if(!title || !price || !image) {
+        alert("Please fill all fields and provide an image!");
+        return;
+      }
 
       db.collection("products").add({ 
         title, 
         price, 
         image, 
         category,
-        inStock: true, // ডিফল্টভাবে প্রোডাক্ট ইন-স্টক থাকবে
+        inStock: true,
         createdAt: firebase.firestore.FieldValue.serverTimestamp() 
       })
       .then(() => {
@@ -145,17 +269,32 @@
         document.getElementById("pTitle").value = "";
         document.getElementById("pPrice").value = "";
         document.getElementById("pImg").value = "";
+        document.getElementById("productImageFile").value = "";
+        uploadedImageBase64 = "";
+        document.getElementById("imagePreviewContainer").style.display = "none";
+        document.getElementById("dropText").innerHTML = `
+          <p style="font-size: 13px; font-weight: 600; color: #fff;">Drag & drop your image here</p>
+          <p style="font-size: 11px; color: #aaa; margin-top: 4px;">or <span style="color: #e5b869; text-decoration: underline;">Browse from device</span></p>
+        `;
         document.getElementById("pCategory").value = "tshirt";
+      })
+      .catch((error) => {
+        alert("Error adding product: " + error.message);
       });
     }
 
     // Load Existing Products with Stock Toggle & Category Info
     db.collection("products").onSnapshot(snapshot => {
       const list = document.getElementById("pList");
+      if (!list) return;
       list.innerHTML = "";
+      if(snapshot.empty) {
+        list.innerHTML = "<p style='color: #aaa; text-align: center; font-size: 13px;'>No products found.</p>";
+        return;
+      }
       snapshot.forEach(doc => {
         const d = doc.data();
-        const inStock = d.inStock !== false; // চেক করা হচ্ছে স্টক স্ট্যাটাস
+        const inStock = d.inStock !== false;
         list.innerHTML += `
           <div class="product-item">
             <div><b>${d.title}</b> - ${d.price} BDT <span style="font-size:11px; color:#e5b869; margin-left:8px;">[${d.category || 'general'}]</span></div>
