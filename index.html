@@ -133,10 +133,65 @@
     .cover-logo-badge span { color: #fff; font-weight: 700; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
 
     .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto 40px auto; }
-    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.03); position: relative; }
+    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.03); position: relative; }
     .card:hover { transform: translateY(-5px); }
-    .card img { width: 100%; height: 350px; object-fit: contain; background: var(--bg-color); }
-    
+
+    /* Slider Container inside Card */
+    .product-img-box {
+      position: relative;
+      width: 100%;
+      height: 350px;
+      background: var(--bg-color);
+      overflow: hidden;
+    }
+    .product-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: none;
+    }
+    .product-img-box img.active {
+      display: block;
+    }
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 50%;
+      z-index: 6;
+      transition: 0.2s;
+    }
+    .slider-btn:hover { background: var(--primary-color); }
+    .prev-btn { left: 10px; }
+    .next-btn { right: 10px; }
+
+    .slider-dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 5px;
+      z-index: 6;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 50%;
+    }
+    .dot.active {
+      background: var(--primary-color);
+      width: 16px;
+      border-radius: 3px;
+    }
+
     .stock-badge {
       position: absolute;
       top: 15px;
@@ -154,7 +209,8 @@
     }
 
     .card-details { padding: 20px; text-align: center; }
-    .card-title { font-size: 18px; color: var(--text-color); margin-bottom: 8px; font-weight: 600; }
+    .card-title { font-size: 18px; color: var(--text-color); margin-bottom: 8px; font-weight: 600; cursor: pointer; }
+    .card-title:hover { color: var(--primary-color); }
     .card-price { font-size: 16px; color: var(--primary-color); font-weight: 700; }
 
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; backdrop-filter: blur(5px); }
@@ -235,12 +291,11 @@
     <p style="text-align: center; width: 100%; color: var(--subtext-color);">Loading catalog...</p>
   </div>
 
-  <!-- Product Modal with Multiple Image Gallery -->
+  <!-- Product Modal -->
   <div class="modal-overlay" id="productModal">
     <div class="modal-content">
       <button class="close-modal" onclick="closeModal()">&times;</button>
       
-      <!-- Multiple Image Gallery Container -->
       <div style="margin-bottom: 15px;">
         <img id="modalImg" class="modal-img" src="" alt="">
         <div id="modalThumbnails" style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px;"></div>
@@ -343,9 +398,7 @@
         <p style="font-size: 11px; color: var(--subtext-color); text-transform: uppercase; letter-spacing: 1px;">Aesthetic Fashion Brand</p>
       </div>
       
-      <div style="font-size: 13px; color: var(--text-color); line-height: 1.6; margin-bottom: 15px;" id="receiptDetailsBody">
-        <!-- Dynamic Invoice Content -->
-      </div>
+      <div style="font-size: 13px; color: var(--text-color); line-height: 1.6; margin-bottom: 15px;" id="receiptDetailsBody"></div>
 
       <div style="display: flex; gap: 10px; margin-top: 20px;">
         <button class="cart-action-btn" onclick="downloadReceiptImage()" style="flex: 1; padding: 10px; font-size: 13px;">📥 Download Slip</button>
@@ -435,7 +488,7 @@
     function closeFeedbackModal() { document.getElementById("feedbackModal").style.display = "none"; }
     function submitFeedback() {
       const name = document.getElementById("feedbackName").value;
-      const text = document.getElementById("feedbackText5").value || document.getElementById("feedbackText").value;
+      const text = document.getElementById("feedbackText").value;
       if(!name || !text) { alert("Please fill in all fields."); return; }
       alert("Thank you for your valuable feedback!");
       closeFeedbackModal();
@@ -474,6 +527,38 @@
     function closeReceiptModal() {
       document.getElementById("receiptModal").style.display = "none";
       window.location.reload();
+    }
+
+    // Card Image Slider Function
+    window.slideImagesIndex = {};
+    function slideImage(event, productId, direction, totalImages) {
+      event.stopPropagation(); // Card click hoye modal open howa theke rokhar jonno
+      if (!window.slideImagesIndex[productId]) {
+        window.slideImagesIndex[productId] = 0;
+      }
+
+      window.slideImagesIndex[productId] += direction;
+
+      if (window.slideImagesIndex[productId] >= totalImages) {
+        window.slideImagesIndex[productId] = 0;
+      } else if (window.slideImagesIndex[productId] < 0) {
+        window.slideImagesIndex[productId] = totalImages - 1;
+      }
+
+      let currentIndex = window.slideImagesIndex[productId];
+
+      const imgs = document.querySelectorAll(`.slide-img-${productId}`);
+      imgs.forEach((img, idx) => {
+        img.classList.remove('active');
+        const dot = document.querySelector(`.dot-${productId}-${idx}`);
+        if(dot) dot.classList.remove('active');
+      });
+
+      if (imgs[currentIndex]) {
+        imgs[currentIndex].classList.add('active');
+        const currentDot = document.querySelector(`.dot-${productId}-${currentIndex}`);
+        if(currentDot) currentDot.classList.add('active');
+      }
     }
   </script>
 
