@@ -4,38 +4,62 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VAYNRO | Admin Control Panel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background: #121212; color: #ffffff; padding: 30px; }
-    .admin-container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 30px; }
-    .card { background: #1e1e1e; padding: 25px; border-radius: 16px; border: 1px solid #333; }
-    h2 { font-size: 20px; color: #e5b869; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
-    .form-group { margin-bottom: 15px; }
-    label { display: block; font-size: 12px; color: #aaa; margin-bottom: 5px; text-transform: uppercase; font-weight: 600; }
-    input, textarea, select { width: 100%; padding: 12px; background: #2a2a2a; border: 1px solid #444; color: #fff; border-radius: 8px; font-size: 14px; outline: none; }
-    button { width: 100%; padding: 12px; background: #e5b869; color: #121212; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; text-transform: uppercase; margin-top: 10px; transition: 0.3s; }
-    button:hover { background: #d4a555; }
+    body { background: #0f0f0f; color: #f3f4f6; padding: 30px; }
+    .admin-container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px; }
     
-    .img-tab-btn { background: #2a2a2a; color: #aaa; border: 1px solid #444; padding: 8px; font-size: 12px; font-weight: 600; border-radius: 6px; cursor: pointer; flex: 1; margin-top: 0; text-transform: none; transition: 0.2s; }
-    .img-tab-btn.active { background: #e5b869; color: #121212; border-color: #e5b869; }
-    #dropZone { border: 2px dashed #555; padding: 20px; text-align: center; border-radius: 8px; background: #2a2a2a; cursor: pointer; position: relative; transition: 0.2s; }
-    #dropZone:hover { border-color: #e5b869; }
+    .card { background: #18181b; padding: 25px; border-radius: 20px; border: 1px solid #27272a; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    h2 { font-size: 18px; color: #fbbf24; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1.5px; text-align: center; font-weight: 700; }
+    
+    .form-group { margin-bottom: 18px; }
+    label { display: block; font-size: 11px; color: #a1a1aa; margin-bottom: 6px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+    input, textarea, select { width: 100%; padding: 14px; background: #202024; border: 1px solid #3f3f46; color: #fff; border-radius: 12px; font-size: 14px; outline: none; transition: 0.2s; }
+    input:focus, select:focus { border-color: #fbbf24; box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1); }
+    
+    button { width: 100%; padding: 14px; background: #fbbf24; color: #18181b; font-weight: 700; border: none; border-radius: 12px; cursor: pointer; text-transform: uppercase; margin-top: 10px; transition: 0.2s; letter-spacing: 0.5px; }
+    button:hover { background: #f59e0b; transform: translateY(-1px); }
+    
+    .img-tab-btn { background: #202024; color: #a1a1aa; border: 1px solid #3f3f46; padding: 10px; font-size: 12px; font-weight: 600; border-radius: 8px; cursor: pointer; flex: 1; margin-top: 0; text-transform: none; transition: 0.2s; }
+    .img-tab-btn.active { background: #fbbf24; color: #18181b; border-color: #fbbf24; }
+    
+    #dropZone { border: 2px dashed #3f3f46; padding: 25px; text-align: center; border-radius: 12px; background: #202024; cursor: pointer; position: relative; transition: 0.2s; }
+    #dropZone:hover { border-color: #fbbf24; }
 
-    .product-list { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-    .product-item { display: flex; justify-content: space-between; align-items: center; background: #2a2a2a; padding: 10px 15px; border-radius: 8px; flex-wrap: wrap; gap: 10px; }
+    .product-list { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+    .product-item { display: flex; justify-content: space-between; align-items: center; background: #202024; padding: 14px 18px; border-radius: 12px; flex-wrap: wrap; gap: 10px; border: 1px solid #27272a; }
     .btn-group { display: flex; gap: 8px; }
-    .stock-btn { background: #f39c12; color: #fff; width: auto; padding: 6px 12px; font-size: 12px; margin-top: 0; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; }
-    .stock-btn.in-stock { background: #27ae60; }
-    .delete-btn { background: #e74c3c; color: #fff; width: auto; padding: 6px 12px; font-size: 12px; margin-top: 0; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; }
     
-    .thumb-preview-box { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-    .thumb-item { position: relative; width: 60px; height: 60px; border-radius: 6px; overflow: hidden; border: 1px solid #444; }
+    .stock-btn { background: #d97706; color: #fff; width: auto; padding: 6px 12px; font-size: 11px; margin-top: 0; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; }
+    .stock-btn.in-stock { background: #059669; }
+    .delete-btn { background: #dc2626; color: #fff; width: auto; padding: 6px 12px; font-size: 11px; margin-top: 0; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; }
+    
+    .thumb-preview-box { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+    .thumb-item { position: relative; width: 65px; height: 65px; border-radius: 8px; overflow: hidden; border: 1px solid #3f3f46; }
     .thumb-item img { width: 100%; height: 100%; object-fit: cover; }
-    .thumb-remove { position: absolute; top: 2px; right: 2px; background: rgba(231,76,60,0.8); color: #fff; border: none; border-radius: 50%; width: 16px; height: 16px; font-size: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .thumb-remove { position: absolute; top: 3px; right: 3px; background: rgba(220, 38, 38, 0.9); color: #fff; border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+    /* Custom Stylish Modal / Toast Popup */
+    #uploadPopup { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 9999; }
+    .popup-box { background: #18181b; border: 1px solid #3f3f46; padding: 30px; border-radius: 20px; width: 320px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+    .spinner { width: 45px; height: 45px; border: 4px solid #3f3f46; border-top: 4px solid #fbbf24; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 15px; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
+
+  <!-- Live Upload Progress Popup -->
+  <div id="uploadPopup">
+    <div class="popup-box">
+      <div class="spinner"></div>
+      <h3 id="popupTitle" style="color: #fbbf24; font-size: 16px; margin-bottom: 8px; font-weight: 700;">Uploading Images...</h3>
+      <p id="popupProgressText" style="font-size: 13px; color: #a1a1aa; margin-bottom: 15px;">0% completed</p>
+      <div style="background: #202024; border-radius: 10px; height: 8px; overflow: hidden; border: 1px solid #3f3f46;">
+        <div id="popupProgressBar" style="background: #fbbf24; width: 0%; height: 100%; transition: width 0.2s;"></div>
+      </div>
+    </div>
+  </div>
 
   <div class="admin-container">
     
@@ -50,35 +74,31 @@
         <input type="number" id="pPrice" placeholder="e.g. 2500">
       </div>
 
-      <!-- Multiple Image Source Section -->
       <div class="form-group">
         <label>Product Images (Add Pictures)</label>
         
-        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+        <div style="display: flex; gap: 10px; margin-bottom: 12px;">
           <button type="button" class="img-tab-btn active" onclick="switchImageTab('file')">📁 Browse Files</button>
           <button type="button" class="img-tab-btn" onclick="switchImageTab('url')">🔗 Image URLs</button>
         </div>
 
-        <!-- Option 1: File Browse & Drag & Drop -->
         <div id="fileUploadTab">
           <div id="dropZone">
             <input type="file" id="productImageFile" accept="image/*" multiple style="position: absolute; inset: 0; opacity: 0; cursor: pointer;" onchange="handleFileSelect(this)">
             <div id="dropText">
               <p style="font-size: 13px; font-weight: 600; color: #fff;">Drag & drop multiple images here</p>
-              <p style="font-size: 11px; color: #aaa; margin-top: 4px;">or <span style="color: #e5b869; text-decoration: underline;">Browse from device (Select multiple)</span></p>
+              <p style="font-size: 11px; color: #a1a1aa; margin-top: 4px;">or <span style="color: #fbbf24; text-decoration: underline;">Browse from device</span></p>
             </div>
           </div>
         </div>
 
-        <!-- Option 2: Image URL -->
         <div id="urlUploadTab" style="display: none;">
           <input type="text" id="pImgUrlInput" placeholder="Paste image link and click Add">
-          <button type="button" onclick="addImageUrlToList()" style="background: #333; color: #e5b869; margin-top: 6px; padding: 8px;">+ Add Image Link</button>
+          <button type="button" onclick="addImageUrlToList()" style="background: #27272a; color: #fbbf24; margin-top: 8px; padding: 10px;">+ Add Image Link</button>
         </div>
 
-        <!-- Multiple Images Preview Grid -->
         <div id="imagePreviewContainer" style="display: none;">
-          <label style="margin-top: 10px; font-size: 11px; color: #e5b869;">Selected Images Gallery Preview:</label>
+          <label style="margin-top: 12px; font-size: 11px; color: #fbbf24;">Selected Gallery Preview:</label>
           <div class="thumb-preview-box" id="thumbPreviewList"></div>
         </div>
       </div>
@@ -99,13 +119,10 @@
 
     <div class="card">
       <h2>Existing Products & Stock Control</h2>
-      <div class="product-list" id="pList">Loading...</div>
+      <div class="product-list" id="pList">Loading products...</div>
     </div>
-
-    <!-- About & Contact Cards remain same -->
   </div>
 
-  <!-- Firebase Scripts (App, Firestore, and Storage) -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
@@ -125,7 +142,7 @@
     const db = firebase.firestore();
     const storage = firebase.storage();
 
-    let productFilesArray = []; // Store actual File objects or URLs
+    let productFilesArray = [];
 
     function switchImageTab(type) {
       const fileTab = document.getElementById("fileUploadTab");
@@ -160,7 +177,7 @@
       const urlInput = document.getElementById("pImgUrlInput");
       const url = urlInput.value.trim();
       if(url) {
-        productFilesArray.push(url); // Direct URL string
+        productFilesArray.push(url);
         urlInput.value = "";
         renderImagePreviews();
       } else {
@@ -194,12 +211,11 @@
       renderImagePreviews();
     }
 
-    // Upload Product using Firebase Storage for Files
+    // Upload Product with Live Progress & Detailed Error Handling
     async function uploadProduct() {
       const title = document.getElementById("pTitle").value.trim();
       const price = Number(document.getElementById("pPrice").value);
       const category = document.getElementById("pCategory").value;
-      const publishBtn = document.getElementById("publishBtn");
 
       if(!title || !price) {
         alert("Please fill title and price!");
@@ -211,26 +227,60 @@
         return;
       }
 
-      publishBtn.innerText = "Uploading Images...";
-      publishBtn.disabled = true;
+      const popup = document.getElementById("uploadPopup");
+      const progressBar = document.getElementById("popupProgressBar");
+      const progressText = document.getElementById("popupProgressText");
+      const popupTitle = document.getElementById("popupTitle");
+      
+      popup.style.display = "flex";
+      progressBar.style.width = "0%";
+      progressText.innerText = "Initializing upload...";
+      popupTitle.innerText = "Uploading Product...";
 
       try {
         let uploadedImageUrls = [];
+        let totalItems = productFilesArray.length;
+        let completedCount = 0;
 
-        for (let item of productFilesArray) {
+        for (let i = 0; i < totalItems; i++) {
+          let item = productFilesArray[i];
+          
           if (typeof item === 'string') {
-            // Already a URL string
             uploadedImageUrls.push(item);
+            completedCount++;
+            let percent = Math.round((completedCount / totalItems) * 100);
+            progressBar.style.width = percent + "%";
+            progressText.innerText = `${percent}% completed (${completedCount}/${totalItems})`;
           } else {
-            // It's a File object, upload to Firebase Storage
             const fileName = `products/${Date.now()}_${item.name}`;
             const storageRef = storage.ref().child(fileName);
-            const snapshot = await storageRef.put(item);
-            const downloadUrl = await snapshot.ref.getDownloadURL();
-            uploadedImageUrls.push(downloadUrl);
+            
+            // Using put() with snapshot listener for accurate percentage
+            const uploadTask = storageRef.put(item);
+            
+            await new Promise((resolve, reject) => {
+              uploadTask.on('state_changed', 
+                (snapshot) => {
+                  let fileProgress = (snapshot.bytesTransferred / snapshot.totalBytes);
+                  let overallPercent = Math.round(((completedCount + fileProgress) / totalItems) * 100);
+                  progressBar.style.width = overallPercent + "%";
+                  progressText.innerText = `Uploading image ${i + 1} of ${totalItems} (${overallPercent}%)`;
+                }, 
+                (error) => {
+                  reject(error);
+                }, 
+                async () => {
+                  const downloadUrl = await uploadTask.snapshot.ref.getDownloadURL();
+                  uploadedImageUrls.push(downloadUrl);
+                  completedCount++;
+                  resolve();
+                }
+              );
+            });
           }
         }
 
+        progressText.innerText = "Saving to database...";
         const mainImage = uploadedImageUrls[0];
 
         await db.collection("products").add({ 
@@ -243,7 +293,10 @@
           createdAt: firebase.firestore.FieldValue.serverTimestamp() 
         });
 
+        popup.style.display = "none";
         alert("Product Added Successfully!");
+        
+        // Reset form
         document.getElementById("pTitle").value = "";
         document.getElementById("pPrice").value = "";
         document.getElementById("productImageFile").value = "";
@@ -253,20 +306,18 @@
         document.getElementById("pCategory").value = "tshirt";
 
       } catch (error) {
-        alert("Error adding product: " + error.message);
-      } finally {
-        publishBtn.innerText = "Publish Product";
-        publishBtn.disabled = false;
+        popup.style.display = "none";
+        console.error("Upload Error:", error);
+        alert("Upload Failed! Error: " + error.message + "\n\nTip: Check if your Firebase Storage Rules allow write access.");
       }
     }
 
-    // Load Existing Products
     db.collection("products").onSnapshot(snapshot => {
       const list = document.getElementById("pList");
       if (!list) return;
       list.innerHTML = "";
       if(snapshot.empty) {
-        list.innerHTML = "<p style='color: #aaa; text-align: center; font-size: 13px;'>No products found.</p>";
+        list.innerHTML = "<p style='color: #71717a; text-align: center; font-size: 13px;'>No products found.</p>";
         return;
       }
       snapshot.forEach(doc => {
@@ -275,7 +326,7 @@
         const imgCount = d.images ? d.images.length : 1;
         list.innerHTML += `
           <div class="product-item">
-            <div><b>${d.title}</b> - ${d.price} BDT <span style="font-size:11px; color:#e5b869; margin-left:8px;">[${d.category || 'general'}] (${imgCount} imgs)</span></div>
+            <div><b>${d.title}</b> - ${d.price} BDT <span style="font-size:11px; color:#fbbf24; margin-left:6px;">[${d.category || 'general'}] (${imgCount} imgs)</span></div>
             <div class="btn-group">
               <button class="stock-btn ${inStock ? 'in-stock' : ''}" onclick="toggleStock('${doc.id}', ${inStock})">
                 ${inStock ? 'In Stock' : 'Stock Out'}
