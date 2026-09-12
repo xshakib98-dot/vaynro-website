@@ -96,9 +96,42 @@ function openModal(product) {
   currentProduct = product;
   selectedSize = 'S';
 
-  document.getElementById("modalImg").src = product.image;
+  // Set main image
+  document.getElementById("modalImg").src = product.image || (product.images && product.images[0]) || '';
   document.getElementById("modalTitle").innerText = product.title;
   
+  // Render Multiple Images Gallery inside Modal
+  let galleryContainer = document.getElementById("modalGalleryThumbnails");
+  const modalContent = document.querySelector(".modal-content");
+  
+  if (!galleryContainer && modalContent) {
+    galleryContainer = document.createElement("div");
+    galleryContainer.id = "modalGalleryThumbnails";
+    galleryContainer.style.cssText = "display: flex; gap: 8px; margin-top: 10px; overflow-x: auto; padding-bottom: 5px;";
+    const modalImgEl = document.getElementById("modalImg");
+    if (modalImgEl) {
+      modalImgEl.parentNode.insertBefore(galleryContainer, modalImgEl.nextSibling);
+    }
+  }
+
+  if (galleryContainer) {
+    galleryContainer.innerHTML = "";
+    const imgs = product.images && product.images.length > 0 ? product.images : [product.image];
+    
+    if (imgs.length > 1) {
+      galleryContainer.style.display = "flex";
+      imgs.forEach((imgUrl) => {
+        galleryContainer.innerHTML += `
+          <div onclick="document.getElementById('modalImg').src='${imgUrl}'" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; border: 1px solid var(--card-border); cursor: pointer; flex-shrink: 0;">
+            <img src="${imgUrl}" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+        `;
+      });
+    } else {
+      galleryContainer.style.display = "none";
+    }
+  }
+
   // Reset size buttons to default 'S'
   const sizeBtns = document.querySelectorAll('.size-btn');
   sizeBtns.forEach((btn, index) => {
@@ -111,13 +144,12 @@ function openModal(product) {
   let warningBox = document.getElementById("stockOutWarning");
   const orderFormContainer = document.getElementById("orderFormContainer");
 
-  // যদি ইনডেক্স ফাইলে স্টক আউট ওয়ার্নিং বক্স না থাকে, তবে ডাইনামিক তৈরি করে নেব
+  // যদি ইনডেক্স ফাইলে স্টক আউট ওয়ার্নিং বক্স না থাকে, তবে ডাইনামিক তৈরি করে নেব
   if (!warningBox) {
     warningBox = document.createElement("div");
     warningBox.id = "stockOutWarning";
     warningBox.style.cssText = "display: none; background: #ffebee; color: #c62828; padding: 12px; border-radius: 8px; font-weight: 700; text-align: center; margin-bottom: 15px; border: 1px solid #ef9a9a;";
     warningBox.innerText = "⚠️ This product is currently STOCK OUT! Order is unavailable.";
-    const modalContent = document.querySelector(".modal-content");
     const modalPriceEl = document.getElementById("modalPrice");
     if (modalContent && modalPriceEl) {
       modalContent.insertBefore(warningBox, modalPriceEl.nextSibling);
