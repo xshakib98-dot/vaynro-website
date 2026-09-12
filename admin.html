@@ -17,7 +17,6 @@
     button { width: 100%; padding: 12px; background: #e5b869; color: #121212; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; text-transform: uppercase; margin-top: 10px; transition: 0.3s; }
     button:hover { background: #d4a555; }
     
-    /* Image Tab & Dropzone Custom Styles */
     .img-tab-btn { background: #2a2a2a; color: #aaa; border: 1px solid #444; padding: 8px; font-size: 12px; font-weight: 600; border-radius: 6px; cursor: pointer; flex: 1; margin-top: 0; text-transform: none; transition: 0.2s; }
     .img-tab-btn.active { background: #e5b869; color: #121212; border-color: #e5b869; }
     #dropZone { border: 2px dashed #555; padding: 20px; text-align: center; border-radius: 8px; background: #2a2a2a; cursor: pointer; position: relative; transition: 0.2s; }
@@ -29,6 +28,11 @@
     .stock-btn { background: #f39c12; color: #fff; width: auto; padding: 6px 12px; font-size: 12px; margin-top: 0; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; }
     .stock-btn.in-stock { background: #27ae60; }
     .delete-btn { background: #e74c3c; color: #fff; width: auto; padding: 6px 12px; font-size: 12px; margin-top: 0; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; }
+    
+    .thumb-preview-box { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .thumb-item { position: relative; width: 60px; height: 60px; border-radius: 6px; overflow: hidden; border: 1px solid #444; }
+    .thumb-item img { width: 100%; height: 100%; object-fit: cover; }
+    .thumb-remove { position: absolute; top: 2px; right: 2px; background: rgba(231,76,60,0.8); color: #fff; border: none; border-radius: 50%; width: 16px; height: 16px; font-size: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
   </style>
 </head>
 <body>
@@ -46,34 +50,36 @@
         <input type="number" id="pPrice" placeholder="e.g. 2500">
       </div>
 
-      <!-- Image Source Section with Tabs (File / Drag-Drop / URL) -->
+      <!-- Multiple Image Source Section -->
       <div class="form-group">
-        <label>Product Image Source</label>
+        <label>Product Images (Add 4-5 Pictures)</label>
         
         <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-          <button type="button" class="img-tab-btn active" onclick="switchImageTab('file')">📁 Browse / Drag File</button>
-          <button type="button" class="img-tab-btn" onclick="switchImageTab('url')">🔗 Image URL</button>
+          <button type="button" class="img-tab-btn active" onclick="switchImageTab('file')">📁 Browse Files</button>
+          <button type="button" class="img-tab-btn" onclick="switchImageTab('url')">🔗 Image URLs</button>
         </div>
 
         <!-- Option 1: File Browse & Drag & Drop -->
         <div id="fileUploadTab">
           <div id="dropZone">
-            <input type="file" id="productImageFile" accept="image/*" style="position: absolute; inset: 0; opacity: 0; cursor: pointer;" onchange="handleFileSelect(this)">
+            <input type="file" id="productImageFile" accept="image/*" multiple style="position: absolute; inset: 0; opacity: 0; cursor: pointer;" onchange="handleFileSelect(this)">
             <div id="dropText">
-              <p style="font-size: 13px; font-weight: 600; color: #fff;">Drag & drop your image here</p>
-              <p style="font-size: 11px; color: #aaa; margin-top: 4px;">or <span style="color: #e5b869; text-decoration: underline;">Browse from device</span></p>
+              <p style="font-size: 13px; font-weight: 600; color: #fff;">Drag & drop multiple images here</p>
+              <p style="font-size: 11px; color: #aaa; margin-top: 4px;">or <span style="color: #e5b869; text-decoration: underline;">Browse from device (Select multiple)</span></p>
             </div>
           </div>
         </div>
 
         <!-- Option 2: Image URL -->
         <div id="urlUploadTab" style="display: none;">
-          <input type="text" id="pImg" placeholder="https://example.com/image.jpg">
+          <input type="text" id="pImgUrlInput" placeholder="Paste image link and click Add">
+          <button type="button" onclick="addImageUrlToList()" style="background: #333; color: #e5b869; margin-top: 6px; padding: 8px;">+ Add Image Link</button>
         </div>
 
-        <!-- Image Preview Box -->
-        <div id="imagePreviewContainer" style="display: none; margin-top: 10px; text-align: center;">
-          <img id="imagePreview" src="" alt="Preview" style="max-height: 100px; border-radius: 6px; border: 1px solid #444;">
+        <!-- Multiple Images Preview Grid -->
+        <div id="imagePreviewContainer" style="display: none;">
+          <label style="margin-top: 10px; font-size: 11px; color: #e5b869;">Selected Images Gallery Preview:</label>
+          <div class="thumb-preview-box" id="thumbPreviewList"></div>
         </div>
       </div>
 
@@ -157,9 +163,8 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    let uploadedImageBase64 = "";
+    let productImagesArray = []; // Stores multiple image strings (Base64 or URLs)
 
-    // Switch between File Upload/Drag & Drop and Image URL tabs
     function switchImageTab(type) {
       const fileTab = document.getElementById("fileUploadTab");
       const urlTab = document.getElementById("urlUploadTab");
@@ -178,104 +183,98 @@
       }
     }
 
-    // Handle File Browse Selection
+    // Handle Multiple File Selection
     function handleFileSelect(input) {
-      if (input.files && input.files[0]) {
-        processFile(input.files[0]);
+      if (input.files && input.files.length > 0) {
+        Array.from(input.files).forEach(file => {
+          if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              productImagesArray.push(e.target.result);
+              renderImagePreviews();
+            }
+            reader.readAsDataURL(file);
+          }
+        });
       }
     }
 
-    // Drag & Drop Event Listeners
-    const dropZone = document.getElementById("dropZone");
-    if (dropZone) {
-      ['dragenter', 'dragover'].forEach(eventName => {
-        dropZone.addEventListener(eventName, (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          dropZone.style.background = "#333";
-        }, false);
-      });
-
-      ['dragleave', 'drop'].forEach(eventName => {
-        dropZone.addEventListener(eventName, (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          dropZone.style.background = "#2a2a2a";
-        }, false);
-      });
-
-      dropZone.addEventListener('drop', (e) => {
-        const dt = e.dataTransfer;
-        const files = dt.files;
-        if (files && files[0]) {
-          processFile(files[0]);
-        }
-      });
-    }
-
-    // Convert file to Base64 and show preview
-    function processFile(file) {
-      if (!file.type.startsWith('image/')) {
-        alert("Please select a valid image file.");
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        uploadedImageBase64 = e.target.result;
-        
-        const previewContainer = document.getElementById("imagePreviewContainer");
-        const previewImg = document.getElementById("imagePreview");
-        previewImg.src = uploadedImageBase64;
-        previewContainer.style.display = "block";
-        
-        document.getElementById("dropText").innerHTML = `<p style="font-size: 12px; font-weight: 600; color: #27ae60;">✅ File Selected: ${file.name}</p>`;
-      }
-      reader.readAsDataURL(file);
-    }
-
-    // Determine final image string based on active tab
-    function getProductImageValue() {
-      const urlTabDisplay = document.getElementById("urlUploadTab").style.display;
-      if (urlTabDisplay !== "none") {
-        return document.getElementById("pImg").value.trim();
+    // Add Image via URL to List
+    function addImageUrlToList() {
+      const urlInput = document.getElementById("pImgUrlInput");
+      const url = urlInput.value.trim();
+      if(url) {
+        productImagesArray.push(url);
+        urlInput.value = "";
+        renderImagePreviews();
       } else {
-        return uploadedImageBase64;
+        alert("Please enter a valid image URL.");
       }
     }
 
-    // Product Upload Function with Category and Stock
+    // Render Preview Thumbnails
+    function renderImagePreviews() {
+      const container = document.getElementById("imagePreviewContainer");
+      const list = document.getElementById("thumbPreviewList");
+      list.innerHTML = "";
+
+      if(productImagesArray.length > 0) {
+        container.style.display = "block";
+        productImagesArray.forEach((imgSrc, index) => {
+          list.innerHTML += `
+            <div class="thumb-item">
+              <img src="${imgSrc}" alt="thumb">
+              <button class="thumb-remove" onclick="removeImage(${index})">&times;</button>
+            </div>
+          `;
+        });
+      } else {
+        container.style.display = "none";
+      }
+    }
+
+    // Remove Image from List
+    function removeImage(index) {
+      productImagesArray.splice(index, 1);
+      renderImagePreviews();
+    }
+
+    // Product Upload Function with Multiple Images Array
     function uploadProduct() {
       const title = document.getElementById("pTitle").value.trim();
       const price = Number(document.getElementById("pPrice").value);
-      const image = getProductImageValue();
       const category = document.getElementById("pCategory").value;
 
-      if(!title || !price || !image) {
-        alert("Please fill all fields and provide an image!");
+      if(!title || !price) {
+        alert("Please fill title and price!");
         return;
       }
+
+      if(productImagesArray.length === 0) {
+        alert("Please add at least one product image!");
+        return;
+      }
+
+      // Main image field for backward compatibility + images array for gallery
+      const mainImage = productImagesArray[0];
 
       db.collection("products").add({ 
         title, 
         price, 
-        image, 
+        image: mainImage,
+        images: productImagesArray, // Saving full array of 4-5 images
         category,
         inStock: true,
         createdAt: firebase.firestore.FieldValue.serverTimestamp() 
       })
       .then(() => {
-        alert("Product Added Successfully!");
+        alert("Product Added Successfully with Multiple Images!");
         document.getElementById("pTitle").value = "";
         document.getElementById("pPrice").value = "";
-        document.getElementById("pImg").value = "";
         document.getElementById("productImageFile").value = "";
-        uploadedImageBase64 = "";
-        document.getElementById("imagePreviewContainer").style.display = "none";
-        document.getElementById("dropText").innerHTML = `
-          <p style="font-size: 13px; font-weight: 600; color: #fff;">Drag & drop your image here</p>
-          <p style="font-size: 11px; color: #aaa; margin-top: 4px;">or <span style="color: #e5b869; text-decoration: underline;">Browse from device</span></p>
-        `;
+        document.getElementById("pImgUrlInput").value = "";
+        productImagesArray = [];
+        renderImagePreviews();
         document.getElementById("pCategory").value = "tshirt";
       })
       .catch((error) => {
@@ -283,7 +282,7 @@
       });
     }
 
-    // Load Existing Products with Stock Toggle & Category Info
+    // Load Existing Products
     db.collection("products").onSnapshot(snapshot => {
       const list = document.getElementById("pList");
       if (!list) return;
@@ -295,9 +294,10 @@
       snapshot.forEach(doc => {
         const d = doc.data();
         const inStock = d.inStock !== false;
+        const imgCount = d.images ? d.images.length : 1;
         list.innerHTML += `
           <div class="product-item">
-            <div><b>${d.title}</b> - ${d.price} BDT <span style="font-size:11px; color:#e5b869; margin-left:8px;">[${d.category || 'general'}]</span></div>
+            <div><b>${d.title}</b> - ${d.price} BDT <span style="font-size:11px; color:#e5b869; margin-left:8px;">[${d.category || 'general'}] (${imgCount} imgs)</span></div>
             <div class="btn-group">
               <button class="stock-btn ${inStock ? 'in-stock' : ''}" onclick="toggleStock('${doc.id}', ${inStock})">
                 ${inStock ? 'In Stock' : 'Stock Out'}
@@ -309,12 +309,9 @@
       });
     });
 
-    // Toggle Stock Status Function
     function toggleStock(id, currentStatus) {
       db.collection("products").doc(id).update({
         inStock: !currentStatus
-      }).then(() => {
-        console.log("Stock status updated");
       });
     }
 
@@ -324,7 +321,7 @@
       }
     }
 
-    // Fetch & Set Initial Settings Data
+    // Site Settings Loaders & Savers
     db.collection("site_settings").doc("about").get().then(doc => {
       if(doc.exists) {
         const d = doc.data();
@@ -345,18 +342,16 @@
       }
     });
 
-    // Save About Us Data
     function saveAboutSettings() {
       db.collection("site_settings").doc("about").set({
         name: document.getElementById("abName").value,
         role: document.getElementById("abRole").value,
         img: document.getElementById("abImg").value,
-        bio1: document.getElementById("abBio1").value,
+        bio1: document.getElementById("abBio12") ? document.getElementById("abBio12").value : document.getElementById("abBio1").value,
         bio2: document.getElementById("abBio2").value
       }).then(() => alert("About Us info updated successfully!"));
     }
 
-    // Save Contact Us Data
     function saveContactSettings() {
       db.collection("site_settings").doc("contact").set({
         phone: document.getElementById("ctPhone").value,
